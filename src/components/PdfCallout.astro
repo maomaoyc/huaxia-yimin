@@ -1,0 +1,27 @@
+---
+import DownloadButtons from './DownloadButtons.astro';
+import { withBase } from '@/lib/paths';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = '下载完整书稿',
+  text = 'PDF 与 Word 文件请上传至 public/downloads/，公开链接将保持稳定。'
+} = Astro.props;
+---
+
+<section class="bg-ivory text-ink">
+  <div class="mx-auto max-w-4xl px-4 pb-12 sm:px-6 lg:px-8">
+    <div class="border border-gold-deep/20 bg-white/62 p-5">
+      <h2 class="font-serif text-2xl font-semibold text-navy-850">{title}</h2>
+      <p class="mt-2 text-sm leading-7 text-ink/72">{text}</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a class="inline-flex border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" href={withBase('/book/preface/')}>在线阅读</a>
+        <DownloadButtons />
+      </div>
+    </div>
+  </div>
+</section>

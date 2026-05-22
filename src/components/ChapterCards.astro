@@ -1,0 +1,32 @@
+---
+import { withBase } from '@/lib/paths';
+
+interface Chapter {
+  title: string;
+  summary: string;
+  concepts: string[];
+  link: string;
+}
+
+interface Props {
+  chapters: Chapter[];
+}
+
+const { chapters } = Astro.props;
+---
+
+<div class="grid gap-5 md:grid-cols-2">
+  {chapters.map((chapter, index) => (
+    <article id={`chapter-${index + 1}`} class="border border-gold-deep/20 bg-white/58 p-5 shadow-sm">
+      <p class="text-xs uppercase tracking-[0.24em] text-gold-deep">Chapter {index + 1}</p>
+      <h2 class="mt-3 font-serif text-2xl font-semibold text-navy-850">{chapter.title}</h2>
+      <p class="mt-3 text-sm leading-7 text-ink/78">{chapter.summary}</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {chapter.concepts.map((concept) => (
+          <span class="border border-gold-deep/25 bg-ivory px-2.5 py-1 text-xs text-gold-deep">{concept}</span>
+        ))}
+      </div>
+      <a href={withBase(chapter.link)} class="mt-5 inline-flex text-sm font-medium text-gold-deep hover:text-navy-850">阅读本章</a>
+    </article>
+  ))}
+</div>

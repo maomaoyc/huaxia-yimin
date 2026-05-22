@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ContentShell from '@/components/ContentShell.astro';
+import VolumeIndex from '@/components/VolumeIndex.astro';
+import Diagrams from '@/components/Diagrams.astro';
+import Timeline from '@/components/Timeline.astro';
+import DownloadCenter from '@/components/DownloadCenter.astro';
+import PdfCallout from '@/components/PdfCallout.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages
+    .filter((page) => page.slug !== 'home')
+    .map((page) => ({
+      params: { slug: page.slug },
+      props: { page }
+    }));
+}
+
+const { page } = Astro.props;
+const volumes = await getCollection('volumes');
+const { Content } = await page.render();
+---
+
+<BaseLayout title={`${page.data.title} | 华夏义民起义、变革、正常化之法理`} description={page.data.description}>
+  <PageHero title={page.data.title} eyebrow={page.data.eyebrow} description={page.data.description} />
+  <ContentShell>
+    <Content />
+  </ContentShell>
+  {page.slug === 'introduction' && <PdfCallout title="下载完整 PDF" text="本书 PDF 将通过固定链接提供，适合离线阅读、引用与打印。" />}
+  {page.slug === 'structure' && <VolumeIndex volumes={volumes} />}
+  {page.slug === 'diagrams' && <Diagrams />}
+  {page.slug === 'timeline' && <Timeline />}
+  {page.slug === 'downloads' && <DownloadCenter />}
+</BaseLayout>

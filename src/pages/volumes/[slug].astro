@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ContentShell from '@/components/ContentShell.astro';
+import ChapterCards from '@/components/ChapterCards.astro';
+import { getBookVolumeSlug, sortBookEntries } from '@/lib/book';
+
+export async function getStaticPaths() {
+  const volumes = await getCollection('volumes');
+  return volumes.map((volume) => ({
+    params: { slug: volume.slug },
+    props: { volume }
+  }));
+}
+
+const { volume } = Astro.props;
+const { Content } = await volume.render();
+const bookEntries = sortBookEntries(await getCollection('book'))
+  .filter((entry) => getBookVolumeSlug(entry) === volume.slug)
+  .map((entry) => ({
+    title: entry.data.title,
+    summary: entry.data.summary,
+    concepts: entry.data.keywords,
+    link: `/book/${entry.slug}/`
+  }));
+---
+
+<BaseLayout title={`${volume.data.title} | 华夏义民起义、变革、正常化之法理`} description={volume.data.description}>
+  <PageHero title={volume.data.title} eyebrow={volume.data.subtitle} description={volume.data.description} />
+  <ContentShell>
+    <Content />
+    <div class="not-prose mt-10">
+      <ChapterCards chapters={bookEntries} />
+    </div>
+  </ContentShell>
+</BaseLayout>

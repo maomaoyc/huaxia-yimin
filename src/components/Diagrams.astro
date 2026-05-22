@@ -1,0 +1,47 @@
+---
+const flow = ['心境分析', '名实辨析', '群境理论', '法理评估', '正常化方案'];
+const concepts = [
+  { label: '心境', note: '主体判断与责任意识' },
+  { label: '名实', note: '概念与现实对应' },
+  { label: '群境', note: '共同体与制度场域' },
+  { label: '法理', note: '正当性与规范边界' },
+  { label: '正常化', note: '公共秩序重建' }
+];
+---
+
+<section class="bg-ivory text-ink">
+  <div class="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:px-8">
+    <div class="border border-gold-deep/20 bg-white/62 p-5 sm:p-7">
+      <h2 class="font-serif text-2xl font-semibold text-navy-850">著作逻辑流程</h2>
+      <div class="mt-6 grid gap-3 md:grid-cols-5">
+        {flow.map((item, index) => (
+          <div class="relative border border-gold-deep/25 bg-ivory p-4 text-center">
+            <p class="font-serif text-lg text-navy-850">{item}</p>
+            <p class="mt-2 text-xs text-gold-deep">Step {index + 1}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+      <div class="border border-gold-deep/20 bg-white/62 p-5 sm:p-7">
+        <h2 class="font-serif text-2xl font-semibold text-navy-850">概念图</h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          {concepts.map((concept) => (
+            <div class="border border-gold-deep/20 bg-ivory p-4">
+              <p class="font-serif text-xl text-navy-850">{concept.label}</p>
+              <p class="mt-2 text-sm leading-6 text-ink/70">{concept.note}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="border border-gold-deep/20 bg-white/62 p-5 sm:p-7">
+        <h2 class="font-serif text-2xl font-semibold text-navy-850">地理可视化占位</h2>
+        <div class="map-placeholder mt-6 aspect-[4/3] border border-dashed border-gold-deep/45 p-5">
+          <div class="flex h-full items-center justify-center text-center">
+            <p class="max-w-sm text-sm leading-7 text-ink/70">未来可接入历史地点、路线、事件层级与来源注释，形成可交互地图。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

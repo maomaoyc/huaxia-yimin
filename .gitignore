@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.pnpm-store/
+.vercel/
+.netlify/
+.DS_Store
+*.log
+*.swp

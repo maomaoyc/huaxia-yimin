@@ -1,0 +1,40 @@
+---
+import { withBase } from '@/lib/paths';
+
+const downloads = [
+  {
+    title: 'PDF 版本',
+    file: 'huaxia-yimin.pdf',
+    type: 'PDF',
+    detail: '适合在线预览、离线阅读、打印与正式引用。',
+    button: '下载 PDF'
+  },
+  {
+    title: 'Word 版本',
+    file: 'huaxia-yimin.docx',
+    type: 'DOCX',
+    detail: '适合作者修订、校对、编辑流转与后续转换。',
+    button: '下载 Word'
+  }
+];
+---
+
+<section class="bg-ivory text-ink">
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid gap-5 md:grid-cols-2">
+      {downloads.map((item) => (
+        <article class="border border-gold-deep/20 bg-white/62 p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="font-serif text-2xl font-semibold text-navy-850">{item.title}</h2>
+              <p class="mt-2 text-sm leading-6 text-ink/70">{item.detail}</p>
+            </div>
+            <span class="shrink-0 border border-gold-deep/30 px-2.5 py-1 text-xs text-gold-deep">{item.type}</span>
+          </div>
+          <p class="mt-4 font-mono text-xs text-ink/58">/downloads/{item.file}</p>
+          <a class="mt-5 inline-flex border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep transition hover:border-navy-850 hover:text-navy-850" href={withBase(`/downloads/${item.file}`)} download>{item.button}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

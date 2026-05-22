@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import { withBase } from '@/lib/paths';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const pages = await getCollection('pages');
+const volumes = await getCollection('volumes');
+
+const navItems = [
+  {
+    label: '在线阅读',
+    href: withBase('/book/preface/'),
+    order: 1.5
+  },
+  ...pages.map((page) => ({
+    label: page.data.navLabel ?? page.data.title,
+    href: withBase(page.slug === 'home' ? '/' : `/${page.slug}/`),
+    order: page.data.order
+  })),
+  ...volumes.map((volume) => ({
+    label: volume.data.shortTitle,
+    href: withBase(`/volumes/${volume.slug}/`),
+    order: volume.data.order
+  }))
+].sort((a, b) => a.order - b.order);
+---
+
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="border-b border-gold-muted/20 bg-navy-950/92 backdrop-blur">
+      <a class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ivory focus:px-4 focus:py-2 focus:text-navy-950" href="#content">跳至正文</a>
+      <div class="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
+        <div class="flex items-start justify-between gap-5">
+          <a href={withBase('/')} class="group max-w-[18rem] sm:max-w-lg">
+            <p class="font-serif text-lg font-semibold leading-snug text-ivory sm:text-2xl">华夏义民起义、变革、正常化之法理</p>
+            <p class="mt-1 text-xs uppercase tracking-[0.28em] text-gold-pale/80">Academic Book Project</p>
+          </a>
+          <a href={withBase('/downloads/')} class="shrink-0 border border-gold-muted/50 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950">PDF 下载</a>
+        </div>
+        <nav aria-label="主导航" class="-mx-2 flex gap-1 overflow-x-auto pb-1">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class="whitespace-nowrap px-2.5 py-2 text-sm text-ivory/76 transition hover:text-gold-pale"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="content">
+      <slot />
+    </main>
+    <footer class="bg-navy-950 text-ivory">
+      <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_0.7fr] lg:px-8">
+        <div>
+          <p class="font-serif text-xl">华夏义民起义、变革、正常化之法理</p>
+          <p class="mt-3 max-w-2xl text-sm leading-7 text-ivory/68">本站为静态学术书籍网站模板。公开文本保持克制表达，历史政治主张以作者论题方式呈现，便于后续补充注释、来源与英文版本。</p>
+        </div>
+        <div class="text-sm leading-7 text-ivory/68">
+          <p>Static build: Astro + Tailwind CSS</p>
+          <p>Deploy targets: Cloudflare Pages / Vercel / Netlify</p>
+          <p>Future i18n: `src/content/en/` reserved</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

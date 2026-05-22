@@ -1,0 +1,24 @@
+---
+const items = [
+  { date: '理论起点', title: '心境问题', text: '从主体判断、义感与责任意识切入。' },
+  { date: '概念展开', title: '名实辨析', text: '检视公共名称、现实经验与法理名分之间的关系。' },
+  { date: '制度层面', title: '群境分析', text: '转入共同体生活、制度结构与秩序重建。' },
+  { date: '论证终点', title: '正常化法理', text: '提出作者关于变革之后公共秩序如何重新整合的理论命题。' }
+];
+---
+
+<section class="bg-ivory text-ink">
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="space-y-5">
+      {items.map((item) => (
+        <article class="grid gap-3 border-l-2 border-gold-deep/45 bg-white/58 p-5 sm:grid-cols-[10rem_1fr]">
+          <p class="text-sm font-medium text-gold-deep">{item.date}</p>
+          <div>
+            <h2 class="font-serif text-2xl font-semibold text-navy-850">{item.title}</h2>
+            <p class="mt-2 text-sm leading-7 text-ink/72">{item.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

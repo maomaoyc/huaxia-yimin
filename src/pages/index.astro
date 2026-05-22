@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import ContentShell from '@/components/ContentShell.astro';
+import VolumeIndex from '@/components/VolumeIndex.astro';
+import Diagrams from '@/components/Diagrams.astro';
+import PdfCallout from '@/components/PdfCallout.astro';
+
+const home = (await getCollection('pages')).find((page) => page.slug === 'home');
+if (!home) {
+  throw new Error('Missing home page content');
+}
+
+const volumes = await getCollection('volumes');
+const { Content } = await home.render();
+---
+
+<BaseLayout title={home.data.title} description={home.data.description}>
+  <PageHero title={home.data.title} eyebrow={home.data.eyebrow} description={home.data.description} />
+  <ContentShell>
+    <Content />
+  </ContentShell>
+  <PdfCallout title="阅读与下载" text="可在线阅读各章，也可下载完整 PDF 或 Word 文件。上传正式书稿后，以下链接保持不变。" />
+  <VolumeIndex volumes={volumes} />
+  <Diagrams />
+</BaseLayout>
