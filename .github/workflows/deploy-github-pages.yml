@@ -22,7 +22,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
       - id: pages
         uses: actions/configure-pages@v5
       - name: Configure Astro for GitHub Pages
