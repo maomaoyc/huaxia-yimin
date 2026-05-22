@@ -4,15 +4,15 @@ import DownloadButtons from '@/components/DownloadButtons.astro';
 import { withBase } from '@/lib/paths';
 ---
 
-<BaseLayout title="Huaxia Civic Uprising, Transformation, and Jurisprudence of Normalization" description="English overview of the Chinese academic book project.">
+<BaseLayout title="Huaxia Civic Uprising, Transformation, and Jurisprudence of Normalization" description="English overview of the Chinese academic book project." locale="en">
   <section class="bg-navy-950 text-ivory">
     <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
       <p class="text-sm uppercase tracking-[0.32em] text-gold-pale/82">English Overview</p>
       <h1 class="mt-5 font-serif text-4xl font-semibold leading-tight sm:text-5xl">Huaxia Civic Uprising, Transformation, and Jurisprudence of Normalization</h1>
       <p class="mt-6 max-w-3xl text-base leading-8 text-ivory/76">This page provides an English-facing entry point for a Chinese academic book organized around the concepts of inner disposition, name-reality analysis, collective environment, jurisprudence, and normalization.</p>
       <div class="mt-7 flex flex-wrap gap-3">
-        <a class="border border-gold-muted/50 px-4 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/book/preface/')}>Read Chinese Text</a>
-        <DownloadButtons compact />
+        <a class="border border-gold-muted/50 px-4 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/en/book/preface/')}>Read Online</a>
+        <DownloadButtons compact locale="en" />
       </div>
     </div>
   </section>
@@ -22,7 +22,7 @@ import { withBase } from '@/lib/paths';
         <h2>Editorial Note</h2>
         <p>The full book is currently presented in Chinese. Strong historical and political claims are presented as the author’s thesis and interpretive framework, not as neutral factual assertions by the website.</p>
         <h2>Core Concepts</h2>
-        <p><strong>心境</strong> concerns inner disposition and judgment. <strong>名实</strong> concerns the relation between names, concepts, and realities. <strong>群境</strong> concerns collective life and institutional environment. These concepts lead into the author’s discussion of jurisprudence and normalization.</p>
+        <p><strong>Mind-state</strong> concerns inner disposition and judgment. <strong>Name-reality</strong> concerns the relation between names, concepts, and realities. <strong>Collective environment</strong> concerns collective life and institutional setting. These concepts lead into the author’s discussion of jurisprudence and normalization.</p>
         <h2>Contact</h2>
         <p>Publication, translation, and editorial contact: <a href="mailto:yc114de@gmail.com">yc114de@gmail.com</a>.</p>
       </article>

@@ -1,15 +1,18 @@
 ---
 import DownloadButtons from './DownloadButtons.astro';
 import { withBase } from '@/lib/paths';
+import { localizedPath, uiText, type Locale } from '@/lib/i18n';
 
 interface Props {
   title?: string;
   text?: string;
+  locale?: Locale;
 }
 
 const {
   title = '下载完整书稿',
-  text = 'PDF 与 Word 文件请上传至 public/downloads/，公开链接将保持稳定。'
+  text = 'PDF 与 Word 文件请上传至 public/downloads/，公开链接将保持稳定。',
+  locale = 'zh'
 } = Astro.props;
 ---
 
@@ -19,8 +22,8 @@ const {
       <h2 class="font-serif text-2xl font-semibold text-navy-850">{title}</h2>
       <p class="mt-2 text-sm leading-7 text-ink/72">{text}</p>
       <div class="mt-5 flex flex-wrap gap-3">
-        <a class="inline-flex border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" href={withBase('/book/preface/')}>在线阅读</a>
-        <DownloadButtons />
+        <a class="inline-flex border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" href={withBase(localizedPath(locale, '/book/preface/'))}>{uiText.readOnline[locale]}</a>
+        <DownloadButtons locale={locale} />
       </div>
     </div>
   </div>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import LocalizedContent from '@/components/LocalizedContent.astro';
+import { localizedPages, navTranslations } from '@/lib/i18n';
+
+const locale = 'es';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages
+    .filter((page) => page.slug !== 'home')
+    .map((page) => ({ params: { slug: page.slug } }));
+}
+
+const slug = Astro.params.slug ?? '';
+const volumes = await getCollection('volumes');
+const page = localizedPages[slug]?.[locale] ?? {
+  title: navTranslations[slug]?.[locale] ?? slug,
+  eyebrow: navTranslations[slug]?.[locale] ?? 'Español',
+  description: 'Página localizada en español para este sitio académico chino.'
+};
+---
+
+<BaseLayout title={`${page.title} | Español`} description={page.description} locale={locale}>
+  <PageHero title={page.title} eyebrow={page.eyebrow} description={page.description} locale={locale} />
+  <LocalizedContent slug={slug} locale={locale} volumes={volumes} />
+</BaseLayout>

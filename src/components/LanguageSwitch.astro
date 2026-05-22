@@ -1,9 +1,25 @@
 ---
 import { withBase } from '@/lib/paths';
+import { localizedPath, type Locale } from '@/lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'zh' } = Astro.props;
+const pathname = Astro.url.pathname;
+
+const itemClass = (target: Locale) =>
+  `border border-gold-muted/35 px-2 py-1 transition hover:bg-gold-muted hover:text-navy-950 ${locale === target ? 'bg-gold-muted text-navy-950' : 'text-gold-pale/80'}`;
+const label = {
+  zh: '语言切换',
+  en: 'Language switcher',
+  es: 'Selector de idioma'
+};
 ---
 
-<div class="flex items-center gap-1 text-xs" aria-label="语言切换">
-  <a class="border border-gold-muted/35 px-2 py-1 text-gold-pale/90 transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/')}>中</a>
-  <a class="border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/en/')}>EN</a>
-  <a class="border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/es/')}>ES</a>
+<div class="flex items-center gap-1 text-xs" aria-label={label[locale]}>
+  <a class={itemClass('zh')} href={withBase(localizedPath('zh', pathname))}>中</a>
+  <a class={itemClass('en')} href={withBase(localizedPath('en', pathname))}>EN</a>
+  <a class={itemClass('es')} href={withBase(localizedPath('es', pathname))}>ES</a>
 </div>

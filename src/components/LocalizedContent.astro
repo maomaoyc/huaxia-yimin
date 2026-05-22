@@ -1,0 +1,44 @@
+---
+import DownloadCenter from '@/components/DownloadCenter.astro';
+import Diagrams from '@/components/Diagrams.astro';
+import SubmissionForms from '@/components/SubmissionForms.astro';
+import Timeline from '@/components/Timeline.astro';
+import VolumeIndex from '@/components/VolumeIndex.astro';
+import PdfCallout from '@/components/PdfCallout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { localizedPages, navTranslations, type Locale } from '@/lib/i18n';
+
+interface Props {
+  slug: string;
+  locale: 'en' | 'es';
+  volumes: CollectionEntry<'volumes'>[];
+}
+
+const { slug, locale, volumes } = Astro.props;
+const page = localizedPages[slug]?.[locale] ?? {
+  title: navTranslations[slug]?.[locale] ?? slug,
+  eyebrow: navTranslations[slug]?.[locale] ?? slug,
+  description: locale === 'en'
+    ? 'This localized page provides a concise editorial guide while the full primary text remains in Chinese.'
+    : 'Esta página localizada ofrece una guía editorial breve mientras el texto principal completo permanece en chino.',
+  body: locale === 'en'
+    ? ['This page mirrors the Chinese site structure and provides an English-facing overview for navigation, publication, and reading.', 'The full online reader remains available in Chinese, with downloads in PDF and Word format.']
+    : ['Esta página refleja la estructura del sitio chino y ofrece una orientación en español para navegación, publicación y lectura.', 'La lectura completa sigue disponible en chino, con descargas en PDF y Word.']
+};
+---
+
+<section class="paper-texture bg-ivory text-ink">
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <article class="academic-prose prose prose-lg max-w-none">
+      {page.body.map((paragraph) => <p>{paragraph}</p>)}
+    </article>
+  </div>
+</section>
+
+{slug === 'introduction' && <PdfCallout title={locale === 'en' ? 'Download the book' : 'Descargar la obra'} text={locale === 'en' ? 'The full book is available as PDF and Word files.' : 'La obra completa está disponible como PDF y Word.'} locale={locale} />}
+{slug === 'structure' && <VolumeIndex volumes={volumes} locale={locale} />}
+{slug === 'diagrams' && <Diagrams locale={locale} />}
+{slug === 'timeline' && <Timeline locale={locale} />}
+{slug === 'downloads' && <DownloadCenter locale={locale} />}
+{slug === 'author-submissions' && <SubmissionForms mode="author" locale={locale} />}
+{slug === 'reader-feedback' && <SubmissionForms mode="reader" locale={locale} />}

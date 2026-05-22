@@ -4,15 +4,15 @@ import DownloadButtons from '@/components/DownloadButtons.astro';
 import { withBase } from '@/lib/paths';
 ---
 
-<BaseLayout title="Levantamiento cívico Huaxia, transformación y jurisprudencia de la normalización" description="Resumen en español del proyecto académico chino.">
+<BaseLayout title="Levantamiento cívico Huaxia, transformación y jurisprudencia de la normalización" description="Resumen en español del proyecto académico chino." locale="es">
   <section class="bg-navy-950 text-ivory">
     <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
       <p class="text-sm uppercase tracking-[0.32em] text-gold-pale/82">Resumen en español</p>
       <h1 class="mt-5 font-serif text-4xl font-semibold leading-tight sm:text-5xl">Levantamiento cívico Huaxia, transformación y jurisprudencia de la normalización</h1>
       <p class="mt-6 max-w-3xl text-base leading-8 text-ivory/76">Esta página ofrece una entrada en español a una obra académica china organizada en torno a disposición interior, relación nombre-realidad, entorno colectivo, jurisprudencia y normalización.</p>
       <div class="mt-7 flex flex-wrap gap-3">
-        <a class="border border-gold-muted/50 px-4 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/book/preface/')}>Leer texto chino</a>
-        <DownloadButtons compact />
+        <a class="border border-gold-muted/50 px-4 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/es/book/preface/')}>Leer en línea</a>
+        <DownloadButtons compact locale="es" />
       </div>
     </div>
   </section>
@@ -22,7 +22,7 @@ import { withBase } from '@/lib/paths';
         <h2>Nota editorial</h2>
         <p>La obra completa se presenta actualmente en chino. Las afirmaciones históricas y políticas fuertes se muestran como tesis e interpretación del autor, no como afirmaciones neutrales del sitio.</p>
         <h2>Conceptos centrales</h2>
-        <p><strong>心境</strong> trata de la disposición interior y el juicio. <strong>名实</strong> trata la relación entre nombres, conceptos y realidades. <strong>群境</strong> trata la vida colectiva y el entorno institucional. Estos conceptos conducen a la discusión del autor sobre jurisprudencia y normalización.</p>
+        <p><strong>Estado interior</strong> trata de la disposición interior y el juicio. <strong>Nombre-realidad</strong> trata la relación entre nombres, conceptos y realidades. <strong>Entorno colectivo</strong> trata la vida colectiva y el entorno institucional. Estos conceptos conducen a la discusión del autor sobre jurisprudencia y normalización.</p>
         <h2>Contacto</h2>
         <p>Contacto para publicación, traducción y edición: <a href="mailto:yc114de@gmail.com">yc114de@gmail.com</a>.</p>
       </article>

@@ -1,39 +1,46 @@
 ---
 import { getCollection } from 'astro:content';
 import { withBase } from '@/lib/paths';
+import { localizedPath, navTranslations, siteTitle, uiText, type Locale } from '@/lib/i18n';
 import LanguageSwitch from '@/components/LanguageSwitch.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
+  locale?: Locale;
 }
 
-const { title, description } = Astro.props;
+const { title, description, locale = 'zh' } = Astro.props;
 const pages = await getCollection('pages');
 const volumes = await getCollection('volumes');
 
 const navItems = [
   {
-    label: '在线阅读',
-    href: withBase('/book/preface/'),
+    label: navTranslations.read[locale],
+    href: withBase(localizedPath(locale, '/book/preface/')),
     order: 1.5
   },
   ...pages.map((page) => ({
-    label: page.data.navLabel ?? page.data.title,
-    href: withBase(page.slug === 'home' ? '/' : `/${page.slug}/`),
+    label: navTranslations[page.slug]?.[locale] ?? page.data.navLabel ?? page.data.title,
+    href: withBase(localizedPath(locale, page.slug === 'home' ? '/' : `/${page.slug}/`)),
     order: page.data.order
   })),
   ...volumes.map((volume) => ({
-    label: volume.data.shortTitle,
-    href: withBase(`/volumes/${volume.slug}/`),
+    label: navTranslations[volume.slug]?.[locale] ?? volume.data.shortTitle,
+    href: withBase(localizedPath(locale, `/volumes/${volume.slug}/`)),
     order: volume.data.order
   }))
 ].sort((a, b) => a.order - b.order);
+const navLabel = {
+  zh: '主导航',
+  en: 'Main navigation',
+  es: 'Navegación principal'
+};
 ---
 
 <!doctype html>
-<html lang="zh-Hans">
+<html lang={locale === 'zh' ? 'zh-Hans' : locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -44,19 +51,19 @@ const navItems = [
   </head>
   <body>
     <header class="border-b border-gold-muted/20 bg-navy-950/92 backdrop-blur">
-      <a class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ivory focus:px-4 focus:py-2 focus:text-navy-950" href="#content">跳至正文</a>
+      <a class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ivory focus:px-4 focus:py-2 focus:text-navy-950" href="#content">{locale === 'zh' ? '跳至正文' : locale === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
       <div class="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
         <div class="flex items-start justify-between gap-5">
-          <a href={withBase('/')} class="group max-w-[18rem] sm:max-w-lg">
-            <p class="font-serif text-lg font-semibold leading-snug text-ivory sm:text-2xl">华夏义民起义、变革、正常化之法理</p>
+          <a href={withBase(localizedPath(locale, '/'))} class="group max-w-[18rem] sm:max-w-lg">
+            <p class="font-serif text-lg font-semibold leading-snug text-ivory sm:text-2xl">{siteTitle[locale]}</p>
             <p class="mt-1 text-xs uppercase tracking-[0.28em] text-gold-pale/80">Academic Book Project</p>
           </a>
           <div class="flex shrink-0 items-center gap-2">
-            <LanguageSwitch />
-            <a href={withBase('/downloads/')} class="border border-gold-muted/50 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950">PDF 下载</a>
+            <LanguageSwitch locale={locale} />
+            <a href={withBase('/downloads/huaxia-yimin.pdf')} download class="border border-gold-muted/50 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950">{uiText.downloadPdf[locale]}</a>
           </div>
         </div>
-        <nav aria-label="主导航" class="-mx-2 flex gap-1 overflow-x-auto pb-1">
+        <nav aria-label={navLabel[locale]} class="-mx-2 flex gap-1 overflow-x-auto pb-1">
           {navItems.map((item) => (
             <a
               href={item.href}
@@ -74,14 +81,14 @@ const navItems = [
     <footer class="bg-navy-950 text-ivory">
       <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_0.7fr] lg:px-8">
         <div>
-          <p class="font-serif text-xl">华夏义民起义、变革、正常化之法理</p>
-          <p class="mt-3 max-w-2xl text-sm leading-7 text-ivory/68">本站为静态学术书籍网站模板。公开文本保持克制表达，历史政治主张以作者论题方式呈现，便于后续补充注释、来源与英文版本。</p>
+          <p class="font-serif text-xl">{siteTitle[locale]}</p>
+          <p class="mt-3 max-w-2xl text-sm leading-7 text-ivory/68">{uiText.footerNote[locale]}</p>
         </div>
         <div class="text-sm leading-7 text-ivory/68">
           <p>Static build: Astro + Tailwind CSS</p>
           <p>Deploy targets: Cloudflare Pages / Vercel / Netlify</p>
-          <p>联系出版与资料提交：<a class="text-gold-pale underline decoration-gold-muted/40" href="mailto:yc114de@gmail.com">yc114de@gmail.com</a></p>
-          <p><a class="text-gold-pale underline decoration-gold-muted/40" href={withBase('/author-submissions/')}>作者资料入口</a> · <a class="text-gold-pale underline decoration-gold-muted/40" href={withBase('/reader-feedback/')}>读者留言</a></p>
+          <p>{uiText.contact[locale]}：<a class="text-gold-pale underline decoration-gold-muted/40" href="mailto:yc114de@gmail.com">yc114de@gmail.com</a></p>
+          <p><a class="text-gold-pale underline decoration-gold-muted/40" href={withBase(localizedPath(locale, '/author-submissions/'))}>{navTranslations['author-submissions'][locale]}</a> · <a class="text-gold-pale underline decoration-gold-muted/40" href={withBase(localizedPath(locale, '/reader-feedback/'))}>{navTranslations['reader-feedback'][locale]}</a></p>
         </div>
       </div>
     </footer>

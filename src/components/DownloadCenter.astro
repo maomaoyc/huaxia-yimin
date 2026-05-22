@@ -1,20 +1,47 @@
 ---
 import { withBase } from '@/lib/paths';
+import { uiText, type Locale } from '@/lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'zh' } = Astro.props;
+const copy = {
+  zh: {
+    pdfTitle: 'PDF 版本',
+    wordTitle: 'Word 版本',
+    pdfDetail: '适合在线预览、离线阅读、打印与正式引用。',
+    wordDetail: '适合作者修订、校对、编辑流转与后续转换。'
+  },
+  en: {
+    pdfTitle: 'PDF Version',
+    wordTitle: 'Word Version',
+    pdfDetail: 'Suitable for online preview, offline reading, printing, and formal citation.',
+    wordDetail: 'Suitable for author revision, proofreading, editorial exchange, and conversion.'
+  },
+  es: {
+    pdfTitle: 'Versión PDF',
+    wordTitle: 'Versión Word',
+    pdfDetail: 'Adecuada para vista previa, lectura sin conexión, impresión y citas formales.',
+    wordDetail: 'Adecuada para revisión, corrección, intercambio editorial y conversión.'
+  }
+};
 
 const downloads = [
   {
-    title: 'PDF 版本',
+    title: copy[locale].pdfTitle,
     file: 'huaxia-yimin.pdf',
     type: 'PDF',
-    detail: '适合在线预览、离线阅读、打印与正式引用。',
-    button: '下载 PDF'
+    detail: copy[locale].pdfDetail,
+    button: uiText.downloadPdf[locale]
   },
   {
-    title: 'Word 版本',
+    title: copy[locale].wordTitle,
     file: 'huaxia-yimin.docx',
     type: 'DOCX',
-    detail: '适合作者修订、校对、编辑流转与后续转换。',
-    button: '下载 Word'
+    detail: copy[locale].wordDetail,
+    button: uiText.downloadWord[locale]
   }
 ];
 ---

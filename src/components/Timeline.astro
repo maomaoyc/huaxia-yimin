@@ -1,10 +1,33 @@
 ---
-const items = [
-  { date: '理论起点', title: '心境问题', text: '从主体判断、义感与责任意识切入。' },
-  { date: '概念展开', title: '名实辨析', text: '检视公共名称、现实经验与法理名分之间的关系。' },
-  { date: '制度层面', title: '群境分析', text: '转入共同体生活、制度结构与秩序重建。' },
-  { date: '论证终点', title: '正常化法理', text: '提出作者关于变革之后公共秩序如何重新整合的理论命题。' }
-];
+import type { Locale } from '@/lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'zh' } = Astro.props;
+const timeline = {
+  zh: [
+    { date: '理论起点', title: '心境问题', text: '从主体判断、义感与责任意识切入。' },
+    { date: '概念展开', title: '名实辨析', text: '检视公共名称、现实经验与法理名分之间的关系。' },
+    { date: '制度层面', title: '群境分析', text: '转入共同体生活、制度结构与秩序重建。' },
+    { date: '论证终点', title: '正常化法理', text: '提出作者关于变革之后公共秩序如何重新整合的理论命题。' }
+  ],
+  en: [
+    { date: 'Theoretical Starting Point', title: 'Mind-State Problem', text: 'The argument begins from judgment, moral sentiment, and responsibility.' },
+    { date: 'Conceptual Development', title: 'Name-Reality Analysis', text: 'The author examines public names, lived realities, and juridical designation.' },
+    { date: 'Institutional Level', title: 'Collective Environment', text: 'The analysis turns to community life, institutional structure, and reconstruction of order.' },
+    { date: 'Argumentative Endpoint', title: 'Jurisprudence of Normalization', text: 'The author proposes a theory of how public order may be reintegrated after transformation.' }
+  ],
+  es: [
+    { date: 'Punto teórico inicial', title: 'Problema del estado interior', text: 'El argumento parte del juicio, el sentido moral y la responsabilidad.' },
+    { date: 'Desarrollo conceptual', title: 'Análisis nombre-realidad', text: 'El autor examina nombres públicos, realidades vividas y designación jurídica.' },
+    { date: 'Nivel institucional', title: 'Entorno colectivo', text: 'El análisis pasa a la vida comunitaria, la estructura institucional y la reconstrucción del orden.' },
+    { date: 'Punto final del argumento', title: 'Jurisprudencia de la normalización', text: 'El autor propone una teoría sobre cómo reintegrar el orden público tras la transformación.' }
+  ]
+};
+
+const items = timeline[locale];
 ---
 
 <section class="bg-ivory text-ink">

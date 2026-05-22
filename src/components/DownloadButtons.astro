@@ -1,17 +1,19 @@
 ---
 import { withBase } from '@/lib/paths';
+import { uiText, type Locale } from '@/lib/i18n';
 
 interface Props {
   compact?: boolean;
+  locale?: Locale;
 }
 
-const { compact = false } = Astro.props;
+const { compact = false, locale = 'zh' } = Astro.props;
 const baseClass = compact
   ? 'inline-flex border border-gold-muted/55 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950'
   : 'inline-flex border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850';
 ---
 
 <div class="flex flex-wrap gap-3">
-  <a class={baseClass} href={withBase('/downloads/huaxia-yimin.pdf')} download>PDF 下载</a>
-  <a class={baseClass} href={withBase('/downloads/huaxia-yimin.docx')} download>Word 下载</a>
+  <a class={baseClass} href={withBase('/downloads/huaxia-yimin.pdf')} download>{uiText.downloadPdf[locale]}</a>
+  <a class={baseClass} href={withBase('/downloads/huaxia-yimin.docx')} download>{uiText.downloadWord[locale]}</a>
 </div>

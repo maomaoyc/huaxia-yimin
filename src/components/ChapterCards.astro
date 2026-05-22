@@ -1,5 +1,6 @@
 ---
 import { withBase } from '@/lib/paths';
+import { localizedPath, type Locale } from '@/lib/i18n';
 
 interface Chapter {
   title: string;
@@ -10,15 +11,21 @@ interface Chapter {
 
 interface Props {
   chapters: Chapter[];
+  locale?: Locale;
 }
 
-const { chapters } = Astro.props;
+const { chapters, locale = 'zh' } = Astro.props;
+const labels = {
+  zh: { chapter: 'Chapter', read: '阅读本章' },
+  en: { chapter: 'Chapter', read: 'Read Chapter' },
+  es: { chapter: 'Capítulo', read: 'Leer capítulo' }
+};
 ---
 
 <div class="grid gap-5 md:grid-cols-2">
   {chapters.map((chapter, index) => (
     <article id={`chapter-${index + 1}`} class="border border-gold-deep/20 bg-white/58 p-5 shadow-sm">
-      <p class="text-xs uppercase tracking-[0.24em] text-gold-deep">Chapter {index + 1}</p>
+      <p class="text-xs uppercase tracking-[0.24em] text-gold-deep">{labels[locale].chapter} {index + 1}</p>
       <h2 class="mt-3 font-serif text-2xl font-semibold text-navy-850">{chapter.title}</h2>
       <p class="mt-3 text-sm leading-7 text-ink/78">{chapter.summary}</p>
       <div class="mt-4 flex flex-wrap gap-2">
@@ -26,7 +33,7 @@ const { chapters } = Astro.props;
           <span class="border border-gold-deep/25 bg-ivory px-2.5 py-1 text-xs text-gold-deep">{concept}</span>
         ))}
       </div>
-      <a href={withBase(chapter.link)} class="mt-5 inline-flex text-sm font-medium text-gold-deep hover:text-navy-850">阅读本章</a>
+      <a href={withBase(localizedPath(locale, chapter.link))} class="mt-5 inline-flex text-sm font-medium text-gold-deep hover:text-navy-850">{labels[locale].read}</a>
     </article>
   ))}
 </div>

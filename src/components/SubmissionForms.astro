@@ -1,15 +1,64 @@
 ---
+import { siteTitle, type Locale } from '@/lib/i18n';
+
 interface Props {
   mode: 'author' | 'reader';
+  locale?: Locale;
 }
 
-const { mode } = Astro.props;
+const { mode, locale = 'zh' } = Astro.props;
 const contact = 'yc114de@gmail.com';
 const isAuthor = mode === 'author';
-const title = isAuthor ? '作者资料上传入口' : '读者留言与反馈';
-const intro = isAuthor
-  ? '用于提交章节讲解视频、图片、校订资料或补充说明。静态网站不直接保存上传文件，请通过邮件发送附件，或提交云盘链接。'
-  : '用于读者留言、错字反馈、章节建议、出版合作线索或阅读意见。';
+const copy = {
+  zh: {
+    authorTitle: '作者资料上传入口',
+    readerTitle: '读者留言与反馈',
+    authorIntro: '用于提交章节讲解视频、图片、校订资料或补充说明。静态网站不直接保存上传文件，请通过邮件发送附件，或提交云盘链接。',
+    readerIntro: '用于读者留言、错字反馈、章节建议、出版合作线索或阅读意见。',
+    contactLine: '出版、授权、校订与资料提交联系：',
+    name: '姓名 / 称呼',
+    contact: '联系方式',
+    resource: '资料链接 / 附件说明',
+    resourcePlaceholder: '视频、图片或云盘链接',
+    authorMessage: '资料说明',
+    readerMessage: '留言内容',
+    submit: '生成邮件',
+    direct: '直接写邮件'
+  },
+  en: {
+    authorTitle: 'Author Materials Upload',
+    readerTitle: 'Reader Messages and Feedback',
+    authorIntro: 'Submit chapter explanation videos, images, corrections, or supplementary notes. This static site does not store uploads; please send attachments or cloud links by email.',
+    readerIntro: 'For reader comments, typo reports, chapter suggestions, publication leads, or reading feedback.',
+    contactLine: 'Publication, rights, corrections, and materials contact: ',
+    name: 'Name',
+    contact: 'Contact Information',
+    resource: 'Material Link / Attachment Note',
+    resourcePlaceholder: 'Video, image, or cloud link',
+    authorMessage: 'Material Description',
+    readerMessage: 'Message',
+    submit: 'Create Email',
+    direct: 'Write Email'
+  },
+  es: {
+    authorTitle: 'Envío de materiales del autor',
+    readerTitle: 'Mensajes y comentarios de lectores',
+    authorIntro: 'Envíe videos explicativos, imágenes, correcciones o notas complementarias. Este sitio estático no almacena archivos; envíe adjuntos o enlaces en la nube por correo.',
+    readerIntro: 'Para comentarios, erratas, sugerencias de capítulos, contactos editoriales u opiniones de lectura.',
+    contactLine: 'Contacto para publicación, derechos, correcciones y materiales: ',
+    name: 'Nombre',
+    contact: 'Información de contacto',
+    resource: 'Enlace de material / nota de adjunto',
+    resourcePlaceholder: 'Video, imagen o enlace en la nube',
+    authorMessage: 'Descripción del material',
+    readerMessage: 'Mensaje',
+    submit: 'Crear correo',
+    direct: 'Escribir correo'
+  }
+};
+const text = copy[locale];
+const title = isAuthor ? text.authorTitle : text.readerTitle;
+const intro = isAuthor ? text.authorIntro : text.readerIntro;
 ---
 
 <section class="bg-ivory text-ink">
@@ -17,54 +66,66 @@ const intro = isAuthor
     <div class="border border-gold-deep/20 bg-white/70 p-5 sm:p-7">
       <h2 class="font-serif text-2xl font-semibold text-navy-850">{title}</h2>
       <p class="mt-3 text-sm leading-7 text-ink/72">{intro}</p>
-      <p class="mt-2 text-sm leading-7 text-ink/72">出版、授权、校订与资料提交联系：<a class="text-gold-deep underline decoration-gold-deep/30" href={`mailto:${contact}`}>{contact}</a></p>
+      <p class="mt-2 text-sm leading-7 text-ink/72">{text.contactLine}<a class="text-gold-deep underline decoration-gold-deep/30" href={`mailto:${contact}`}>{contact}</a></p>
 
-      <form class="mt-6 grid gap-4" data-contact-form data-mode={mode} data-contact={contact}>
+      <form
+        class="mt-6 grid gap-4"
+        data-contact-form
+        data-mode={mode}
+        data-contact={contact}
+        data-author-mode={locale === 'zh' ? '作者资料提交' : locale === 'en' ? 'Author materials submission' : 'Envío de materiales del autor'}
+        data-reader-mode={locale === 'zh' ? '读者留言反馈' : locale === 'en' ? 'Reader feedback' : 'Comentarios de lectores'}
+        data-category-label={locale === 'zh' ? '类别' : locale === 'en' ? 'Category' : 'Categoría'}
+        data-name-label={text.name}
+        data-contact-label={text.contact}
+        data-resource-label={locale === 'zh' ? '资料链接' : locale === 'en' ? 'Material link' : 'Enlace de material'}
+        data-subject-title={siteTitle[locale]}
+      >
         <label class="grid gap-2 text-sm">
-          <span class="font-medium text-navy-850">姓名 / 称呼</span>
+          <span class="font-medium text-navy-850">{text.name}</span>
           <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" />
         </label>
         <label class="grid gap-2 text-sm">
-          <span class="font-medium text-navy-850">联系方式</span>
+          <span class="font-medium text-navy-850">{text.contact}</span>
           <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contactInfo" type="text" />
         </label>
         {isAuthor && (
           <label class="grid gap-2 text-sm">
-            <span class="font-medium text-navy-850">资料链接 / 附件说明</span>
-            <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="resourceLink" type="text" placeholder="视频、图片或云盘链接" />
+            <span class="font-medium text-navy-850">{text.resource}</span>
+            <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="resourceLink" type="text" placeholder={text.resourcePlaceholder} />
           </label>
         )}
         <label class="grid gap-2 text-sm">
-          <span class="font-medium text-navy-850">{isAuthor ? '资料说明' : '留言内容'}</span>
+          <span class="font-medium text-navy-850">{isAuthor ? text.authorMessage : text.readerMessage}</span>
           <textarea class="min-h-40 border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="message"></textarea>
         </label>
         <div class="flex flex-wrap gap-3">
-          <button class="border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="submit">生成邮件</button>
-          <a class="border border-gold-deep/20 px-4 py-2 text-sm text-ink/60 transition hover:border-gold-deep/45 hover:text-gold-deep" href={`mailto:${contact}`}>直接写邮件</a>
+          <button class="border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="submit">{text.submit}</button>
+          <a class="border border-gold-deep/20 px-4 py-2 text-sm text-ink/60 transition hover:border-gold-deep/45 hover:text-gold-deep" href={`mailto:${contact}`}>{text.direct}</a>
         </div>
       </form>
     </div>
   </div>
 </section>
 
-<script>
+  <script>
   document.querySelectorAll('[data-contact-form]').forEach((form) => {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const target = event.currentTarget;
       if (!(target instanceof HTMLFormElement)) return;
       const data = new FormData(target);
-      const mode = target.dataset.mode === 'author' ? '作者资料提交' : '读者留言反馈';
+      const mode = target.dataset.mode === 'author' ? target.dataset.authorMode : target.dataset.readerMode;
       const contact = target.dataset.contact || 'yc114de@gmail.com';
       const lines = [
-        `类别：${mode}`,
-        `姓名：${data.get('name') || ''}`,
-        `联系方式：${data.get('contactInfo') || ''}`,
-        `资料链接：${data.get('resourceLink') || ''}`,
+        `${target.dataset.categoryLabel}: ${mode}`,
+        `${target.dataset.nameLabel}: ${data.get('name') || ''}`,
+        `${target.dataset.contactLabel}: ${data.get('contactInfo') || ''}`,
+        `${target.dataset.resourceLabel}: ${data.get('resourceLink') || ''}`,
         '',
         `${data.get('message') || ''}`
       ];
-      const subject = encodeURIComponent(`《华夏义民起义、变革、正常化之法理》${mode}`);
+      const subject = encodeURIComponent(`${target.dataset.subjectTitle || 'Book'} ${mode}`);
       const body = encodeURIComponent(lines.join('\n'));
       window.location.href = `mailto:${contact}?subject=${subject}&body=${body}`;
     });

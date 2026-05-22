@@ -1,23 +1,30 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { localizedPath, volumeTranslations, type Locale } from '@/lib/i18n';
 import { withBase } from '@/lib/paths';
 
 interface Props {
   volumes: CollectionEntry<'volumes'>[];
+  locale?: Locale;
 }
 
-const { volumes } = Astro.props;
+const { volumes, locale = 'zh' } = Astro.props;
+const linkLabel = {
+  zh: '进入卷册',
+  en: 'Open Volume',
+  es: 'Abrir volumen'
+};
 ---
 
 <section class="bg-ivory text-ink">
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="grid gap-5 md:grid-cols-3">
       {volumes.sort((a, b) => a.data.order - b.data.order).map((volume) => (
-        <a href={withBase(`/volumes/${volume.slug}/`)} class="group border border-gold-deep/20 bg-white/62 p-6 transition hover:border-gold-deep/55 hover:bg-white">
-          <p class="text-xs uppercase tracking-[0.26em] text-gold-deep">{volume.data.shortTitle}</p>
-          <h2 class="mt-4 font-serif text-2xl font-semibold text-navy-850">{volume.data.title}</h2>
-          <p class="mt-3 text-sm leading-7 text-ink/72">{volume.data.description}</p>
-          <span class="mt-5 inline-flex text-sm text-gold-deep group-hover:text-navy-850">进入卷册</span>
+        <a href={withBase(localizedPath(locale, `/volumes/${volume.slug}/`))} class="group border border-gold-deep/20 bg-white/62 p-6 transition hover:border-gold-deep/55 hover:bg-white">
+          <p class="text-xs uppercase tracking-[0.26em] text-gold-deep">{volumeTranslations[volume.slug]?.[locale]?.shortTitle ?? volume.data.shortTitle}</p>
+          <h2 class="mt-4 font-serif text-2xl font-semibold text-navy-850">{volumeTranslations[volume.slug]?.[locale]?.title ?? volume.data.title}</h2>
+          <p class="mt-3 text-sm leading-7 text-ink/72">{volumeTranslations[volume.slug]?.[locale]?.description ?? volume.data.description}</p>
+          <span class="mt-5 inline-flex text-sm text-gold-deep group-hover:text-navy-850">{linkLabel[locale]}</span>
         </a>
       ))}
     </div>

@@ -1,11 +1,24 @@
 ---
+import { siteTitle, type Locale } from '@/lib/i18n';
+
 interface Props {
   eyebrow?: string;
   title: string;
   description: string;
+  locale?: Locale;
 }
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, locale = 'zh' } = Astro.props;
+const volumeLine = {
+  zh: '心境科学 · 名实学科 · 群境科学 · 正常化法理',
+  en: 'Mind-State · Name-Reality · Collective Environment · Normalization',
+  es: 'Estado interior · Nombre-realidad · Entorno colectivo · Normalización'
+};
+const volumeLabel = {
+  zh: '三卷本',
+  en: 'Three Volumes',
+  es: 'Tres volúmenes'
+};
 ---
 
 <section class="bg-navy-950 text-ivory">
@@ -36,16 +49,13 @@ const { eyebrow, title, description } = Astro.props;
               <div class="absolute -left-6 top-8 hidden h-36 w-5 rounded-full border border-gold-deep/30 bg-gold-pale/50 sm:block"></div>
               <div class="absolute -right-6 bottom-8 hidden h-36 w-5 rounded-full border border-gold-deep/30 bg-gold-pale/50 sm:block"></div>
               <div class="flex h-full flex-col justify-between border border-gold-deep/30 p-3">
-                <p class="font-serif text-lg font-semibold leading-snug">华夏义民起义、变革、正常化之法理</p>
-                <div>
-                  <p class="text-xs tracking-[0.24em] text-gold-deep">三卷本</p>
-                  <p class="mt-2 text-[10px] leading-4 text-gold-deep/75">山河 · 舆图 · 简牍</p>
-                </div>
+                <p class="font-serif text-lg font-semibold leading-snug">{siteTitle[locale]}</p>
+                <p class="text-xs tracking-[0.24em] text-gold-deep">{volumeLabel[locale]}</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="border-t border-gold-muted/25 px-6 py-4 text-sm leading-6 text-ivory/68">心境科学 · 名实学科 · 群境科学 · 正常化法理</div>
+        <div class="border-t border-gold-muted/25 px-6 py-4 text-sm leading-6 text-ivory/68">{volumeLine[locale]}</div>
       </div>
     </div>
   </div>
