@@ -8,6 +8,7 @@ import Diagrams from '@/components/Diagrams.astro';
 import Timeline from '@/components/Timeline.astro';
 import DownloadCenter from '@/components/DownloadCenter.astro';
 import PdfCallout from '@/components/PdfCallout.astro';
+import SubmissionForms from '@/components/SubmissionForms.astro';
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
@@ -34,4 +35,6 @@ const { Content } = await page.render();
   {page.slug === 'diagrams' && <Diagrams />}
   {page.slug === 'timeline' && <Timeline />}
   {page.slug === 'downloads' && <DownloadCenter />}
+  {page.slug === 'author-submissions' && <SubmissionForms mode="author" />}
+  {page.slug === 'reader-feedback' && <SubmissionForms mode="reader" />}
 </BaseLayout>

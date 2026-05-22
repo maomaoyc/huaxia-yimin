@@ -29,6 +29,7 @@ npm run build
 - Volume pages and chapter cards: `src/content/volumes/*.md`
 - Online reading chapters: `src/content/book/**/*.md`
 - Download file placeholders: `public/downloads/`
+- Author media materials: `public/media/`
 - Future English planning: `src/i18n/en/README.md`
 
 Each online reading file supports this frontmatter for future search and bilingual expansion:
@@ -91,6 +92,10 @@ Astro copies everything under `public/` into the static build output. Keep the P
 - `/timeline/`
 - `/downloads/`
 - `/letter/`
+- `/author-submissions/`
+- `/reader-feedback/`
+- `/en/`
+- `/es/`
 - `/book/preface/`
 - `/book/volume-1/chapter-1/`
 - `/book/volume-2/chapter-1/`
@@ -139,3 +144,11 @@ https://huaxia-yimin.pages.dev
 ```
 
 Change `SITE_URL` in deployment settings when the final domain is chosen.
+
+## Contact and Submissions
+
+- Publication contact: `yc114de@gmail.com`
+- Author media submission page: `/author-submissions/`
+- Reader feedback page: `/reader-feedback/`
+
+The site is static. Author videos, images, and supplemental chapter materials should be sent by email or cloud-drive link, then reviewed and placed under `public/media/` before being linked from pages.

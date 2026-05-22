@@ -1,0 +1,9 @@
+---
+import { withBase } from '@/lib/paths';
+---
+
+<div class="flex items-center gap-1 text-xs" aria-label="语言切换">
+  <a class="border border-gold-muted/35 px-2 py-1 text-gold-pale/90 transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/')}>中</a>
+  <a class="border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/en/')}>EN</a>
+  <a class="border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950" href={withBase('/es/')}>ES</a>
+</div>

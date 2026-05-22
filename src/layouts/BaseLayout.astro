@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { withBase } from '@/lib/paths';
+import LanguageSwitch from '@/components/LanguageSwitch.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -38,6 +39,7 @@ const navItems = [
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <title>{title}</title>
   </head>
   <body>
@@ -49,7 +51,10 @@ const navItems = [
             <p class="font-serif text-lg font-semibold leading-snug text-ivory sm:text-2xl">华夏义民起义、变革、正常化之法理</p>
             <p class="mt-1 text-xs uppercase tracking-[0.28em] text-gold-pale/80">Academic Book Project</p>
           </a>
-          <a href={withBase('/downloads/')} class="shrink-0 border border-gold-muted/50 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950">PDF 下载</a>
+          <div class="flex shrink-0 items-center gap-2">
+            <LanguageSwitch />
+            <a href={withBase('/downloads/')} class="border border-gold-muted/50 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950">PDF 下载</a>
+          </div>
         </div>
         <nav aria-label="主导航" class="-mx-2 flex gap-1 overflow-x-auto pb-1">
           {navItems.map((item) => (
@@ -75,7 +80,8 @@ const navItems = [
         <div class="text-sm leading-7 text-ivory/68">
           <p>Static build: Astro + Tailwind CSS</p>
           <p>Deploy targets: Cloudflare Pages / Vercel / Netlify</p>
-          <p>Future i18n: `src/content/en/` reserved</p>
+          <p>联系出版与资料提交：<a class="text-gold-pale underline decoration-gold-muted/40" href="mailto:yc114de@gmail.com">yc114de@gmail.com</a></p>
+          <p><a class="text-gold-pale underline decoration-gold-muted/40" href={withBase('/author-submissions/')}>作者资料入口</a> · <a class="text-gold-pale underline decoration-gold-muted/40" href={withBase('/reader-feedback/')}>读者留言</a></p>
         </div>
       </div>
     </footer>

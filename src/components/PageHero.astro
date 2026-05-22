@@ -18,13 +18,29 @@ const { eyebrow, title, description } = Astro.props;
     <div class="min-h-72 border border-gold-muted/30 bg-navy-900 shadow-soft">
       <div class="grid h-full grid-rows-[1fr_auto]">
         <div class="relative overflow-hidden p-6">
+          <svg class="absolute inset-0 h-full w-full opacity-25" viewBox="0 0 420 320" aria-hidden="true">
+            <defs>
+              <pattern id="map-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                <path d="M32 0H0v32" fill="none" stroke="#b99b5f" stroke-width="0.8" />
+              </pattern>
+            </defs>
+            <rect width="420" height="320" fill="url(#map-grid)" />
+            <path d="M8 250c50-48 83-34 123-75 40-41 77-27 111-62 39-40 75-34 154-86" fill="none" stroke="#d8c38c" stroke-width="2" />
+            <path d="M0 260h42v-16h26v16h42v-18h26v18h42v-17h26v17h42v-16h26v16h42v-18h26v18h80" fill="none" stroke="#b99b5f" stroke-width="3" />
+            <path d="M30 210c44-48 75-48 110 0 44-72 98-84 154 0" fill="none" stroke="#f5efe0" stroke-width="2" />
+          </svg>
           <div class="absolute inset-x-8 top-8 h-px bg-gold-muted/35"></div>
           <div class="absolute bottom-8 left-8 right-8 h-px bg-gold-muted/35"></div>
           <div class="flex h-full items-center justify-center">
-            <div class="aspect-[3/4] w-36 border border-gold-muted/55 bg-ivory p-4 text-center text-navy-950 shadow-soft sm:w-44">
+            <div class="relative aspect-[3/4] w-36 border border-gold-muted/55 bg-ivory p-4 text-center text-navy-950 shadow-soft sm:w-44">
+              <div class="absolute -left-6 top-8 hidden h-36 w-5 rounded-full border border-gold-deep/30 bg-gold-pale/50 sm:block"></div>
+              <div class="absolute -right-6 bottom-8 hidden h-36 w-5 rounded-full border border-gold-deep/30 bg-gold-pale/50 sm:block"></div>
               <div class="flex h-full flex-col justify-between border border-gold-deep/30 p-3">
                 <p class="font-serif text-lg font-semibold leading-snug">华夏义民起义、变革、正常化之法理</p>
-                <p class="text-xs tracking-[0.24em] text-gold-deep">三卷本</p>
+                <div>
+                  <p class="text-xs tracking-[0.24em] text-gold-deep">三卷本</p>
+                  <p class="mt-2 text-[10px] leading-4 text-gold-deep/75">山河 · 舆图 · 简牍</p>
+                </div>
               </div>
             </div>
           </div>
