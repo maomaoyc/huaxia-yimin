@@ -30,6 +30,7 @@ npm run build
 - Online reading chapters: `src/content/book/**/*.md`
 - Download file placeholders: `public/downloads/`
 - Author media materials: `public/media/`
+- Cloudflare Pages Functions: `functions/api/`
 - Future English planning: `src/i18n/en/README.md`
 
 Each online reading file supports this frontmatter for future search and bilingual expansion:
@@ -47,7 +48,7 @@ Optional helper fields:
 - `order`
 - `language`
 
-Replace the placeholder body text in `src/content/book/` with the full book text after uploading the manuscript.
+Replace or revise the body text in `src/content/book/` when chapters are corrected from the manuscript. The public pages intentionally present strong historical-political claims as the author's thesis or argument.
 
 Example chapter file:
 
@@ -78,21 +79,32 @@ Stable public links:
 
 Astro copies everything under `public/` into the static build output. Keep the PDF and DOCX files in `public/downloads/` so they are included on GitHub Pages, Cloudflare Pages, Vercel, and Netlify.
 
+## Online Reading and Comments
+
+Each chapter page is generated from `src/content/book/**/*.md` and includes chapter metadata, full text, previous/next navigation, download buttons, a desktop table of contents, a mobile table of contents, reading progress, and light/dark reading mode.
+
+Chapter comments and annotations do not write to GitHub. By default, comments and highlights are saved in the visitor's browser. On Cloudflare Pages, bind a KV namespace named `COMMENTS_KV` to make chapter comments shared publicly through `functions/api/comments.ts`.
+
+Reader registration and author upload forms use Cloudflare Pages Functions. To email submissions to `yc114de@gmail.com`, configure an environment variable:
+
+```text
+RESEND_API_KEY=...
+```
+
+If the email service is not configured, the forms fall back to opening an email draft.
+
 ## Routes
 
 - `/`
 - `/introduction/`
 - `/author/`
 - `/arguments/`
-- `/structure/`
 - `/volumes/volume-1/`
 - `/volumes/volume-2/`
 - `/volumes/volume-3/`
-- `/diagrams/`
 - `/timeline/`
 - `/downloads/`
-- `/letter/`
-- `/author-submissions/`
+- `/letter/` 后记
 - `/reader-feedback/`
 - `/en/`
 - `/es/`
@@ -110,7 +122,7 @@ The repository includes static deployment configuration for:
 - Vercel: `vercel.json`
 - Netlify: `netlify.toml`
 
-Cloudflare Pages, Vercel, and Netlify should use `npm run build` and publish the generated `dist/` directory.
+Cloudflare Pages, Vercel, and Netlify should use `npm run build` and publish the generated `dist/` directory. Cloudflare Pages will also deploy the functions under `functions/api/`.
 
 ### GitHub Pages
 
@@ -143,12 +155,12 @@ The default project domain in `astro.config.mjs` is currently:
 https://huaxia-yimin.pages.dev
 ```
 
-Change `SITE_URL` in deployment settings when the final domain is chosen.
+Set `SITE_URL=https://huaxiayimin.us` in deployment settings for the custom domain. For GitHub Pages project deployment, set `BASE_PATH=/repository-name`; for Cloudflare Pages custom-domain deployment, keep `BASE_PATH=/`.
 
 ## Contact and Submissions
 
 - Publication contact: `yc114de@gmail.com`
-- Author media submission page: `/author-submissions/`
+- Author latest article/video upload entry: `/letter/`
 - Reader feedback page: `/reader-feedback/`
 
-The site is static. Author videos, images, and supplemental chapter materials should be sent by email or cloud-drive link, then reviewed and placed under `public/media/` before being linked from pages.
+Author videos, images, and supplemental chapter materials can be submitted by cloud-drive link or file name through the 后记 page. Large media files should still be reviewed and placed under `public/media/` before being linked from public pages.

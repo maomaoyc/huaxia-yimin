@@ -1,0 +1,72 @@
+---
+---
+
+<section class="bg-ivory text-ink" id="author-upload">
+  <div class="mx-auto max-w-5xl px-4 pb-12 sm:px-6 lg:px-8">
+    <div class="border border-gold-deep/20 bg-white/72 p-5 sm:p-7">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.24em] text-gold-deep">Author Updates</p>
+          <h2 class="mt-3 font-serif text-2xl font-semibold text-navy-850">作者最新文章与视频上传</h2>
+          <p class="mt-2 text-sm leading-7 text-ink/72">用于提交作者最新文章、视频讲解、图片资料或云盘链接。提交内容不写入 GitHub 仓库。</p>
+        </div>
+        <a class="shrink-0 border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep transition hover:border-navy-850 hover:text-navy-850" href="#author-upload-form">上传资料</a>
+      </div>
+
+      <form id="author-upload-form" class="mt-6 grid gap-4" data-author-upload>
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="grid gap-2 text-sm">
+            <span class="font-medium text-navy-850">提交人</span>
+            <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" required />
+          </label>
+          <label class="grid gap-2 text-sm">
+            <span class="font-medium text-navy-850">联系方式</span>
+            <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contact" type="text" required />
+          </label>
+        </div>
+        <label class="grid gap-2 text-sm">
+          <span class="font-medium text-navy-850">文章 / 视频标题</span>
+          <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="title" type="text" />
+        </label>
+        <label class="grid gap-2 text-sm">
+          <span class="font-medium text-navy-850">云盘链接或公开视频链接</span>
+          <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="resourceUrl" type="url" placeholder="https://" />
+        </label>
+        <label class="grid gap-2 text-sm">
+          <span class="font-medium text-navy-850">本地文件</span>
+          <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-sm text-ink outline-none focus:border-gold-deep" name="file" type="file" />
+          <span class="text-xs leading-5 text-ink/55">当前版本会提交文件名与说明；若需真正保存大文件，请在 Cloudflare 配置 R2 存储。</span>
+        </label>
+        <label class="grid gap-2 text-sm">
+          <span class="font-medium text-navy-850">说明</span>
+          <textarea class="min-h-32 border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="message"></textarea>
+        </label>
+        <div class="flex flex-wrap items-center gap-3">
+          <button class="border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="submit">提交上传</button>
+          <p class="text-sm text-ink/60" data-author-upload-status></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelector('[data-author-upload]')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement)) return;
+    const status = document.querySelector('[data-author-upload-status]');
+    if (status) status.textContent = '提交中...';
+    const data = new FormData(form);
+    try {
+      const response = await fetch('/api/author-upload', { method: 'POST', body: data });
+      if (!response.ok) throw new Error('request failed');
+      if (status) status.textContent = '已提交。若后端邮件服务未配置，请同时保留云盘链接。';
+      form.reset();
+    } catch {
+      const subject = encodeURIComponent('作者最新文章与视频上传');
+      const body = encodeURIComponent(`提交人：${data.get('name') || ''}\n联系方式：${data.get('contact') || ''}\n标题：${data.get('title') || ''}\n链接：${data.get('resourceUrl') || ''}\n文件：${data.get('file') instanceof File ? data.get('file').name : ''}\n\n${data.get('message') || ''}`);
+      window.location.href = `mailto:yc114de@gmail.com?subject=${subject}&body=${body}`;
+    }
+  });
+</script>

@@ -14,7 +14,7 @@ export const siteTitle: Record<Locale, string> = {
 
 export const navTranslations: Record<string, Record<Locale, string>> = {
   home: { zh: '首页', en: 'Home', es: 'Inicio' },
-  read: { zh: '在线阅读', en: 'Read', es: 'Lectura' },
+  read: { zh: '作者', en: 'Author', es: 'Autor' },
   introduction: { zh: '简介', en: 'Introduction', es: 'Introducción' },
   author: { zh: '作者', en: 'Author', es: 'Autor' },
   arguments: { zh: '核心论证', en: 'Core Arguments', es: 'Argumentos' },
@@ -22,7 +22,7 @@ export const navTranslations: Record<string, Record<Locale, string>> = {
   diagrams: { zh: '图解', en: 'Diagrams', es: 'Diagramas' },
   timeline: { zh: '时间线', en: 'Timeline', es: 'Cronología' },
   downloads: { zh: '下载', en: 'Downloads', es: 'Descargas' },
-  letter: { zh: '致读者', en: 'Letter', es: 'Carta' },
+  letter: { zh: '后记', en: 'Afterword', es: 'Epílogo' },
   'author-submissions': { zh: '作者上传', en: 'Author Uploads', es: 'Envíos del autor' },
   'reader-feedback': { zh: '读者留言', en: 'Reader Feedback', es: 'Comentarios' },
   'volume-1': { zh: '心境科学', en: 'Volume I', es: 'Volumen I' },

@@ -1,0 +1,149 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { sortBookEntries } from '@/lib/book';
+import { withBase } from '@/lib/paths';
+
+interface Props {
+  entries: CollectionEntry<'book'>[];
+}
+
+const entries = sortBookEntries(Astro.props.entries).filter((entry) => entry.slug !== 'afterword');
+const featured = entries.filter((entry) => entry.slug !== 'preface').slice(0, 18);
+const chapterLabel = (entry: CollectionEntry<'book'>) => {
+  if (entry.data.chapterNumber === 0) return entry.data.title;
+  return entry.data.title.replace(/^第[一二三四五六七八九十百〇零]+卷\s*[^·]+\s*·\s*/, '');
+};
+---
+
+<section class="bg-ivory text-ink" id="reading-map">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-xs uppercase tracking-[0.26em] text-gold-deep">Reading Atlas</p>
+        <h2 class="mt-3 font-serif text-3xl font-semibold text-navy-850">读书地图</h2>
+      </div>
+      <div class="inline-flex w-fit border border-gold-deep/25 bg-white/65 p-1 text-sm">
+        <button class="map-tab bg-navy-850 px-4 py-2 text-ivory" type="button" data-map-tab="book">章节地图</button>
+        <button class="map-tab px-4 py-2 text-gold-deep" type="button" data-map-tab="china">中国地图</button>
+      </div>
+    </div>
+
+    <div class="mt-7 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+      <div class="map-panel is-active border border-gold-deep/20 bg-white/68 p-4 sm:p-6" data-map-panel="book">
+        <div class="reading-atlas" data-open-map>
+          <div class="atlas-disc" aria-hidden="true">
+            {featured.map((entry, index) => (
+              <a
+                href={withBase(`/book/${entry.slug}/`)}
+                class="atlas-node"
+                style={`--i:${index};--n:${featured.length};`}
+              >
+                <span>{entry.data.chapterNumber}</span>
+              </a>
+            ))}
+          </div>
+          <div class="atlas-center">
+            <p class="font-serif text-2xl text-navy-850">心境 · 名实 · 群境</p>
+            <p class="mt-2 text-sm leading-6 text-ink/68">点击地图放大，并从章节索引进入阅读。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-panel hidden border border-gold-deep/20 bg-white/68 p-4 sm:p-6" data-map-panel="china">
+        <div class="relative min-h-[26rem] overflow-hidden bg-[#efe5cb]">
+          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 720 520" role="img" aria-label="中国历史脉络示意图">
+            <defs>
+              <linearGradient id="chinaLand" x1="0" x2="1">
+                <stop offset="0" stop-color="#d8c38c" />
+                <stop offset="1" stop-color="#9fb58f" />
+              </linearGradient>
+            </defs>
+            <path d="M162 164 248 96l119 16 91 55 94-2 69 72-31 81 35 72-78 55-102-19-90 45-105-26-69-78-74-17-33-86 56-48z" fill="url(#chinaLand)" stroke="#8a6b35" stroke-width="3" />
+            <path d="M186 201c57-6 96 8 138 33 65 39 113 21 174 57 34 20 54 48 88 58" fill="none" stroke="#487c91" stroke-width="5" opacity=".52" />
+            <path d="M292 147c24 72 14 151-34 234" fill="none" stroke="#487c91" stroke-width="3" opacity=".45" />
+            <g fill="#102035" font-size="20" font-family="Noto Serif SC, Songti SC, serif">
+              <text x="270" y="155">华夏文明</text>
+              <text x="244" y="257">王朝演变</text>
+              <text x="393" y="324">近代变局</text>
+              <text x="300" y="405">正常化命题</text>
+            </g>
+          </svg>
+          <div class="relative z-10 grid h-full min-h-[26rem] content-end p-5">
+            <div class="max-w-xl border border-gold-deep/25 bg-ivory/88 p-4">
+              <h3 class="font-serif text-2xl text-navy-850">历史与法理脉络</h3>
+              <p class="mt-2 text-sm leading-7 text-ink/72">此处以示意地图呈现文明秩序、王朝演变、近代变局与正常化命题之间的关系。后续可继续接入朝代层、事件层、地点层和来源注释。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-gold-deep/20 bg-white/68 p-5">
+        <h3 class="font-serif text-2xl font-semibold text-navy-850">章节索引</h3>
+        <div class="mt-4 grid max-h-[26rem] gap-2 overflow-y-auto pr-2 text-sm">
+          {entries.map((entry) => (
+            <a class="border border-gold-deep/15 bg-ivory px-3 py-2 text-ink/74 transition hover:border-gold-deep/45 hover:text-gold-deep" href={withBase(`/book/${entry.slug}/`)}>
+              {chapterLabel(entry)}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="map-dialog w-[min(92vw,72rem)] border border-gold-deep/35 bg-ivory p-0 text-ink shadow-soft" data-map-dialog>
+    <div class="flex items-center justify-between border-b border-gold-deep/20 px-5 py-4">
+      <h3 class="font-serif text-2xl text-navy-850">章节读书地图</h3>
+      <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="button" data-close-map>关闭</button>
+    </div>
+    <div class="grid gap-5 p-5 lg:grid-cols-[1fr_0.9fr]">
+      <div class="reading-atlas large">
+        <div class="atlas-disc" aria-hidden="true">
+          {featured.map((entry, index) => (
+            <a href={withBase(`/book/${entry.slug}/`)} class="atlas-node" style={`--i:${index};--n:${featured.length};`}>
+              <span>{entry.data.chapterNumber}</span>
+            </a>
+          ))}
+        </div>
+        <div class="atlas-center">
+          <p class="font-serif text-3xl text-navy-850">全书逻辑图</p>
+          <p class="mt-2 text-sm text-ink/68">旋转节点对应章节入口。</p>
+        </div>
+      </div>
+      <div class="grid max-h-[34rem] gap-2 overflow-y-auto pr-2 text-sm">
+        {entries.map((entry) => (
+          <a class="border border-gold-deep/15 bg-white px-3 py-2 text-ink/74 transition hover:border-gold-deep/45 hover:text-gold-deep" href={withBase(`/book/${entry.slug}/`)}>
+            {chapterLabel(entry)}
+          </a>
+        ))}
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  document.querySelectorAll('[data-map-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = button instanceof HTMLElement ? button.dataset.mapTab : '';
+      document.querySelectorAll('[data-map-tab]').forEach((tab) => {
+        const active = tab instanceof HTMLElement && tab.dataset.mapTab === target;
+        tab.classList.toggle('bg-navy-850', active);
+        tab.classList.toggle('text-ivory', active);
+        tab.classList.toggle('text-gold-deep', !active);
+      });
+      document.querySelectorAll('[data-map-panel]').forEach((panel) => {
+        const active = panel instanceof HTMLElement && panel.dataset.mapPanel === target;
+        panel.classList.toggle('hidden', !active);
+        panel.classList.toggle('is-active', active);
+      });
+    });
+  });
+
+  const dialog = document.querySelector('[data-map-dialog]');
+  document.querySelector('[data-open-map]')?.addEventListener('click', (event) => {
+    if ((event.target instanceof HTMLElement) && event.target.closest('a')) return;
+    if (dialog instanceof HTMLDialogElement) dialog.showModal();
+  });
+  document.querySelector('[data-close-map]')?.addEventListener('click', () => {
+    if (dialog instanceof HTMLDialogElement) dialog.close();
+  });
+</script>

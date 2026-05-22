@@ -14,14 +14,10 @@ interface Props {
 const { title, description, locale = 'zh' } = Astro.props;
 const pages = await getCollection('pages');
 const volumes = await getCollection('volumes');
+const hiddenPageSlugs = new Set(['structure', 'diagrams', 'author-submissions']);
 
 const navItems = [
-  {
-    label: navTranslations.read[locale],
-    href: withBase(localizedPath(locale, '/book/preface/')),
-    order: 1.5
-  },
-  ...pages.map((page) => ({
+  ...pages.filter((page) => !hiddenPageSlugs.has(page.slug)).map((page) => ({
     label: navTranslations[page.slug]?.[locale] ?? page.data.navLabel ?? page.data.title,
     href: withBase(localizedPath(locale, page.slug === 'home' ? '/' : `/${page.slug}/`)),
     order: page.data.order
@@ -88,7 +84,7 @@ const navLabel = {
           <p>Static build: Astro + Tailwind CSS</p>
           <p>Deploy targets: Cloudflare Pages / Vercel / Netlify</p>
           <p>{uiText.contact[locale]}：<a class="text-gold-pale underline decoration-gold-muted/40" href="mailto:yc114de@gmail.com">yc114de@gmail.com</a></p>
-          <p><a class="text-gold-pale underline decoration-gold-muted/40" href={withBase(localizedPath(locale, '/author-submissions/'))}>{navTranslations['author-submissions'][locale]}</a> · <a class="text-gold-pale underline decoration-gold-muted/40" href={withBase(localizedPath(locale, '/reader-feedback/'))}>{navTranslations['reader-feedback'][locale]}</a></p>
+          <p><a class="text-gold-pale underline decoration-gold-muted/40" href={withBase(localizedPath(locale, '/letter/'))}>{navTranslations.letter[locale]}</a> · <a class="text-gold-pale underline decoration-gold-muted/40" href={withBase(localizedPath(locale, '/reader-feedback/'))}>{navTranslations['reader-feedback'][locale]}</a></p>
         </div>
       </div>
     </footer>

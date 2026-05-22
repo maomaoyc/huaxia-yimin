@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import ContentShell from '@/components/ContentShell.astro';
 import VolumeIndex from '@/components/VolumeIndex.astro';
-import Diagrams from '@/components/Diagrams.astro';
+import InteractiveMaps from '@/components/InteractiveMaps.astro';
 import PdfCallout from '@/components/PdfCallout.astro';
 
 const home = (await getCollection('pages')).find((page) => page.slug === 'home');
@@ -13,6 +13,7 @@ if (!home) {
 }
 
 const volumes = await getCollection('volumes');
+const bookEntries = await getCollection('book');
 const { Content } = await home.render();
 ---
 
@@ -23,5 +24,5 @@ const { Content } = await home.render();
   </ContentShell>
   <PdfCallout title="阅读与下载" text="可在线阅读各章，也可下载完整 PDF 或 Word 文件。上传正式书稿后，以下链接保持不变。" />
   <VolumeIndex volumes={volumes} />
-  <Diagrams />
+  <InteractiveMaps entries={bookEntries} />
 </BaseLayout>

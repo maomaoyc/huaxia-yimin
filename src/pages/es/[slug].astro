@@ -8,9 +8,10 @@ import { localizedPages, navTranslations } from '@/lib/i18n';
 const locale = 'es';
 
 export async function getStaticPaths() {
+  const hiddenPages = new Set(['structure', 'diagrams', 'author-submissions']);
   const pages = await getCollection('pages');
   return pages
-    .filter((page) => page.slug !== 'home')
+    .filter((page) => page.slug !== 'home' && !hiddenPages.has(page.slug))
     .map((page) => ({ params: { slug: page.slug } }));
 }
 

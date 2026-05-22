@@ -12,19 +12,34 @@ const copy = {
     pdfTitle: 'PDF 版本',
     wordTitle: 'Word 版本',
     pdfDetail: '适合在线预览、离线阅读、打印与正式引用。',
-    wordDetail: '适合作者修订、校对、编辑流转与后续转换。'
+    wordDetail: '适合作者修订、校对、编辑流转与后续转换。',
+    versionTitle: '版本信息',
+    version: '第一版 / v1.0',
+    date: '发布日期：2026.5.22',
+    notesTitle: '版本修订说明',
+    notes: '第一版用于公开发布完整 PDF、Word 文件与在线阅读系统。后续每次修订将在此处追加版本号、发布日期与主要修订内容。'
   },
   en: {
     pdfTitle: 'PDF Version',
     wordTitle: 'Word Version',
     pdfDetail: 'Suitable for online preview, offline reading, printing, and formal citation.',
-    wordDetail: 'Suitable for author revision, proofreading, editorial exchange, and conversion.'
+    wordDetail: 'Suitable for author revision, proofreading, editorial exchange, and conversion.',
+    versionTitle: 'Version Information',
+    version: 'First Edition / v1.0',
+    date: 'Published: 2026.5.22',
+    notesTitle: 'Revision Notes',
+    notes: 'The first edition publishes the PDF, Word file, and online reading system. Future revisions will be recorded here with version number, publication date, and major changes.'
   },
   es: {
     pdfTitle: 'Versión PDF',
     wordTitle: 'Versión Word',
     pdfDetail: 'Adecuada para vista previa, lectura sin conexión, impresión y citas formales.',
-    wordDetail: 'Adecuada para revisión, corrección, intercambio editorial y conversión.'
+    wordDetail: 'Adecuada para revisión, corrección, intercambio editorial y conversión.',
+    versionTitle: 'Información de versión',
+    version: 'Primera edición / v1.0',
+    date: 'Fecha de publicación: 2026.5.22',
+    notesTitle: 'Notas de revisión',
+    notes: 'La primera edición publica los archivos PDF y Word y el sistema de lectura en línea. Las revisiones futuras se registrarán aquí con versión, fecha y cambios principales.'
   }
 };
 
@@ -48,6 +63,20 @@ const downloads = [
 
 <section class="bg-ivory text-ink">
   <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-6 border border-gold-deep/20 bg-white/62 p-5">
+      <p class="text-xs uppercase tracking-[0.24em] text-gold-deep">{copy[locale].versionTitle}</p>
+      <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div>
+          <h2 class="font-serif text-2xl font-semibold text-navy-850">{copy[locale].version}</h2>
+          <p class="mt-2 text-sm text-ink/68">{copy[locale].date}</p>
+        </div>
+        <span class="w-fit border border-gold-deep/30 px-3 py-1 text-xs text-gold-deep">Public Release</span>
+      </div>
+      <div class="mt-5 border-t border-gold-deep/15 pt-4">
+        <h3 class="font-serif text-xl text-navy-850">{copy[locale].notesTitle}</h3>
+        <p class="mt-2 text-sm leading-7 text-ink/72">{copy[locale].notes}</p>
+      </div>
+    </div>
     <div class="grid gap-5 md:grid-cols-2">
       {downloads.map((item) => (
         <article class="border border-gold-deep/20 bg-white/62 p-5">

@@ -21,6 +21,15 @@ body {
   font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+html[lang="en"] body,
+html[lang="en"] .academic-prose,
+html[lang="en"] .reading-article,
+html[lang="en"] input,
+html[lang="en"] textarea,
+html[lang="en"] button {
+  font-family: "Times New Roman", Times, serif;
+}
+
 ::selection {
   background: rgba(185, 155, 95, 0.5);
   color: #fffaf0;
@@ -37,7 +46,7 @@ body {
 }
 
 .academic-prose :where(p, li) {
-  line-height: 1.95;
+  line-height: 1.82;
 }
 
 .academic-prose :where(a) {
@@ -64,6 +73,117 @@ body {
 
 .reading-article {
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+}
+
+.reading-article .academic-prose {
+  font-size: 1.04rem;
+}
+
+.reading-article .academic-prose :where(p, li) {
+  line-height: 1.78;
+  margin-top: 1.05em;
+  margin-bottom: 1.05em;
+}
+
+.english-reading .reading-article .academic-prose {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.08rem;
+}
+
+.english-reading .reading-article .academic-prose :where(p, li) {
+  line-height: 1.68;
+}
+
+.reading-atlas {
+  position: relative;
+  display: grid;
+  min-height: 26rem;
+  place-items: center;
+  overflow: hidden;
+  cursor: zoom-in;
+  background:
+    radial-gradient(circle at 48% 46%, rgba(245, 239, 224, 0.96) 0 6rem, rgba(216, 195, 140, 0.24) 6.1rem 10rem, transparent 10.2rem),
+    linear-gradient(135deg, rgba(159, 181, 143, 0.34), rgba(216, 195, 140, 0.34));
+}
+
+.reading-atlas.large {
+  min-height: 34rem;
+}
+
+.atlas-disc {
+  position: absolute;
+  inset: 2rem;
+  border: 1px solid rgba(138, 107, 53, 0.26);
+  border-radius: 50%;
+  animation: atlas-spin 38s linear infinite;
+}
+
+.atlas-disc::before,
+.atlas-disc::after {
+  position: absolute;
+  inset: 15%;
+  content: "";
+  border: 1px dashed rgba(138, 107, 53, 0.24);
+  border-radius: 50%;
+}
+
+.atlas-disc::after {
+  inset: 32%;
+}
+
+.atlas-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid rgba(138, 107, 53, 0.44);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #8a6b35;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transform: rotate(calc(360deg / var(--n) * var(--i))) translate(10.7rem) rotate(calc(-360deg / var(--n) * var(--i)));
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.reading-atlas.large .atlas-node {
+  transform: rotate(calc(360deg / var(--n) * var(--i))) translate(14rem) rotate(calc(-360deg / var(--n) * var(--i)));
+}
+
+.atlas-node:hover {
+  border-color: #102035;
+  background: #102035;
+  color: #f5efe0;
+}
+
+.atlas-center {
+  position: relative;
+  z-index: 1;
+  max-width: 18rem;
+  text-align: center;
+}
+
+.map-dialog::backdrop,
+dialog::backdrop {
+  background: rgba(7, 17, 31, 0.72);
+}
+
+@keyframes atlas-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-disc {
+    animation: none;
+  }
 }
 
 .reading-page.is-dark {

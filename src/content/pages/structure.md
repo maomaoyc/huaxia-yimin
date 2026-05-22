@@ -3,7 +3,7 @@ title: "全书结构"
 eyebrow: "Book Structure"
 description: "三卷结构从主体心境、名实辨析推进至群体秩序与正常化法理。"
 navLabel: "结构"
-order: 5
+order: 98
 ---
 
 第一卷“心境科学原理概论”处理主体判断、价值感受、意志与责任的理论基础。

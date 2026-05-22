@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import DownloadButtons from '@/components/DownloadButtons.astro';
+import ChapterInteractions from '@/components/reading/ChapterInteractions.astro';
 import { getBookVolumeSlug, sortBookEntries } from '@/lib/book';
 import { localizedPath, volumeTranslations, type Locale } from '@/lib/i18n';
 import { withBase } from '@/lib/paths';
@@ -18,27 +19,56 @@ const { Content } = await entry.render();
 const toc = sortBookEntries(entries);
 const volumeSlug = getBookVolumeSlug(entry);
 const currentVolume = volumeSlug ? volumeTranslations[volumeSlug]?.[locale] : undefined;
+const specialEntries = toc.filter((item) => item.data.chapterNumber === 0 || item.slug === 'afterword');
+const volumeGroups = ['volume-1', 'volume-2', 'volume-3']
+  .map((slug) => ({
+    slug,
+    volume: volumeTranslations[slug]?.[locale],
+    entries: toc.filter((item) => getBookVolumeSlug(item) === slug)
+  }))
+  .filter((group) => group.entries.length > 0);
 const labels = {
   toc: { zh: '目录', en: 'Table of Contents', es: 'Índice' },
   dark: { zh: '深色阅读', en: 'Dark Mode', es: 'Modo oscuro' },
   light: { zh: '浅色阅读', en: 'Light Mode', es: 'Modo claro' },
   previous: { zh: '上一章', en: 'Previous', es: 'Anterior' },
-  next: { zh: '下一章', en: 'Next', es: 'Siguiente' }
+  next: { zh: '下一章', en: 'Next', es: 'Siguiente' },
+  chapter: { zh: '第', en: 'Chapter', es: 'Capítulo' },
+  translation: {
+    zh: '',
+    en: 'English reading version',
+    es: 'Versión de lectura en español'
+  },
+  translationNotice: {
+    zh: '',
+    en: 'The full English translation is being prepared. This page keeps the chapter route, metadata, notes, comments, and download access in English so readers can navigate the whole book in English mode.',
+    es: 'La traducción completa al español está en preparación. Esta página mantiene la ruta, metadatos, notas, comentarios y descargas en español para navegar toda la obra en modo español.'
+  }
 };
+const chapterDisplay = (item: CollectionEntry<'book'>) => {
+  if (locale === 'zh') return item.data.title;
+  if (item.data.chapterNumber === 0) return locale === 'en' ? 'Preface' : 'Prefacio';
+  if (item.slug === 'afterword') return locale === 'en' ? 'Afterword' : 'Epílogo';
+  return `${labels.chapter[locale]} ${item.data.chapterNumber}`;
+};
+const pageTitle = locale === 'zh' ? entry.data.title : chapterDisplay(entry);
+const pageSummary = locale === 'zh'
+  ? entry.data.summary
+  : `${labels.translation[locale]}: ${entry.data.summary}`;
 ---
 
-<div class="reading-page min-h-screen bg-ivory text-ink" data-reading-page>
+<div class:list={['reading-page min-h-screen bg-ivory text-ink', locale === 'en' && 'english-reading']} data-reading-page>
   <div class="fixed left-0 right-0 top-0 z-40 h-1 bg-navy-950/10">
     <div class="h-full w-0 bg-gold-deep" data-reading-progress></div>
   </div>
 
   <section class="bg-navy-950 text-ivory">
-    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <div class="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-3xl">
-          <p class="text-sm tracking-[0.28em] text-gold-pale/80">{currentVolume?.title ?? entry.data.volume}</p>
-          <h1 class="mt-4 font-serif text-3xl font-semibold leading-tight sm:text-5xl">{entry.data.title}</h1>
-          <p class="mt-5 text-base leading-8 text-ivory/76">{entry.data.summary}</p>
+          <p class="text-xs tracking-[0.26em] text-gold-pale/80">{currentVolume?.title ?? entry.data.volume}</p>
+          <h1 class="mt-3 font-serif text-3xl font-semibold leading-tight sm:text-4xl">{pageTitle}</h1>
+          <p class="mt-4 text-sm leading-7 text-ivory/76 sm:text-base">{pageSummary}</p>
         </div>
         <div class="flex shrink-0 flex-wrap gap-3">
           <button type="button" class="border border-gold-muted/55 px-3 py-2 text-sm text-gold-pale transition hover:bg-gold-muted hover:text-navy-950" data-reading-mode data-dark-label={labels.dark[locale]} data-light-label={labels.light[locale]}>{labels.dark[locale]}</button>
@@ -48,54 +78,80 @@ const labels = {
     </div>
   </section>
 
-  <div class="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[17rem_1fr] lg:px-8">
+  <div class="mx-auto grid max-w-7xl gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[15rem_1fr] lg:px-8">
     <aside class="lg:sticky lg:top-5 lg:h-[calc(100vh-2.5rem)] lg:overflow-y-auto">
       <details class="border border-gold-deep/20 bg-white/72 p-4 lg:hidden">
         <summary class="cursor-pointer font-serif text-lg text-navy-850">{labels.toc[locale]}</summary>
-        <nav class="mt-4 grid gap-2 text-sm">
-          {toc.map((item) => (
-            <a class:list={['leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>
-              {item.data.chapterNumber === 0 ? item.data.title : `${item.data.volume.replace('原理概论', '')} · ${item.data.title}`}
-            </a>
+        <nav class="mt-4 grid gap-4 text-sm">
+          {specialEntries.map((item) => (
+            <a class:list={['leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+          ))}
+          {volumeGroups.map((group) => (
+            <div>
+              <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-gold-deep">{group.volume?.shortTitle}</p>
+              <div class="grid gap-2">
+                {group.entries.map((item) => (
+                  <a class:list={['leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+                ))}
+              </div>
+            </div>
           ))}
         </nav>
       </details>
 
       <nav class="hidden border border-gold-deep/20 bg-white/72 p-4 lg:block" aria-label="在线阅读目录">
         <p class="font-serif text-xl text-navy-850">{labels.toc[locale]}</p>
-        <div class="mt-4 grid gap-2 text-sm">
-          {toc.map((item) => (
-            <a class:list={['leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>
-              {item.data.chapterNumber === 0 ? item.data.title : `${item.data.volume.replace('原理概论', '')} · ${item.data.title}`}
-            </a>
+        <div class="mt-4 grid gap-4 text-sm">
+          {specialEntries.map((item) => (
+            <a class:list={['leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+          ))}
+          {volumeGroups.map((group) => (
+            <div>
+              <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-gold-deep">{group.volume?.shortTitle}</p>
+              <div class="grid gap-2">
+                {group.entries.map((item) => (
+                  <a class:list={['leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </nav>
     </aside>
 
     <div class="min-w-0">
-      <article class="reading-article border border-gold-deep/20 bg-white/78 px-5 py-7 shadow-sm sm:px-8 lg:px-12">
-        <div class="mb-8 flex flex-wrap gap-2">
+      <article class="reading-article border border-gold-deep/20 bg-white/78 px-5 py-6 shadow-sm sm:px-7 lg:px-10">
+        <div class="mb-6 flex flex-wrap gap-2">
           {entry.data.keywords.map((keyword) => (
             <span class="border border-gold-deep/25 bg-ivory px-2.5 py-1 text-xs text-gold-deep">{keyword}</span>
           ))}
         </div>
-        <div class="academic-prose prose prose-lg max-w-none">
-          <Content />
-        </div>
+        {locale === 'zh' ? (
+          <div class="academic-prose prose max-w-none">
+            <Content />
+          </div>
+        ) : (
+          <div class="academic-prose prose max-w-none">
+            <p>{labels.translationNotice[locale]}</p>
+            <p><strong>{locale === 'en' ? 'Original chapter title' : 'Título original del capítulo'}:</strong> {entry.data.title}</p>
+            <p><strong>{locale === 'en' ? 'Primary keywords' : 'Palabras clave'}:</strong> {entry.data.keywords.join(' / ')}</p>
+          </div>
+        )}
       </article>
+
+      <ChapterInteractions entry={entry} locale={locale} />
 
       <nav class="chapter-nav mt-6 grid gap-3 sm:grid-cols-2" aria-label="章节导航">
         {previous ? (
           <a class="border border-gold-deep/20 bg-white/70 p-4 text-sm text-ink/74 hover:border-gold-deep/45" href={withBase(localizedPath(locale, `/book/${previous.slug}/`))}>
             <span class="block text-xs text-gold-deep">{labels.previous[locale]}</span>
-            <span class="mt-1 block font-serif text-lg text-navy-850">{previous.data.title}</span>
+            <span class="mt-1 block font-serif text-lg text-navy-850">{chapterDisplay(previous)}</span>
           </a>
         ) : <div></div>}
         {next && (
           <a class="border border-gold-deep/20 bg-white/70 p-4 text-right text-sm text-ink/74 hover:border-gold-deep/45" href={withBase(localizedPath(locale, `/book/${next.slug}/`))}>
             <span class="block text-xs text-gold-deep">{labels.next[locale]}</span>
-            <span class="mt-1 block font-serif text-lg text-navy-850">{next.data.title}</span>
+            <span class="mt-1 block font-serif text-lg text-navy-850">{chapterDisplay(next)}</span>
           </a>
         )}
       </nav>
