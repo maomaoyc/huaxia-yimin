@@ -10,138 +10,146 @@ interface Props {
 const { entry, locale = 'zh' } = Astro.props;
 const copy = {
   zh: {
-    title: '章节批注与评论',
-    intro: '选中正文后可直接划线、高亮或记录想法；也可留下本章评论。注册为可选项。',
-    register: '读者注册',
-    name: '姓名 / 昵称',
-    contact: '联系方式',
-    note: '注册说明',
-    registerButton: '提交注册',
-    comment: '章节评论',
-    commentBody: '评论内容',
-    publishComment: '发表评论',
     highlight: '高亮',
     underline: '划线',
     idea: '想法',
-    saved: '已保存。',
-    pending: '提交中...',
-    failed: '提交未完成，请稍后再试。',
-    close: '关闭'
+    reader: '姓名',
+    note: '想法',
+    save: '保存',
+    cancel: '取消',
+    defaultName: '读者'
   },
   en: {
-    title: 'Chapter Notes and Comments',
-    intro: 'Select text in the chapter to highlight, underline, or save a note. Chapter comments and registration are optional.',
-    register: 'Reader Registration',
-    name: 'Name / Nickname',
-    contact: 'Contact',
-    note: 'Registration Note',
-    registerButton: 'Submit Registration',
-    comment: 'Chapter Comment',
-    commentBody: 'Comment',
-    publishComment: 'Post Comment',
     highlight: 'Highlight',
     underline: 'Underline',
     idea: 'Note',
-    saved: 'Saved.',
-    pending: 'Submitting...',
-    failed: 'Submission failed. Please try again later.',
-    close: 'Close'
+    reader: 'Name',
+    note: 'Note',
+    save: 'Save',
+    cancel: 'Cancel',
+    defaultName: 'Reader'
   },
   es: {
-    title: 'Notas y comentarios',
-    intro: 'Seleccione texto del capítulo para resaltar, subrayar o guardar una nota. Los comentarios y el registro son opcionales.',
-    register: 'Registro de lector',
-    name: 'Nombre / apodo',
-    contact: 'Contacto',
-    note: 'Nota de registro',
-    registerButton: 'Enviar registro',
-    comment: 'Comentario del capítulo',
-    commentBody: 'Comentario',
-    publishComment: 'Publicar comentario',
     highlight: 'Resaltar',
     underline: 'Subrayar',
     idea: 'Nota',
-    saved: 'Guardado.',
-    pending: 'Enviando...',
-    failed: 'No se pudo enviar. Inténtelo más tarde.',
-    close: 'Cerrar'
+    reader: 'Nombre',
+    note: 'Nota',
+    save: 'Guardar',
+    cancel: 'Cancelar',
+    defaultName: 'Lector'
   }
 };
 const text = copy[locale];
 ---
 
-<section class="mt-7 border border-gold-deep/20 bg-white/72 p-5 sm:p-6" data-chapter-interactions data-chapter={entry.slug}>
-  <div class="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
-    <div>
-      <h2 class="font-serif text-2xl font-semibold text-navy-850">{text.title}</h2>
-      <p class="mt-2 text-sm leading-7 text-ink/70">{text.intro}</p>
-    </div>
-    <button class="w-fit border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="button" data-open-register>{text.register}</button>
-  </div>
-
-  <form class="mt-6 grid max-w-3xl gap-3 border border-gold-deep/15 bg-ivory p-4" data-comment-form>
-    <h3 class="font-serif text-xl text-navy-850">{text.comment}</h3>
-    <div class="grid gap-3 sm:grid-cols-2">
-      <label class="grid gap-2 text-sm">
-        <span class="font-medium text-navy-850">{text.name}</span>
-        <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" />
-      </label>
-      <label class="grid gap-2 text-sm">
-        <span class="font-medium text-navy-850">{text.contact}</span>
-        <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contact" type="text" />
-      </label>
-    </div>
-    <label class="grid gap-2 text-sm">
-      <span class="font-medium text-navy-850">{text.commentBody}</span>
-      <textarea class="min-h-28 border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="comment" required></textarea>
-    </label>
-    <div class="flex flex-wrap items-center gap-3">
-      <button class="w-fit border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep" type="submit">{text.publishComment}</button>
-      <p class="text-sm text-ink/60" data-comment-status></p>
-    </div>
-  </form>
-</section>
-
-<div class="selection-tools" data-selection-tools>
+<div class="selection-tools" data-selection-tools data-chapter={entry.slug}>
   <button type="button" data-mark="highlight">{text.highlight}</button>
   <button type="button" data-mark="underline">{text.underline}</button>
   <button type="button" data-mark="idea">{text.idea}</button>
 </div>
 
-<dialog class="w-[min(92vw,34rem)] border border-gold-deep/35 bg-ivory p-0 text-ink shadow-soft" data-register-dialog>
-  <div class="flex items-center justify-between border-b border-gold-deep/20 px-5 py-4">
-    <h2 class="font-serif text-2xl text-navy-850">{text.register}</h2>
-    <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="button" data-close-register>{text.close}</button>
+<form class="idea-popover grid gap-3" data-idea-popover>
+  <label>
+    <span>{text.reader}</span>
+    <input type="text" name="reader" autocomplete="name" />
+  </label>
+  <label>
+    <span>{text.note}</span>
+    <textarea name="note" rows="3" required></textarea>
+  </label>
+  <div class="flex gap-2">
+    <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="submit">{text.save}</button>
+    <button class="border border-gold-deep/20 px-3 py-1.5 text-sm text-ink/65" type="button" data-idea-cancel>{text.cancel}</button>
   </div>
-  <form class="grid gap-4 p-5" data-register-form>
-    <label class="grid gap-2 text-sm">
-      <span class="font-medium text-navy-850">{text.name}</span>
-      <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" required />
-    </label>
-    <label class="grid gap-2 text-sm">
-      <span class="font-medium text-navy-850">{text.contact}</span>
-      <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contact" type="text" required />
-    </label>
-    <label class="grid gap-2 text-sm">
-      <span class="font-medium text-navy-850">{text.note}</span>
-      <textarea class="min-h-28 border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="note"></textarea>
-    </label>
-    <div class="flex flex-wrap items-center gap-3">
-      <button class="border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep" type="submit">{text.registerButton}</button>
-      <p class="text-sm text-ink/60" data-register-status></p>
-    </div>
-  </form>
-</dialog>
+</form>
 
-<script define:vars={{ saved: text.saved, pending: text.pending, failed: text.failed }}>
-  const interactions = document.querySelector('[data-chapter-interactions]');
-  const chapter = interactions instanceof HTMLElement ? interactions.dataset.chapter || 'chapter' : 'chapter';
+<script define:vars={{ defaultName: text.defaultName }}>
   const tools = document.querySelector('[data-selection-tools]');
+  const chapter = tools instanceof HTMLElement ? tools.dataset.chapter || 'chapter' : 'chapter';
   const article = document.querySelector('.reading-article');
+  const ideaPopover = document.querySelector('[data-idea-popover]');
   let activeRange = null;
+  let activeNoteTarget = null;
+
+  const noteKey = `huaxia-inline-notes:${chapter}`;
 
   const hideTools = () => {
     if (tools instanceof HTMLElement) tools.style.display = 'none';
+  };
+
+  const hideIdea = () => {
+    if (ideaPopover instanceof HTMLElement) ideaPopover.style.display = 'none';
+  };
+
+  const placeElementNearRange = (element, range, offsetY = 10) => {
+    const rect = range.getBoundingClientRect();
+    const left = Math.min(window.innerWidth - 360, Math.max(12, rect.left));
+    const top = Math.min(window.innerHeight - 220, Math.max(12, rect.bottom + offsetY));
+    element.style.left = `${left}px`;
+    element.style.top = `${top}px`;
+  };
+
+  const wrapRange = (className) => {
+    if (!activeRange) return null;
+    const wrapper = document.createElement('span');
+    wrapper.className = className;
+    try {
+      activeRange.surroundContents(wrapper);
+    } catch {
+      const contents = activeRange.extractContents();
+      wrapper.appendChild(contents);
+      activeRange.insertNode(wrapper);
+    }
+    return wrapper;
+  };
+
+  const getExistingNoteTarget = () => {
+    const selection = window.getSelection();
+    const node = selection?.anchorNode;
+    if (!node) return null;
+    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+    return element instanceof HTMLElement ? element.closest('.reader-note') : null;
+  };
+
+  const renderNoteBadge = (target, notes) => {
+    target.querySelector('.reader-note-badge')?.remove();
+    target.querySelector('.reader-note-tooltip')?.remove();
+
+    const badge = document.createElement('sup');
+    badge.className = 'reader-note-badge';
+    badge.textContent = String(notes.length);
+
+    const tooltip = document.createElement('span');
+    tooltip.className = 'reader-note-tooltip';
+    notes.forEach((note) => {
+      const item = document.createElement('span');
+      item.textContent = `${note.reader || defaultName} · ${note.createdAt}：${note.text}`;
+      tooltip.appendChild(item);
+    });
+    target.append(badge, tooltip);
+  };
+
+  const addNote = (text) => {
+    let target = activeNoteTarget;
+    if (!target) target = wrapRange('reader-note');
+    if (!(target instanceof HTMLElement)) return;
+    const notes = JSON.parse(target.dataset.notes || '[]');
+    const form = ideaPopover instanceof HTMLFormElement ? new FormData(ideaPopover) : null;
+    const reader = String(form?.get('reader') || '').trim() || defaultName;
+    const createdAt = new Date().toLocaleString('zh-CN', { hour12: false });
+    notes.push({ reader, text, createdAt });
+    target.dataset.notes = JSON.stringify(notes);
+    renderNoteBadge(target, notes);
+
+    const stored = JSON.parse(localStorage.getItem(noteKey) || '[]');
+    stored.unshift({
+      selected: target.textContent?.replace(/\d+$/, '').trim(),
+      reader,
+      text,
+      createdAt
+    });
+    localStorage.setItem(noteKey, JSON.stringify(stored.slice(0, 120)));
   };
 
   document.addEventListener('mouseup', () => {
@@ -151,12 +159,14 @@ const text = copy[locale];
       return;
     }
     activeRange = selection.getRangeAt(0).cloneRange();
+    activeNoteTarget = getExistingNoteTarget();
     const rect = activeRange.getBoundingClientRect();
     if (tools instanceof HTMLElement) {
       tools.style.left = `${Math.min(window.innerWidth - 220, Math.max(12, rect.left))}px`;
       tools.style.top = `${Math.max(12, rect.top - 48)}px`;
       tools.style.display = 'flex';
     }
+    hideIdea();
   });
 
   tools?.querySelectorAll('[data-mark]').forEach((button) => {
@@ -166,65 +176,33 @@ const text = copy[locale];
       const selected = activeRange.toString();
       if (!selected.trim()) return;
       if (type === 'idea') {
-        const idea = window.prompt('记录想法');
-        const notes = JSON.parse(localStorage.getItem(`huaxia-notes:${chapter}`) || '[]');
-        notes.unshift({ selected, idea, createdAt: new Date().toISOString() });
-        localStorage.setItem(`huaxia-notes:${chapter}`, JSON.stringify(notes.slice(0, 80)));
-      } else {
-        const mark = document.createElement('mark');
-        mark.className = 'reader-highlight';
-        if (type === 'underline') mark.style.background = 'transparent';
-        try {
-          activeRange.surroundContents(mark);
-        } catch {
-          const contents = activeRange.extractContents();
-          mark.appendChild(contents);
-          activeRange.insertNode(mark);
+        if (ideaPopover instanceof HTMLElement) {
+          placeElementNearRange(ideaPopover, activeRange, 8);
+          ideaPopover.style.display = 'grid';
+          ideaPopover.querySelector('textarea')?.focus();
         }
+      } else {
+        wrapRange(type === 'underline' ? 'reader-underline' : 'reader-highlight');
+        window.getSelection()?.removeAllRanges();
       }
-      window.getSelection()?.removeAllRanges();
       hideTools();
     });
   });
 
-  document.querySelector('[data-comment-form]')?.addEventListener('submit', async (event) => {
+  ideaPopover?.addEventListener('submit', (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement)) return;
-    const status = document.querySelector('[data-comment-status]');
-    if (status) status.textContent = pending;
-    const data = new FormData(form);
-    data.set('chapter', chapter);
-    try {
-      const response = await fetch('/api/comments', { method: 'POST', body: data });
-      if (!response.ok) throw new Error('request failed');
-      if (status) status.textContent = saved;
-      form.reset();
-    } catch {
-      if (status) status.textContent = failed;
-    }
+    if (!(ideaPopover instanceof HTMLFormElement)) return;
+    const data = new FormData(ideaPopover);
+    const note = String(data.get('note') || '').trim();
+    if (!note) return;
+    addNote(note);
+    ideaPopover.reset();
+    hideIdea();
+    window.getSelection()?.removeAllRanges();
   });
 
-  const registerDialog = document.querySelector('[data-register-dialog]');
-  document.querySelector('[data-open-register]')?.addEventListener('click', () => {
-    if (registerDialog instanceof HTMLDialogElement) registerDialog.showModal();
-  });
-  document.querySelector('[data-close-register]')?.addEventListener('click', () => {
-    if (registerDialog instanceof HTMLDialogElement) registerDialog.close();
-  });
-  document.querySelector('[data-register-form]')?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement)) return;
-    const status = document.querySelector('[data-register-status]');
-    if (status) status.textContent = pending;
-    try {
-      const response = await fetch('/api/register', { method: 'POST', body: new FormData(form) });
-      if (!response.ok) throw new Error('request failed');
-      if (status) status.textContent = saved;
-      form.reset();
-    } catch {
-      if (status) status.textContent = failed;
-    }
+  document.querySelector('[data-idea-cancel]')?.addEventListener('click', () => {
+    hideIdea();
+    window.getSelection()?.removeAllRanges();
   });
 </script>

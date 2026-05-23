@@ -1,38 +1,117 @@
 ---
-const panels = [
-  {
-    title: '后记',
-    text: '二零一八年九月五日写于山东省潍坊市。此书，献给我至亲至爱之父母，荣誉归于您们。',
-    type: '正文'
-  },
-  {
-    title: '补记',
-    text: '二零二零年四月二十日凌晨二点四十分于家宅；二零二零年十二月五日午十一点三十分及前增补于家宅。',
-    type: '增补'
-  },
-  {
-    title: '作者最新文章',
-    text: '后续文章按标题、日期、摘要、阅读全文入口纵向排列，适合持续更新。',
-    type: '文章'
-  },
-  {
-    title: '视频资料',
-    text: '章节讲解、访谈和公开视频可按卡片陈列；五个以上自动换行，保留标题、日期与说明。',
-    type: '视频'
-  }
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry?: CollectionEntry<'book'>;
+}
+
+const { entry } = Astro.props;
+const rendered = entry ? await entry.render() : undefined;
+const AfterwordContent = rendered?.Content;
+
+const tabs = [
+  { id: 'afterword', label: '后记' },
+  { id: 'supplement', label: '补记' },
+  { id: 'articles', label: '作者最新文章' },
+  { id: 'videos', label: '视频资料' }
 ];
+
+const articleSlots = [
+  { title: '作者文章一', date: '待发布', summary: '后续作者文章可在此处按时间顺序添加摘要与阅读全文入口。' },
+  { title: '作者文章二', date: '待发布', summary: '文章卡片适合放置标题、日期、摘要与链接。' },
+  { title: '作者文章三', date: '待发布', summary: '新增文章后按纵向排列，便于检索和连续阅读。' }
+];
+
+const videoSlots = Array.from({ length: 5 }, (_, index) => ({
+  title: `视频资料 ${index + 1}`,
+  meta: '待发布',
+  summary: '可放置章节讲解、访谈、图片资料或云盘链接。'
+}));
 ---
 
-<section class="bg-ivory text-ink">
+<section class="bg-ivory text-ink" data-afterword-tabs>
   <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-    <div class="grid gap-4 md:grid-cols-2">
-      {panels.map((panel) => (
-        <article class="border border-gold-deep/20 bg-white/68 p-5">
-          <p class="font-latin text-xs uppercase tracking-[0.24em] text-gold-deep">{panel.type}</p>
-          <h2 class="mt-3 font-serif text-2xl text-navy-850">{panel.title}</h2>
-          <p class="mt-3 text-sm leading-7 text-ink/72">{panel.text}</p>
-        </article>
+    <div class="flex flex-wrap gap-2 border-b border-gold-deep/20 pb-3">
+      {tabs.map((tab, index) => (
+        <button
+          class:list={[
+            'afterword-tab border border-gold-deep/25 px-4 py-2 text-sm text-gold-deep transition hover:border-navy-850 hover:text-navy-850',
+            index === 0 && 'is-active bg-navy-850 text-ivory'
+          ]}
+          type="button"
+          data-afterword-tab={tab.id}
+        >
+          {tab.label}
+        </button>
       ))}
+    </div>
+
+    <div class="mt-6">
+      <section class="afterword-panel is-active border border-gold-deep/20 bg-white/68 p-5 sm:p-7" data-afterword-panel="afterword">
+        {AfterwordContent ? (
+          <div class="academic-prose prose max-w-none">
+            <AfterwordContent />
+          </div>
+        ) : (
+          <p class="text-sm leading-7 text-ink/72">后记正文待补充。</p>
+        )}
+      </section>
+
+      <section class="afterword-panel hidden border border-gold-deep/20 bg-white/68 p-5 sm:p-7" data-afterword-panel="supplement">
+        <h2 class="font-serif text-2xl font-semibold text-navy-850">补记</h2>
+        <div class="mt-5 grid gap-4 text-base leading-8 text-ink/80">
+          <p>二零二零年四月二十日凌晨二点四十分于家宅</p>
+          <p>二零二零年十二月五日午十一点三十分及前增补于家宅</p>
+        </div>
+      </section>
+
+      <section class="afterword-panel hidden border border-gold-deep/20 bg-white/68 p-5 sm:p-7" data-afterword-panel="articles">
+        <div class="grid gap-4">
+          {articleSlots.map((article) => (
+            <article class="border border-gold-deep/15 bg-ivory p-4">
+              <p class="font-latin text-xs uppercase tracking-[0.22em] text-gold-deep">{article.date}</p>
+              <h3 class="mt-2 font-serif text-xl font-semibold text-navy-850">{article.title}</h3>
+              <p class="mt-2 text-sm leading-7 text-ink/72">{article.summary}</p>
+              <a class="mt-3 inline-flex text-sm font-medium text-gold-deep hover:text-navy-850" href="#">阅读全文</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="afterword-panel hidden border border-gold-deep/20 bg-white/68 p-5 sm:p-7" data-afterword-panel="videos">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {videoSlots.map((video) => (
+            <article class="border border-gold-deep/15 bg-ivory p-4">
+              <div class="aspect-video border border-gold-deep/20 bg-white/70"></div>
+              <p class="mt-3 font-latin text-xs uppercase tracking-[0.22em] text-gold-deep">{video.meta}</p>
+              <h3 class="mt-2 font-serif text-lg font-semibold text-navy-850">{video.title}</h3>
+              <p class="mt-2 text-sm leading-7 text-ink/72">{video.summary}</p>
+            </article>
+          ))}
+        </div>
+      </section>
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('[data-afterword-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!(button instanceof HTMLElement)) return;
+      const target = button.dataset.afterwordTab;
+      document.querySelectorAll('[data-afterword-tab]').forEach((tab) => {
+        const active = tab instanceof HTMLElement && tab.dataset.afterwordTab === target;
+        tab.classList.toggle('is-active', active);
+        tab.classList.toggle('bg-navy-850', active);
+        tab.classList.toggle('text-ivory', active);
+        tab.classList.toggle('text-gold-deep', !active);
+      });
+      document.querySelectorAll('[data-afterword-panel]').forEach((panel) => {
+        const active = panel instanceof HTMLElement && panel.dataset.afterwordPanel === target;
+        panel.classList.toggle('hidden', !active);
+        panel.classList.toggle('is-active', active);
+      });
+      window.applyTraditional?.();
+    });
+  });
+</script>

@@ -147,19 +147,6 @@ html[lang="es"] button {
   inset: 32%;
 }
 
-.atlas-star {
-  position: absolute;
-  inset: 20%;
-  opacity: 0.2;
-  transform: rotate(-8deg);
-}
-
-.atlas-star polygon {
-  fill: rgba(138, 107, 53, 0.18);
-  stroke: rgba(138, 107, 53, 0.55);
-  stroke-width: 1;
-}
-
 .atlas-node {
   position: absolute;
   left: 50%;
@@ -250,6 +237,12 @@ dialog::backdrop {
   color: #d8c38c;
 }
 
+.reading-toc,
+.reading-toc a,
+.reading-toc summary {
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+}
+
 .selection-tools {
   position: fixed;
   z-index: 70;
@@ -273,4 +266,85 @@ dialog::backdrop {
   text-decoration: underline;
   text-decoration-color: rgba(138, 107, 53, 0.65);
   text-underline-offset: 0.18em;
+}
+
+.reader-underline {
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-color: rgba(138, 107, 53, 0.78);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.24em;
+}
+
+.reader-note {
+  position: relative;
+  background: rgba(216, 195, 140, 0.36);
+  border-bottom: 1px solid rgba(138, 107, 53, 0.55);
+}
+
+.reader-note-badge {
+  position: relative;
+  top: -0.7em;
+  display: inline-grid;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  margin-left: 0.12rem;
+  place-items: center;
+  border: 1px solid rgba(138, 107, 53, 0.52);
+  border-radius: 999px;
+  background: #102035;
+  color: #f5efe0;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+.reader-note-tooltip {
+  position: absolute;
+  left: 0;
+  top: 1.7em;
+  z-index: 80;
+  display: none;
+  min-width: min(18rem, 80vw);
+  max-width: 24rem;
+  border: 1px solid rgba(138, 107, 53, 0.32);
+  background: #fffaf0;
+  padding: 0.75rem;
+  box-shadow: 0 12px 30px rgba(7, 17, 31, 0.18);
+  color: #263244;
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+.reader-note:hover .reader-note-tooltip {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.idea-popover {
+  position: fixed;
+  z-index: 75;
+  display: none;
+  width: min(22rem, calc(100vw - 1.5rem));
+  border: 1px solid rgba(138, 107, 53, 0.36);
+  background: #fffaf0;
+  padding: 0.85rem;
+  box-shadow: 0 14px 34px rgba(7, 17, 31, 0.2);
+}
+
+.idea-popover label {
+  display: grid;
+  gap: 0.35rem;
+  color: #102035;
+  font-size: 0.82rem;
+}
+
+.idea-popover input,
+.idea-popover textarea {
+  width: 100%;
+  border: 1px solid rgba(138, 107, 53, 0.25);
+  background: white;
+  padding: 0.45rem 0.55rem;
+  color: #263244;
+  outline: none;
 }

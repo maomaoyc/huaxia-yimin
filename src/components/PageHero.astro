@@ -11,14 +11,19 @@ interface Props {
 const { eyebrow, title, description, locale = 'zh' } = Astro.props;
 const descriptionLines = description.split('\n').filter(Boolean);
 const volumeLine = {
-  zh: '山河 · 舆图 · 简牍',
-  en: 'Mountains and Rivers · Maps · Bamboo Slips',
-  es: 'Montañas y ríos · Mapas · Tablillas'
+  zh: '心境问题 · 名实辨析 · 群经分析 · 正常化法理',
+  en: 'Mind-state Questions · Name-Reality Analysis · Collective Analysis · Jurisprudence of Normalization',
+  es: 'Cuestiones interiores · Análisis nombre-realidad · Análisis colectivo · Jurisprudencia de normalización'
 };
 const volumeLabel = {
   zh: '三卷本',
   en: 'Three Volumes',
   es: 'Tres volúmenes'
+};
+const civilizationLine = {
+  zh: '山河 · 舆图 · 简牍',
+  en: 'Mountains · Maps · Bamboo Slips',
+  es: 'Montañas · Mapas · Tablillas'
 };
 ---
 
@@ -53,7 +58,10 @@ const volumeLabel = {
               <div class="absolute -right-6 bottom-8 hidden h-36 w-5 rounded-full border border-gold-deep/30 bg-gold-pale/50 sm:block"></div>
               <div class="flex h-full flex-col justify-between border border-gold-deep/30 p-3">
                 <p class="font-serif text-lg font-semibold leading-snug">{siteTitle[locale]}</p>
-                <p class="text-xs tracking-[0.24em] text-gold-deep">{volumeLabel[locale]}</p>
+                <div class="grid gap-2">
+                  <p class="font-serif text-sm text-gold-deep">{civilizationLine[locale]}</p>
+                  <p class="text-xs tracking-[0.24em] text-gold-deep">{volumeLabel[locale]}</p>
+                </div>
               </div>
             </div>
           </div>

@@ -40,9 +40,9 @@ export const uiText = {
     es: 'Contacto para publicación y materiales'
   },
   footerNote: {
-    zh: '华夏义民起义、变革、正常化之法理',
-    en: 'Huaxia Civic Uprising, Transformation, and Jurisprudence of Normalization',
-    es: 'Levantamiento cívico Huaxia, transformación y jurisprudencia de la normalización'
+    zh: '近代中国诊治之钥——人之操作系统。',
+    en: 'A diagnostic key for modern China: the human operating system.',
+    es: 'Una clave diagnóstica para la China moderna: el sistema operativo humano.'
   }
 };
 

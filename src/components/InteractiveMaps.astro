@@ -55,9 +55,6 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
               </a>
             ))}
           </div>
-          <svg class="atlas-star" viewBox="0 0 100 100" aria-hidden="true">
-            <polygon points="50,5 58,34 88,22 69,47 96,62 63,63 66,95 50,70 34,95 37,63 4,62 31,47 12,22 42,34" />
-          </svg>
           <div class="atlas-center">
             <p class="font-serif text-2xl text-navy-850">心境 · 名实 · 群境</p>
             <p class="mt-2 text-sm leading-6 text-ink/68">点击地图放大，并从章节索引进入阅读。</p>
@@ -124,12 +121,9 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
               </button>
             ))}
           </div>
-          <svg class="atlas-star" viewBox="0 0 100 100" aria-hidden="true">
-            <polygon points="50,5 58,34 88,22 69,47 96,62 63,63 66,95 50,70 34,95 37,63 4,62 31,47 12,22 42,34" />
-          </svg>
           <div class="atlas-center">
             <p class="font-serif text-2xl text-navy-850">全书逻辑图</p>
-            <p class="mt-2 text-sm text-ink/68">旋转节点对应章节入口。</p>
+            <p class="mt-2 text-sm text-ink/68">选择章节，在右侧小窗阅读。</p>
           </div>
         </div>
         <div class="grid max-h-[18rem] gap-3 overflow-y-auto pr-1 text-sm">
@@ -201,10 +195,11 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
     button.addEventListener('click', (event) => {
       event.preventDefault();
       if (!(button instanceof HTMLElement)) return;
-      if (readerTitle) readerTitle.textContent = button.dataset.readerTitle || '';
-      if (readerVolume) readerVolume.textContent = button.dataset.readerVolume || '';
-      if (readerSummary) readerSummary.textContent = button.dataset.readerSummary || '';
-      if (readerBody) readerBody.textContent = button.dataset.readerBody || '';
+      const convert = window.toTraditionalText || ((value) => value);
+      if (readerTitle) readerTitle.textContent = convert(button.dataset.readerTitle || '');
+      if (readerVolume) readerVolume.textContent = convert(button.dataset.readerVolume || '');
+      if (readerSummary) readerSummary.textContent = convert(button.dataset.readerSummary || '');
+      if (readerBody) readerBody.textContent = convert(button.dataset.readerBody || '');
     });
   });
   document.querySelector('[data-open-map]')?.addEventListener('click', (event) => {

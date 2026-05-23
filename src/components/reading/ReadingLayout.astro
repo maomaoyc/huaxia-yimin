@@ -83,7 +83,7 @@ const localizedKeywords = localizeKeywords(entry.data.keywords, locale);
 
   <div class="mx-auto grid max-w-7xl gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[15rem_1fr] lg:px-8">
     <aside class="lg:sticky lg:top-5 lg:h-[calc(100vh-2.5rem)] lg:overflow-y-auto">
-      <details class="border border-gold-deep/20 bg-white/72 p-4 lg:hidden">
+      <details class="reading-toc border border-gold-deep/20 bg-white/72 p-4 lg:hidden">
         <summary class="cursor-pointer font-serif text-lg text-navy-850">{labels.toc[locale]}</summary>
         <nav class="mt-4 grid gap-4 text-base">
           {specialEntries.map((item) => (
@@ -102,7 +102,7 @@ const localizedKeywords = localizeKeywords(entry.data.keywords, locale);
         </nav>
       </details>
 
-      <nav class="hidden border border-gold-deep/20 bg-white/72 p-4 lg:block" aria-label="在线阅读目录">
+      <nav class="reading-toc hidden border border-gold-deep/20 bg-white/72 p-4 lg:block" aria-label="在线阅读目录">
         <p class="font-serif text-xl text-navy-850">{labels.toc[locale]}</p>
         <div class="mt-4 grid gap-4 text-base">
           {specialEntries.map((item) => (

@@ -31,15 +31,16 @@ const { Content } = await page.render();
 
 <BaseLayout title={`${page.data.title} | 华夏义民起义、变革、正常化之法理`} description={page.data.description}>
   <PageHero title={page.data.title} eyebrow={page.data.eyebrow} description={page.data.description} />
-  <ContentShell>
-    <Content />
-  </ContentShell>
+  {page.slug !== 'letter' && (
+    <ContentShell>
+      <Content />
+    </ContentShell>
+  )}
   {page.slug === 'introduction' && <PdfCallout title="下载完整 PDF" text="本书 PDF 将通过固定链接提供，适合离线阅读、引用与打印。" />}
   {page.slug === 'timeline' && <Timeline />}
   {page.slug === 'downloads' && <DownloadCenter />}
   {page.slug === 'arguments' && preface && <BookTextEmbed entry={preface} title="原书前言" />}
-  {page.slug === 'letter' && <AfterwordPanels />}
-  {page.slug === 'letter' && afterword && <BookTextEmbed entry={afterword} title="后记正文" />}
+  {page.slug === 'letter' && <AfterwordPanels entry={afterword} />}
   {page.slug === 'letter' && <AuthorUploadPanel />}
   {page.slug === 'author-submissions' && <SubmissionForms mode="author" />}
   {page.slug === 'reader-feedback' && <SubmissionForms mode="reader" />}
