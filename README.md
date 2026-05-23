@@ -118,11 +118,38 @@ If the email service is not configured, the forms fall back to opening an email 
 The repository includes static deployment configuration for:
 
 - GitHub Pages: `.github/workflows/deploy-github-pages.yml`
+- Cloudflare Pages via GitHub Actions: `.github/workflows/deploy-cloudflare-pages.yml`
 - Cloudflare Pages: `wrangler.toml`
 - Vercel: `vercel.json`
 - Netlify: `netlify.toml`
 
 Cloudflare Pages, Vercel, and Netlify should use `npm run build` and publish the generated `dist/` directory. Cloudflare Pages will also deploy the functions under `functions/api/`.
+
+### Cloudflare Pages
+
+The repository includes a GitHub Actions workflow that can deploy to Cloudflare Pages after every push to `main`. This bypasses any broken Cloudflare-GitHub connection inside the Cloudflare dashboard.
+
+Add these GitHub repository secrets:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Optional GitHub repository variable:
+
+- `CLOUDFLARE_PAGES_PROJECT`, default: `huaxia-yimin`
+
+Recommended API token permissions:
+
+- Account: Cloudflare Pages Edit
+- Account: Account Settings Read
+- Zone: DNS Read, only if custom-domain verification or DNS automation is needed
+
+After the secrets are set, open **Actions** in GitHub and run **Deploy to Cloudflare Pages**, or push any new commit to `main`. The public custom domain should then serve the newly built site:
+
+```text
+https://huaxiayimin.us/
+https://www.huaxiayimin.us/
+```
 
 ### GitHub Pages
 
