@@ -62,14 +62,14 @@ const intro = isAuthor ? text.authorIntro : text.readerIntro;
 ---
 
 <section class="bg-ivory text-ink">
-  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-    <div class="border border-gold-deep/20 bg-white/70 p-5 sm:p-7">
+  <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+    <div class="border border-gold-deep/18 bg-white/72 p-5 sm:p-6">
       <h2 class="font-serif text-2xl font-semibold text-navy-850">{title}</h2>
       <p class="mt-3 text-sm leading-7 text-ink/72">{intro}</p>
       <p class="mt-2 text-sm leading-7 text-ink/72">{text.contactLine}<span class="text-gold-deep underline decoration-gold-deep/30">{contact}</span></p>
 
       <form
-        class="mt-6 grid gap-4"
+        class="mt-5 grid gap-3.5"
         data-contact-form
         data-mode={mode}
         data-contact={contact}
@@ -86,21 +86,21 @@ const intro = isAuthor ? text.authorIntro : text.readerIntro;
       >
         <label class="grid gap-2 text-sm">
           <span class="font-medium text-navy-850">{text.name}</span>
-          <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" />
+          <input class="border border-gold-deep/25 bg-ivory px-3 py-1.5 text-ink outline-none focus:border-gold-deep" name="name" type="text" />
         </label>
         <label class="grid gap-2 text-sm">
           <span class="font-medium text-navy-850">{text.contact}</span>
-          <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contactInfo" type="text" />
+          <input class="border border-gold-deep/25 bg-ivory px-3 py-1.5 text-ink outline-none focus:border-gold-deep" name="contactInfo" type="text" />
         </label>
         {isAuthor && (
           <label class="grid gap-2 text-sm">
             <span class="font-medium text-navy-850">{text.resource}</span>
-            <input class="border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="resourceLink" type="text" placeholder={text.resourcePlaceholder} />
+            <input class="border border-gold-deep/25 bg-ivory px-3 py-1.5 text-ink outline-none focus:border-gold-deep" name="resourceLink" type="text" placeholder={text.resourcePlaceholder} />
           </label>
         )}
         <label class="grid gap-2 text-sm">
           <span class="font-medium text-navy-850">{isAuthor ? text.authorMessage : text.readerMessage}</span>
-          <textarea class="min-h-40 border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="message"></textarea>
+          <textarea class="min-h-28 border border-gold-deep/25 bg-ivory px-3 py-2 text-ink outline-none focus:border-gold-deep" name="message"></textarea>
         </label>
         <div class="flex flex-wrap gap-3">
           <button class="border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="submit">{text.submit}</button>

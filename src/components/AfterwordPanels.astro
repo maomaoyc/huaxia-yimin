@@ -6,8 +6,15 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const rendered = entry ? await entry.render() : undefined;
-const AfterwordContent = rendered?.Content;
+const splitMarker = '\n补记：\n';
+const [afterwordText = '', supplementRest = ''] = entry?.body.split(splitMarker) ?? [];
+const supplementText = supplementRest ? `补记：\n${supplementRest}` : '';
+const toParagraphs = (text: string) => text
+  .split(/\n{2,}/)
+  .map((paragraph) => paragraph.trim())
+  .filter(Boolean);
+const afterwordParagraphs = toParagraphs(afterwordText);
+const supplementParagraphs = toParagraphs(supplementText);
 
 const tabs = [
   { id: 'afterword', label: '后记' },
@@ -48,9 +55,9 @@ const videoSlots = Array.from({ length: 5 }, (_, index) => ({
 
     <div class="mt-6">
       <section class="afterword-panel is-active border border-gold-deep/20 bg-white/68 p-5 sm:p-7" data-afterword-panel="afterword">
-        {AfterwordContent ? (
+        {afterwordParagraphs.length ? (
           <div class="academic-prose prose max-w-none">
-            <AfterwordContent />
+            {afterwordParagraphs.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         ) : (
           <p class="text-sm leading-7 text-ink/72">后记正文待补充。</p>
@@ -58,10 +65,12 @@ const videoSlots = Array.from({ length: 5 }, (_, index) => ({
       </section>
 
       <section class="afterword-panel hidden border border-gold-deep/20 bg-white/68 p-5 sm:p-7" data-afterword-panel="supplement">
-        <h2 class="font-serif text-2xl font-semibold text-navy-850">补记</h2>
-        <div class="mt-5 grid gap-4 text-base leading-8 text-ink/80">
-          <p>二零二零年四月二十日凌晨二点四十分于家宅</p>
-          <p>二零二零年十二月五日午十一点三十分及前增补于家宅</p>
+        <div class="academic-prose prose max-w-none">
+          {supplementParagraphs.length ? (
+            supplementParagraphs.map((paragraph) => <p>{paragraph}</p>)
+          ) : (
+            <p>补记正文待补充。</p>
+          )}
         </div>
       </section>
 

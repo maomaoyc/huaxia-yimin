@@ -81,20 +81,20 @@ const localizedKeywords = localizeKeywords(entry.data.keywords, locale);
     </div>
   </section>
 
-  <div class="mx-auto grid max-w-7xl gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[15rem_1fr] lg:px-8">
+  <div class="mx-auto grid max-w-7xl gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[18rem_1fr] lg:px-8">
     <aside class="lg:sticky lg:top-5 lg:h-[calc(100vh-2.5rem)] lg:overflow-y-auto">
       <details class="reading-toc border border-gold-deep/20 bg-white/72 p-4 lg:hidden">
         <summary class="cursor-pointer font-serif text-lg text-navy-850">{labels.toc[locale]}</summary>
-        <nav class="mt-4 grid gap-4 text-base">
+        <nav class="mt-4 grid gap-3 text-sm">
           {specialEntries.map((item) => (
-            <a class:list={['leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+            <a class:list={['block truncate leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} title={chapterDisplay(item)} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
           ))}
           {volumeGroups.map((group) => (
             <div>
               <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-gold-deep">{group.volume?.shortTitle}</p>
               <div class="grid gap-2">
                 {group.entries.map((item) => (
-                  <a class:list={['leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+                  <a class:list={['block truncate leading-6 text-ink/72 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} title={chapterDisplay(item)} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
                 ))}
               </div>
             </div>
@@ -104,16 +104,16 @@ const localizedKeywords = localizeKeywords(entry.data.keywords, locale);
 
       <nav class="reading-toc hidden border border-gold-deep/20 bg-white/72 p-4 lg:block" aria-label="在线阅读目录">
         <p class="font-serif text-xl text-navy-850">{labels.toc[locale]}</p>
-        <div class="mt-4 grid gap-4 text-base">
+        <div class="mt-4 grid gap-3 text-sm">
           {specialEntries.map((item) => (
-            <a class:list={['leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+            <a class:list={['block truncate leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} title={chapterDisplay(item)} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
           ))}
           {volumeGroups.map((group) => (
             <div>
               <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-gold-deep">{group.volume?.shortTitle}</p>
               <div class="grid gap-2">
                 {group.entries.map((item) => (
-                  <a class:list={['leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
+                  <a class:list={['block truncate leading-6 text-ink/70 hover:text-gold-deep', item.slug === entry.slug && 'font-medium text-gold-deep']} title={chapterDisplay(item)} href={withBase(localizedPath(locale, `/book/${item.slug}/`))}>{chapterDisplay(item)}</a>
                 ))}
               </div>
             </div>

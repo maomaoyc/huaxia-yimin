@@ -13,30 +13,30 @@ const copy = {
     highlight: '高亮',
     underline: '划线',
     idea: '想法',
-    reader: '姓名',
     note: '想法',
     save: '保存',
     cancel: '取消',
+    placeholder: '写下想法…',
     defaultName: '读者'
   },
   en: {
     highlight: 'Highlight',
     underline: 'Underline',
     idea: 'Note',
-    reader: 'Name',
     note: 'Note',
     save: 'Save',
     cancel: 'Cancel',
+    placeholder: 'Add a note...',
     defaultName: 'Reader'
   },
   es: {
     highlight: 'Resaltar',
     underline: 'Subrayar',
     idea: 'Nota',
-    reader: 'Nombre',
     note: 'Nota',
     save: 'Guardar',
     cancel: 'Cancelar',
+    placeholder: 'Escribir nota...',
     defaultName: 'Lector'
   }
 };
@@ -49,14 +49,10 @@ const text = copy[locale];
   <button type="button" data-mark="idea">{text.idea}</button>
 </div>
 
-<form class="idea-popover grid gap-3" data-idea-popover>
-  <label>
-    <span>{text.reader}</span>
-    <input type="text" name="reader" autocomplete="name" />
-  </label>
+<form class="idea-popover grid gap-2" data-idea-popover>
   <label>
     <span>{text.note}</span>
-    <textarea name="note" rows="3" required></textarea>
+    <textarea name="note" rows="2" placeholder={text.placeholder} required></textarea>
   </label>
   <div class="flex gap-2">
     <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="submit">{text.save}</button>
@@ -71,8 +67,9 @@ const text = copy[locale];
   const ideaPopover = document.querySelector('[data-idea-popover]');
   let activeRange = null;
   let activeNoteTarget = null;
+  let activeMarkTarget = null;
 
-  const noteKey = `huaxia-inline-notes:${chapter}`;
+  const markKey = `huaxia-reader-marks:${chapter}`;
 
   const hideTools = () => {
     if (tools instanceof HTMLElement) tools.style.display = 'none';
@@ -84,16 +81,84 @@ const text = copy[locale];
 
   const placeElementNearRange = (element, range, offsetY = 10) => {
     const rect = range.getBoundingClientRect();
-    const left = Math.min(window.innerWidth - 360, Math.max(12, rect.left));
-    const top = Math.min(window.innerHeight - 220, Math.max(12, rect.bottom + offsetY));
+    const popoverWidth = 260;
+    const popoverHeight = 170;
+    const left = Math.min(window.innerWidth - popoverWidth - 12, Math.max(12, rect.left));
+    const bottomTop = rect.bottom + offsetY;
+    const top = bottomTop + popoverHeight > window.innerHeight
+      ? Math.max(12, rect.top - popoverHeight - offsetY)
+      : Math.max(12, bottomTop);
     element.style.left = `${left}px`;
     element.style.top = `${top}px`;
   };
 
-  const wrapRange = (className) => {
+  const readStoredMarks = () => {
+    try {
+      return JSON.parse(localStorage.getItem(markKey) || '[]');
+    } catch {
+      return [];
+    }
+  };
+
+  const writeStoredMarks = (marks) => {
+    localStorage.setItem(markKey, JSON.stringify(marks.slice(0, 300)));
+  };
+
+  const getMarkElement = (node) => {
+    if (!node) return null;
+    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+    return element instanceof HTMLElement ? element.closest('.reader-mark') : null;
+  };
+
+  const syncStoredMark = (target) => {
+    if (!(target instanceof HTMLElement)) return;
+    const id = target.dataset.markId;
+    if (!id) return;
+    const marks = readStoredMarks();
+    const index = marks.findIndex((item) => item.id === id);
+    const next = {
+      id,
+      type: target.dataset.markType || 'highlight',
+      selected: target.dataset.selectedText || target.textContent?.replace(/\d+$/, '').trim() || '',
+      notes: JSON.parse(target.dataset.notes || '[]'),
+      createdAt: target.dataset.createdAt || new Date().toLocaleString('zh-CN', { hour12: false })
+    };
+    if (index >= 0) marks[index] = next;
+    else marks.unshift(next);
+    writeStoredMarks(marks);
+  };
+
+  const unwrapMark = (target) => {
+    if (!(target instanceof HTMLElement)) return;
+    const id = target.dataset.markId;
+    if (id) writeStoredMarks(readStoredMarks().filter((item) => item.id !== id));
+    target.querySelector('.reader-note-anchor')?.remove();
+    target.querySelector('.reader-note-badge')?.remove();
+    target.querySelector('.reader-note-tooltip')?.remove();
+    const parent = target.parentNode;
+    if (!parent) return;
+    while (target.firstChild) parent.insertBefore(target.firstChild, target);
+    target.remove();
+    parent.normalize();
+  };
+
+  const assignMarkData = (wrapper, type, selected, notes = []) => {
+    wrapper.classList.add('reader-mark');
+    wrapper.dataset.markId = wrapper.dataset.markId || `mark-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    wrapper.dataset.markType = type;
+    wrapper.dataset.selectedText = selected;
+    wrapper.dataset.createdAt = wrapper.dataset.createdAt || new Date().toLocaleString('zh-CN', { hour12: false });
+    wrapper.dataset.notes = JSON.stringify(notes);
+    wrapper.classList.toggle('reader-highlight', type === 'highlight');
+    wrapper.classList.toggle('reader-underline', type === 'underline');
+    wrapper.classList.toggle('reader-note', type === 'note');
+  };
+
+  const wrapRange = (type) => {
     if (!activeRange) return null;
     const wrapper = document.createElement('span');
-    wrapper.className = className;
+    const selected = activeRange.toString().trim();
+    assignMarkData(wrapper, type, selected);
     try {
       activeRange.surroundContents(wrapper);
     } catch {
@@ -107,50 +172,86 @@ const text = copy[locale];
   const getExistingNoteTarget = () => {
     const selection = window.getSelection();
     const node = selection?.anchorNode;
-    if (!node) return null;
-    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
-    return element instanceof HTMLElement ? element.closest('.reader-note') : null;
+    const mark = getMarkElement(node);
+    return mark instanceof HTMLElement && mark.dataset.markType === 'note' ? mark : null;
   };
 
   const renderNoteBadge = (target, notes) => {
+    target.querySelector('.reader-note-anchor')?.remove();
     target.querySelector('.reader-note-badge')?.remove();
     target.querySelector('.reader-note-tooltip')?.remove();
 
+    const anchor = document.createElement('span');
+    anchor.className = 'reader-note-anchor';
     const badge = document.createElement('sup');
     badge.className = 'reader-note-badge';
     badge.textContent = String(notes.length);
 
     const tooltip = document.createElement('span');
     tooltip.className = 'reader-note-tooltip';
-    notes.forEach((note) => {
+    notes.forEach((note, index) => {
       const item = document.createElement('span');
-      item.textContent = `${note.reader || defaultName} · ${note.createdAt}：${note.text}`;
+      item.className = 'reader-note-item';
+      item.textContent = `${note.createdAt}：${note.text}`;
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.dataset.noteDelete = String(index);
+      del.textContent = '删除';
+      item.appendChild(del);
       tooltip.appendChild(item);
     });
-    target.append(badge, tooltip);
+    anchor.append(badge, tooltip);
+    target.append(anchor);
   };
 
   const addNote = (text) => {
     let target = activeNoteTarget;
-    if (!target) target = wrapRange('reader-note');
+    if (!target) target = wrapRange('note');
     if (!(target instanceof HTMLElement)) return;
+    target.dataset.markType = 'note';
+    target.classList.remove('reader-highlight', 'reader-underline');
+    target.classList.add('reader-note', 'reader-mark');
     const notes = JSON.parse(target.dataset.notes || '[]');
-    const form = ideaPopover instanceof HTMLFormElement ? new FormData(ideaPopover) : null;
-    const reader = String(form?.get('reader') || '').trim() || defaultName;
     const createdAt = new Date().toLocaleString('zh-CN', { hour12: false });
-    notes.push({ reader, text, createdAt });
+    notes.push({ text, createdAt });
     target.dataset.notes = JSON.stringify(notes);
     renderNoteBadge(target, notes);
-
-    const stored = JSON.parse(localStorage.getItem(noteKey) || '[]');
-    stored.unshift({
-      selected: target.textContent?.replace(/\d+$/, '').trim(),
-      reader,
-      text,
-      createdAt
-    });
-    localStorage.setItem(noteKey, JSON.stringify(stored.slice(0, 120)));
+    syncStoredMark(target);
   };
+
+  const findTextNode = (selected) => {
+    if (!article || !selected) return null;
+    const walker = document.createTreeWalker(article, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent || parent.closest('.reader-mark')) return NodeFilter.FILTER_REJECT;
+        return node.nodeValue?.includes(selected) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+      }
+    });
+    return walker.nextNode();
+  };
+
+  const restoreMark = (record) => {
+    const textNode = findTextNode(record.selected);
+    if (!textNode || !textNode.nodeValue) return;
+    const start = textNode.nodeValue.indexOf(record.selected);
+    if (start < 0) return;
+    const range = document.createRange();
+    range.setStart(textNode, start);
+    range.setEnd(textNode, start + record.selected.length);
+    const wrapper = document.createElement('span');
+    assignMarkData(wrapper, record.type, record.selected, record.notes || []);
+    wrapper.dataset.markId = record.id;
+    wrapper.dataset.createdAt = record.createdAt || wrapper.dataset.createdAt || '';
+    try {
+      range.surroundContents(wrapper);
+    } catch {
+      return;
+    }
+    if (record.type === 'note') renderNoteBadge(wrapper, record.notes || []);
+  };
+
+  readStoredMarks().slice().reverse().forEach(restoreMark);
 
   document.addEventListener('mouseup', () => {
     const selection = window.getSelection();
@@ -160,6 +261,7 @@ const text = copy[locale];
     }
     activeRange = selection.getRangeAt(0).cloneRange();
     activeNoteTarget = getExistingNoteTarget();
+    activeMarkTarget = getMarkElement(selection.anchorNode);
     const rect = activeRange.getBoundingClientRect();
     if (tools instanceof HTMLElement) {
       tools.style.left = `${Math.min(window.innerWidth - 220, Math.max(12, rect.left))}px`;
@@ -182,7 +284,18 @@ const text = copy[locale];
           ideaPopover.querySelector('textarea')?.focus();
         }
       } else {
-        wrapRange(type === 'underline' ? 'reader-underline' : 'reader-highlight');
+        if (activeMarkTarget instanceof HTMLElement && activeMarkTarget.dataset.markType === type) {
+          unwrapMark(activeMarkTarget);
+        } else if (activeMarkTarget instanceof HTMLElement) {
+          assignMarkData(activeMarkTarget, type, activeMarkTarget.dataset.selectedText || selected);
+          activeMarkTarget.querySelector('.reader-note-anchor')?.remove();
+          activeMarkTarget.querySelector('.reader-note-badge')?.remove();
+          activeMarkTarget.querySelector('.reader-note-tooltip')?.remove();
+          syncStoredMark(activeMarkTarget);
+        } else {
+          const mark = wrapRange(type === 'underline' ? 'underline' : 'highlight');
+          if (mark instanceof HTMLElement) syncStoredMark(mark);
+        }
         window.getSelection()?.removeAllRanges();
       }
       hideTools();
@@ -204,5 +317,22 @@ const text = copy[locale];
   document.querySelector('[data-idea-cancel]')?.addEventListener('click', () => {
     hideIdea();
     window.getSelection()?.removeAllRanges();
+  });
+
+  article?.addEventListener('click', (event) => {
+    const deleteButton = event.target instanceof HTMLElement ? event.target.closest('[data-note-delete]') : null;
+    if (deleteButton instanceof HTMLElement) {
+      const mark = deleteButton.closest('.reader-note');
+      if (!(mark instanceof HTMLElement)) return;
+      const notes = JSON.parse(mark.dataset.notes || '[]');
+      notes.splice(Number(deleteButton.dataset.noteDelete || 0), 1);
+      mark.dataset.notes = JSON.stringify(notes);
+      if (notes.length) {
+        renderNoteBadge(mark, notes);
+        syncStoredMark(mark);
+      } else {
+        unwrapMark(mark);
+      }
+    }
   });
 </script>

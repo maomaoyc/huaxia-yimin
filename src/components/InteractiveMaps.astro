@@ -8,8 +8,16 @@ interface Props {
   entries: CollectionEntry<'book'>[];
 }
 
-const entries = sortBookEntries(Astro.props.entries).filter((entry) => entry.slug !== 'afterword');
-const featured = entries.filter((entry) => entry.slug !== 'preface').slice(0, 18);
+const sortedEntries = sortBookEntries(Astro.props.entries);
+const prefaceEntry = sortedEntries.find((entry) => entry.slug === 'preface');
+const afterwordEntry = sortedEntries.find((entry) => entry.slug === 'afterword');
+const chapterEntries = sortedEntries.filter((entry) => entry.slug !== 'preface' && entry.slug !== 'afterword');
+const entries = [
+  ...(prefaceEntry ? [prefaceEntry] : []),
+  ...(afterwordEntry ? [afterwordEntry] : []),
+  ...chapterEntries
+];
+const featured = chapterEntries.slice(0, 18);
 const firstReadable = entries[0];
 const volumeGroups = ['volume-1', 'volume-2', 'volume-3'].map((slug) => ({
   slug,
@@ -18,6 +26,7 @@ const volumeGroups = ['volume-1', 'volume-2', 'volume-3'].map((slug) => ({
 })).filter((group) => group.entries.length);
 const chapterLabel = (entry: CollectionEntry<'book'>) => {
   if (entry.data.chapterNumber === 0) return entry.data.title;
+  if (entry.slug === 'afterword') return entry.data.title;
   return entry.data.title.replace(/^第[一二三四五六七八九十百〇零]+卷\s*[^·]+\s*·\s*/, '');
 };
 const readerText = (entry: CollectionEntry<'book'>) => entry.body
@@ -25,7 +34,7 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
   .replace(/^#+\s*/gm, '')
   .replace(/[`*_>]/g, '')
   .trim()
-  .slice(0, 2600);
+  .slice(0, 9000);
 ---
 
 <section class="bg-ivory text-ink" id="reading-map">
@@ -46,17 +55,13 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
         <div class="reading-atlas" data-open-map>
           <div class="atlas-disc" aria-hidden="true">
             {featured.map((entry, index) => (
-              <a
-                href={withBase(`/book/${entry.slug}/`)}
-                class="atlas-node"
-                style={`--i:${index};--n:${featured.length};`}
-              >
-                <span>{entry.data.chapterNumber}</span>
-              </a>
+              <span class="atlas-node" style={`--i:${index};--n:${featured.length};`}>
+                <span>{index + 1}</span>
+              </span>
             ))}
           </div>
           <div class="atlas-center">
-            <p class="font-serif text-2xl text-navy-850">心境 · 名实 · 群境</p>
+            <p class="font-serif text-2xl text-navy-850">全书逻辑图</p>
             <p class="mt-2 text-sm leading-6 text-ink/68">点击地图放大，并从章节索引进入阅读。</p>
           </div>
         </div>
@@ -97,14 +102,14 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
     </div>
   </div>
 
-  <dialog class="map-dialog w-[min(94vw,76rem)] border border-gold-deep/35 bg-ivory p-0 text-ink shadow-soft" data-map-dialog>
-    <div class="flex items-center justify-between border-b border-gold-deep/20 px-5 py-4">
+  <dialog class="map-dialog h-[min(88vh,78rem)] w-[min(96vw,88rem)] overflow-hidden border border-gold-deep/35 bg-ivory p-0 text-ink shadow-soft" data-map-dialog>
+    <div class="flex items-center justify-between border-b border-gold-deep/20 px-4 py-3">
       <h3 class="font-serif text-2xl text-navy-850">章节读书地图</h3>
       <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="button" data-close-map>关闭</button>
     </div>
-    <div class="grid max-h-[78vh] gap-5 overflow-hidden p-5 lg:grid-cols-[0.82fr_1.18fr]">
-      <div class="grid min-h-0 gap-4">
-        <div class="reading-atlas large min-h-[18rem] lg:min-h-[24rem]">
+    <div class="atlas-dialog-body h-[calc(100%-3.75rem)] overflow-hidden p-4" data-atlas-dialog-body>
+      <div class="atlas-left-pane min-h-0 overflow-hidden" data-atlas-left-pane>
+        <div class="reading-atlas large min-h-0" data-atlas-visual-pane>
           <div class="atlas-disc" aria-hidden="true">
             {featured.map((entry, index) => (
               <button
@@ -114,10 +119,9 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
                 data-reader-button
                 data-reader-title={chapterLabel(entry)}
                 data-reader-volume={entry.data.volume}
-                data-reader-summary={entry.data.summary}
                 data-reader-body={readerText(entry)}
               >
-                <span>{entry.data.chapterNumber}</span>
+                <span>{index + 1}</span>
               </button>
             ))}
           </div>
@@ -126,29 +130,49 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
             <p class="mt-2 text-sm text-ink/68">选择章节，在右侧小窗阅读。</p>
           </div>
         </div>
-        <div class="grid max-h-[18rem] gap-3 overflow-y-auto pr-1 text-sm">
-          <button
-            type="button"
-            class="border border-gold-deep/15 bg-white px-3 py-2 text-left text-ink/74 transition hover:border-gold-deep/45 hover:text-gold-deep"
-            data-reader-button
-            data-reader-title={firstReadable ? chapterLabel(firstReadable) : '前言'}
-            data-reader-volume={firstReadable?.data.volume ?? ''}
-            data-reader-summary={firstReadable?.data.summary ?? ''}
-            data-reader-body={firstReadable ? readerText(firstReadable) : ''}
-          >
-            前言
-          </button>
+        <div class="atlas-resizer-y" title="拖动调整上下区域，双击恢复" data-atlas-resizer-y></div>
+        <div class="atlas-toc overflow-hidden border border-gold-deep/20 bg-white/72 p-3">
+          <div class="mb-2 flex items-center justify-between gap-3 border-b border-gold-deep/15 pb-2">
+            <h4 class="font-serif text-lg text-navy-850">章节目录</h4>
+          </div>
+          <div class="atlas-toc-list grid gap-0.5 overflow-y-auto pr-1 text-[0.8rem] leading-6">
+          {prefaceEntry && (
+            <button
+              type="button"
+              class="truncate border-b border-gold-deep/12 px-2 py-1 text-left text-ink/76 transition hover:bg-ivory hover:text-gold-deep"
+              title={chapterLabel(prefaceEntry)}
+              data-reader-button
+              data-reader-title={chapterLabel(prefaceEntry)}
+              data-reader-volume={prefaceEntry.data.volume}
+              data-reader-body={readerText(prefaceEntry)}
+            >
+              {chapterLabel(prefaceEntry)}
+            </button>
+          )}
+          {afterwordEntry && (
+            <button
+              type="button"
+              class="truncate border-b border-gold-deep/12 px-2 py-1 text-left text-ink/76 transition hover:bg-ivory hover:text-gold-deep"
+              title={chapterLabel(afterwordEntry)}
+              data-reader-button
+              data-reader-title={chapterLabel(afterwordEntry)}
+              data-reader-volume={afterwordEntry.data.volume}
+              data-reader-body={readerText(afterwordEntry)}
+            >
+              {chapterLabel(afterwordEntry)}
+            </button>
+          )}
           {volumeGroups.map((group) => (
-            <div class="grid gap-2">
-              <p class="font-serif text-base text-navy-850">{group.title}</p>
+            <div class="grid gap-1">
+              <p class="truncate px-2 pt-1 font-serif text-[0.76rem] font-semibold text-gold-deep" title={group.title}>{group.title}</p>
               {group.entries.map((entry) => (
                 <button
                   type="button"
-                  class="border border-gold-deep/15 bg-white px-3 py-2 text-left text-ink/74 transition hover:border-gold-deep/45 hover:text-gold-deep"
+                  class="truncate border-b border-gold-deep/12 px-2 py-1 text-left text-ink/76 transition hover:bg-ivory hover:text-gold-deep"
+                  title={chapterLabel(entry)}
                   data-reader-button
                   data-reader-title={chapterLabel(entry)}
                   data-reader-volume={entry.data.volume}
-                  data-reader-summary={entry.data.summary}
                   data-reader-body={readerText(entry)}
                 >
                   {chapterLabel(entry)}
@@ -156,13 +180,18 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
               ))}
             </div>
           ))}
+          </div>
         </div>
       </div>
-      <div class="min-h-0 overflow-y-auto border border-gold-deep/20 bg-white/78 p-5">
-        <p class="text-xs tracking-[0.24em] text-gold-deep" data-reader-volume-output>{firstReadable?.data.volume}</p>
-        <h4 class="mt-3 font-serif text-3xl text-navy-850" data-reader-title-output>{firstReadable ? chapterLabel(firstReadable) : '前言'}</h4>
-        <p class="mt-4 text-sm leading-7 text-ink/72" data-reader-summary-output>{firstReadable?.data.summary}</p>
-        <div class="mt-5 whitespace-pre-line border-t border-gold-deep/15 pt-5 font-serif text-base leading-9 text-ink/82" data-reader-body-output>{firstReadable ? readerText(firstReadable) : ''}</div>
+      <div class="atlas-resizer-x" title="拖动调整左右区域，双击恢复" data-atlas-resizer-x></div>
+      <div class="grid min-h-0 overflow-hidden" data-atlas-reader-pane>
+        <div class="mini-reader min-h-0 overflow-hidden border border-gold-deep/20 bg-white/82">
+          <div class="border-b border-gold-deep/15 px-4 py-2.5">
+            <p class="text-[0.68rem] tracking-[0.22em] text-gold-deep" data-reader-volume-output>{firstReadable?.data.volume}</p>
+            <h4 class="mt-1 font-serif text-lg text-navy-850" data-reader-title-output>{firstReadable ? chapterLabel(firstReadable) : '前言'}</h4>
+          </div>
+          <div class="mini-reader-body whitespace-pre-line px-4 py-3 font-serif text-[0.92rem] leading-[1.72] text-ink/84" data-reader-body-output>{firstReadable ? readerText(firstReadable) : ''}</div>
+        </div>
       </div>
     </div>
   </dialog>
@@ -189,24 +218,73 @@ const readerText = (entry: CollectionEntry<'book'>) => entry.body
   const dialog = document.querySelector('[data-map-dialog]');
   const readerTitle = document.querySelector('[data-reader-title-output]');
   const readerVolume = document.querySelector('[data-reader-volume-output]');
-  const readerSummary = document.querySelector('[data-reader-summary-output]');
   const readerBody = document.querySelector('[data-reader-body-output]');
   document.querySelectorAll('[data-reader-button]').forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       if (!(button instanceof HTMLElement)) return;
-      const convert = window.toTraditionalText || ((value) => value);
+      const convert = localStorage.getItem('han-script') === 'traditional' && window.toTraditionalText
+        ? window.toTraditionalText
+        : ((value) => value);
       if (readerTitle) readerTitle.textContent = convert(button.dataset.readerTitle || '');
       if (readerVolume) readerVolume.textContent = convert(button.dataset.readerVolume || '');
-      if (readerSummary) readerSummary.textContent = convert(button.dataset.readerSummary || '');
       if (readerBody) readerBody.textContent = convert(button.dataset.readerBody || '');
     });
   });
   document.querySelector('[data-open-map]')?.addEventListener('click', (event) => {
-    if ((event.target instanceof HTMLElement) && event.target.closest('a')) return;
     if (dialog instanceof HTMLDialogElement) dialog.showModal();
   });
   document.querySelector('[data-close-map]')?.addEventListener('click', () => {
     if (dialog instanceof HTMLDialogElement) dialog.close();
   });
+
+  const atlasBody = document.querySelector('[data-atlas-dialog-body]');
+  const leftPane = document.querySelector('[data-atlas-left-pane]');
+  const resizerX = document.querySelector('[data-atlas-resizer-x]');
+  const resizerY = document.querySelector('[data-atlas-resizer-y]');
+  const applyAtlasSizes = () => {
+    if (!(atlasBody instanceof HTMLElement)) return;
+    const left = localStorage.getItem('huaxia-atlas-left') || '40';
+    const top = localStorage.getItem('huaxia-atlas-top') || '57';
+    atlasBody.style.setProperty('--atlas-left', `${left}%`);
+    atlasBody.style.setProperty('--atlas-top', `${top}%`);
+  };
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const startDrag = (event, axis) => {
+    event.preventDefault();
+    const move = (moveEvent) => {
+      if (!(atlasBody instanceof HTMLElement)) return;
+      const rect = atlasBody.getBoundingClientRect();
+      if (axis === 'x') {
+        const percent = clamp(((moveEvent.clientX - rect.left) / rect.width) * 100, 5, 82);
+        localStorage.setItem('huaxia-atlas-left', percent.toFixed(1));
+      } else if (leftPane instanceof HTMLElement) {
+        const paneRect = leftPane.getBoundingClientRect();
+        const percent = clamp(((moveEvent.clientY - paneRect.top) / paneRect.height) * 100, 5, 86);
+        localStorage.setItem('huaxia-atlas-top', percent.toFixed(1));
+      }
+      applyAtlasSizes();
+    };
+    const end = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', end);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', end);
+  };
+  if (resizerX instanceof HTMLElement) {
+    resizerX.addEventListener('pointerdown', (event) => startDrag(event, 'x'));
+    resizerX.addEventListener('dblclick', () => {
+      localStorage.setItem('huaxia-atlas-left', '40');
+      applyAtlasSizes();
+    });
+  }
+  if (resizerY instanceof HTMLElement) {
+    resizerY.addEventListener('pointerdown', (event) => startDrag(event, 'y'));
+    resizerY.addEventListener('dblclick', () => {
+      localStorage.setItem('huaxia-atlas-top', '57');
+      applyAtlasSizes();
+    });
+  }
+  applyAtlasSizes();
 </script>

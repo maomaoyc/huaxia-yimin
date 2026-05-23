@@ -8,7 +8,6 @@ import DownloadCenter from '@/components/DownloadCenter.astro';
 import PdfCallout from '@/components/PdfCallout.astro';
 import SubmissionForms from '@/components/SubmissionForms.astro';
 import BookTextEmbed from '@/components/BookTextEmbed.astro';
-import AuthorUploadPanel from '@/components/AuthorUploadPanel.astro';
 import AfterwordPanels from '@/components/AfterwordPanels.astro';
 
 export async function getStaticPaths() {
@@ -30,8 +29,8 @@ const { Content } = await page.render();
 ---
 
 <BaseLayout title={`${page.data.title} | 华夏义民起义、变革、正常化之法理`} description={page.data.description}>
-  <PageHero title={page.data.title} eyebrow={page.data.eyebrow} description={page.data.description} />
-  {page.slug !== 'letter' && (
+  {page.slug !== 'reader-feedback' && <PageHero title={page.data.title} eyebrow={page.data.eyebrow} description={page.data.description} />}
+  {page.slug !== 'letter' && page.slug !== 'reader-feedback' && (
     <ContentShell>
       <Content />
     </ContentShell>
@@ -41,7 +40,6 @@ const { Content } = await page.render();
   {page.slug === 'downloads' && <DownloadCenter />}
   {page.slug === 'arguments' && preface && <BookTextEmbed entry={preface} title="原书前言" />}
   {page.slug === 'letter' && <AfterwordPanels entry={afterword} />}
-  {page.slug === 'letter' && <AuthorUploadPanel />}
   {page.slug === 'author-submissions' && <SubmissionForms mode="author" />}
   {page.slug === 'reader-feedback' && <SubmissionForms mode="reader" />}
 </BaseLayout>

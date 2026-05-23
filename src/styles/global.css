@@ -111,6 +111,8 @@ html[lang="es"] button {
 }
 
 .reading-atlas {
+  --atlas-node-distance: min(10.7rem, calc((min(100cqw, 100cqh) - 3.25rem) / 2));
+  container-type: size;
   position: relative;
   display: grid;
   min-height: 26rem;
@@ -123,7 +125,10 @@ html[lang="es"] button {
 }
 
 .reading-atlas.large {
-  min-height: 34rem;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 .atlas-disc {
@@ -161,12 +166,21 @@ html[lang="es"] button {
   color: #8a6b35;
   font-size: 0.78rem;
   text-decoration: none;
-  transform: rotate(calc(360deg / var(--n) * var(--i))) translate(10.7rem) rotate(calc(-360deg / var(--n) * var(--i)));
+  transform: rotate(calc(360deg / var(--n) * var(--i))) translate(var(--atlas-node-distance)) rotate(calc(-360deg / var(--n) * var(--i)));
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
+.atlas-node > span {
+  animation: atlas-counter-spin 38s linear infinite;
+}
+
 .reading-atlas.large .atlas-node {
-  transform: rotate(calc(360deg / var(--n) * var(--i))) translate(14rem) rotate(calc(-360deg / var(--n) * var(--i)));
+  --atlas-node-distance: min(11.4rem, calc((min(100cqw, 100cqh) - 3.25rem) / 2));
+  transform: rotate(calc(360deg / var(--n) * var(--i))) translate(var(--atlas-node-distance)) rotate(calc(-360deg / var(--n) * var(--i)));
+}
+
+.reading-atlas.large .atlas-node > span {
+  animation: atlas-counter-spin 38s linear infinite;
 }
 
 .atlas-node:hover {
@@ -175,11 +189,95 @@ html[lang="es"] button {
   color: #f5efe0;
 }
 
+.mini-reader {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.mini-reader-body {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.atlas-dialog-body {
+  --atlas-left: 40%;
+  --atlas-top: 57%;
+  display: grid;
+  grid-template-columns: minmax(2.75rem, var(--atlas-left)) 0.5rem minmax(13rem, 1fr);
+  gap: 0;
+}
+
+.atlas-left-pane {
+  display: grid;
+  grid-template-rows: minmax(2.75rem, var(--atlas-top)) 0.5rem minmax(2.75rem, 1fr);
+  padding-right: 0.75rem;
+}
+
+.atlas-resizer-x,
+.atlas-resizer-y {
+  position: relative;
+  z-index: 2;
+  background: rgba(138, 107, 53, 0.13);
+  transition: background 140ms ease;
+}
+
+.atlas-resizer-x {
+  cursor: col-resize;
+  margin-right: 0.75rem;
+}
+
+.atlas-resizer-y {
+  cursor: row-resize;
+  margin: 0.75rem 0;
+}
+
+.atlas-resizer-x::after,
+.atlas-resizer-y::after {
+  position: absolute;
+  content: "";
+  background: rgba(138, 107, 53, 0.34);
+}
+
+.atlas-resizer-x::after {
+  inset: 16% auto 16% 50%;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.atlas-resizer-y::after {
+  inset: 50% 16% auto 16%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.atlas-resizer-x:hover,
+.atlas-resizer-y:hover {
+  background: rgba(138, 107, 53, 0.24);
+}
+
+.atlas-toc {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+}
+
+.atlas-toc-list {
+  min-height: 0;
+}
+
 .atlas-center {
   position: relative;
   z-index: 1;
-  max-width: 18rem;
+  max-width: min(18rem, 66cqw);
   text-align: center;
+}
+
+.reading-atlas.large .atlas-center p:first-child {
+  font-size: clamp(1rem, 6cqw, 1.5rem);
+}
+
+.reading-atlas.large .atlas-center p:last-child {
+  font-size: clamp(0.68rem, 2.6cqw, 0.875rem);
 }
 
 .map-dialog::backdrop,
@@ -196,9 +294,37 @@ dialog::backdrop {
   }
 }
 
+@keyframes atlas-counter-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .atlas-disc {
+  .atlas-disc,
+  .atlas-node > span {
     animation: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .atlas-dialog-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(14rem, 0.9fr) minmax(18rem, 1.1fr);
+    gap: 0.75rem;
+    overflow-y: auto;
+  }
+
+  .atlas-left-pane {
+    grid-template-rows: minmax(13rem, 1fr) 0.4rem minmax(9rem, 0.75fr);
+    padding-right: 0;
+  }
+
+  .atlas-resizer-x {
+    display: none;
   }
 }
 
@@ -262,6 +388,7 @@ dialog::backdrop {
 }
 
 .reader-highlight {
+  position: relative;
   background: rgba(216, 195, 140, 0.5);
   text-decoration: underline;
   text-decoration-color: rgba(138, 107, 53, 0.65);
@@ -269,6 +396,7 @@ dialog::backdrop {
 }
 
 .reader-underline {
+  position: relative;
   background: transparent;
   text-decoration: underline;
   text-decoration-color: rgba(138, 107, 53, 0.78);
@@ -278,65 +406,94 @@ dialog::backdrop {
 
 .reader-note {
   position: relative;
+  display: inline;
   background: rgba(216, 195, 140, 0.36);
   border-bottom: 1px solid rgba(138, 107, 53, 0.55);
 }
 
+.reader-note-anchor {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.08rem;
+  line-height: 1;
+  vertical-align: baseline;
+}
+
 .reader-note-badge {
   position: relative;
-  top: -0.7em;
+  top: -0.58em;
   display: inline-grid;
-  min-width: 1.05rem;
-  height: 1.05rem;
-  margin-left: 0.12rem;
+  min-width: 0.82rem;
+  height: 0.82rem;
   place-items: center;
-  border: 1px solid rgba(138, 107, 53, 0.52);
+  border: 1px solid rgba(138, 107, 53, 0.4);
   border-radius: 999px;
-  background: #102035;
-  color: #f5efe0;
+  background: #263244;
+  color: #fffaf0;
   font-family: "Times New Roman", Times, serif;
-  font-size: 0.62rem;
+  font-size: 0.5rem;
   line-height: 1;
+  white-space: nowrap;
+  cursor: default;
 }
 
 .reader-note-tooltip {
   position: absolute;
-  left: 0;
-  top: 1.7em;
+  left: 0.2rem;
+  top: 1rem;
   z-index: 80;
   display: none;
-  min-width: min(18rem, 80vw);
-  max-width: 24rem;
-  border: 1px solid rgba(138, 107, 53, 0.32);
-  background: #fffaf0;
-  padding: 0.75rem;
-  box-shadow: 0 12px 30px rgba(7, 17, 31, 0.18);
+  min-width: min(12.5rem, 76vw);
+  max-width: 16rem;
+  border: 1px solid rgba(138, 107, 53, 0.22);
+  background: rgba(255, 250, 240, 0.98);
+  padding: 0.45rem 0.5rem;
+  box-shadow: 0 8px 18px rgba(7, 17, 31, 0.12);
   color: #263244;
-  font-size: 0.82rem;
-  line-height: 1.7;
+  font-size: 0.68rem;
+  line-height: 1.45;
 }
 
-.reader-note:hover .reader-note-tooltip {
+.reader-note-anchor:hover .reader-note-tooltip {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.35rem;
+}
+
+.reader-note-item {
+  display: grid;
+  gap: 0.25rem;
+  border-bottom: 1px solid rgba(138, 107, 53, 0.16);
+  padding-bottom: 0.35rem;
+}
+
+.reader-note-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.reader-note-item button {
+  width: fit-content;
+  color: #8a6b35;
+  font-size: 0.64rem;
+  text-decoration: underline;
 }
 
 .idea-popover {
   position: fixed;
   z-index: 75;
   display: none;
-  width: min(22rem, calc(100vw - 1.5rem));
-  border: 1px solid rgba(138, 107, 53, 0.36);
-  background: #fffaf0;
-  padding: 0.85rem;
-  box-shadow: 0 14px 34px rgba(7, 17, 31, 0.2);
+  width: min(15.5rem, calc(100vw - 1.5rem));
+  border: 1px solid rgba(138, 107, 53, 0.26);
+  background: rgba(255, 250, 240, 0.98);
+  padding: 0.55rem;
+  box-shadow: 0 10px 22px rgba(7, 17, 31, 0.14);
 }
 
 .idea-popover label {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.28rem;
   color: #102035;
-  font-size: 0.82rem;
+  font-size: 0.7rem;
 }
 
 .idea-popover input,
@@ -344,7 +501,13 @@ dialog::backdrop {
   width: 100%;
   border: 1px solid rgba(138, 107, 53, 0.25);
   background: white;
-  padding: 0.45rem 0.55rem;
+  padding: 0.35rem 0.45rem;
   color: #263244;
   outline: none;
+  font-size: 0.74rem;
+}
+
+.idea-popover button {
+  padding: 0.3rem 0.55rem;
+  font-size: 0.72rem;
 }

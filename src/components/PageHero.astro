@@ -11,7 +11,7 @@ interface Props {
 const { eyebrow, title, description, locale = 'zh' } = Astro.props;
 const descriptionLines = description.split('\n').filter(Boolean);
 const volumeLine = {
-  zh: '心境问题 · 名实辨析 · 群经分析 · 正常化法理',
+  zh: '心境科学 · 名实学科 · 群境科学 · 正常化法理',
   en: 'Mind-state Questions · Name-Reality Analysis · Collective Analysis · Jurisprudence of Normalization',
   es: 'Cuestiones interiores · Análisis nombre-realidad · Análisis colectivo · Jurisprudencia de normalización'
 };
@@ -21,9 +21,9 @@ const volumeLabel = {
   es: 'Tres volúmenes'
 };
 const civilizationLine = {
-  zh: '山河 · 舆图 · 简牍',
-  en: 'Mountains · Maps · Bamboo Slips',
-  es: 'Montañas · Mapas · Tablillas'
+  zh: '心境 · 名实 · 群境',
+  en: 'Mind-state · Name-Reality · Collective',
+  es: 'Interioridad · Nombre-realidad · Colectivo'
 };
 ---
 
@@ -59,7 +59,7 @@ const civilizationLine = {
               <div class="flex h-full flex-col justify-between border border-gold-deep/30 p-3">
                 <p class="font-serif text-lg font-semibold leading-snug">{siteTitle[locale]}</p>
                 <div class="grid gap-2">
-                  <p class="font-serif text-sm text-gold-deep">{civilizationLine[locale]}</p>
+                  <p class="whitespace-nowrap font-serif text-xs leading-6 text-gold-deep">{civilizationLine[locale]}</p>
                   <p class="text-xs tracking-[0.24em] text-gold-deep">{volumeLabel[locale]}</p>
                 </div>
               </div>

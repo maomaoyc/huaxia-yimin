@@ -11,6 +11,8 @@ const pathname = Astro.url.pathname;
 
 const itemClass = (target: Locale) =>
   `border border-gold-muted/35 px-2 py-1 transition hover:bg-gold-muted hover:text-navy-950 ${locale === target ? 'bg-gold-muted text-navy-950' : 'text-gold-pale/80'}`;
+const scriptToggleClass =
+  `border border-gold-muted/35 px-2 py-1 transition hover:bg-gold-muted hover:text-navy-950 ${locale === 'zh' ? 'bg-gold-muted text-navy-950' : 'text-gold-pale/80'}`;
 const label = {
   zh: '语言切换',
   en: 'Language switcher',
@@ -19,8 +21,13 @@ const label = {
 ---
 
 <div class="flex items-center gap-1 text-xs" aria-label={label[locale]}>
-  <a class={itemClass('zh')} href={withBase(localizedPath('zh', pathname))} data-simplified-toggle>中</a>
-  <button class="border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950" type="button" data-traditional-toggle>繁</button>
+  {
+    locale === 'zh' ? (
+      <button class={scriptToggleClass} type="button" data-script-toggle>繁</button>
+    ) : (
+      <a class={itemClass('zh')} href={withBase(localizedPath('zh', pathname))} data-simplified-toggle>中</a>
+    )
+  }
   <a class={itemClass('en')} href={withBase(localizedPath('en', pathname))}>EN</a>
   <a class={itemClass('es')} href={withBase(localizedPath('es', pathname))}>ES</a>
 </div>
@@ -40,6 +47,13 @@ const label = {
     ['读书地图', '讀書地圖'],
     ['作者最新文章', '作者最新文章'],
     ['视频资料', '影片資料'],
+    ['三卷本', '三卷本'],
+    ['心境科学', '心境科學'],
+    ['名实学科', '名實學科'],
+    ['群境科学', '群境科學'],
+    ['心境', '心境'],
+    ['名实', '名實'],
+    ['群境', '群境'],
     ['后记', '後記'],
     ['补记', '補記'],
     ['下载', '下載']
@@ -145,22 +159,53 @@ const label = {
     }
     node.childNodes.forEach(convertNode);
   };
+  let traditionalObserver = null;
+  const setTraditionalButtonState = () => {
+    const isTraditional = localStorage.getItem('han-script') === 'traditional';
+    const toggle = document.querySelector('[data-script-toggle]');
+    if (toggle) toggle.textContent = isTraditional ? '简' : '繁';
+  };
   const applyTraditional = () => {
     if (document.documentElement.dataset.scriptMode === 'traditional') return;
     document.documentElement.lang = 'zh-Hant';
     document.documentElement.dataset.scriptMode = 'traditional';
     convertNode(document.body);
+    traditionalObserver?.disconnect();
+    traditionalObserver = new MutationObserver((mutations) => {
+      if (localStorage.getItem('han-script') !== 'traditional') return;
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach(convertNode);
+        if (mutation.type === 'characterData') convertNode(mutation.target);
+      });
+    });
+    traditionalObserver.observe(document.body, { childList: true, characterData: true, subtree: true });
+    setTraditionalButtonState();
   };
   (window as any).toTraditionalText = convertText;
   (window as any).applyTraditional = () => {
+    if (localStorage.getItem('han-script') !== 'traditional') return;
     document.documentElement.dataset.scriptMode = '';
     applyTraditional();
   };
   if (localStorage.getItem('han-script') === 'traditional') applyTraditional();
-  document.querySelector('[data-simplified-toggle]')?.addEventListener('click', () => {
+  setTraditionalButtonState();
+  document.querySelector('[data-simplified-toggle]')?.addEventListener('click', (event) => {
     localStorage.setItem('han-script', 'simplified');
+    traditionalObserver?.disconnect();
+    const target = event.currentTarget;
+    if (target instanceof HTMLAnchorElement) {
+      event.preventDefault();
+      window.location.href = target.href;
+    }
   });
-  document.querySelector('[data-traditional-toggle]')?.addEventListener('click', () => {
+  document.querySelector('[data-script-toggle]')?.addEventListener('click', () => {
+    const isTraditional = localStorage.getItem('han-script') === 'traditional';
+    if (isTraditional) {
+      localStorage.setItem('han-script', 'simplified');
+      traditionalObserver?.disconnect();
+      window.location.href = window.location.href;
+      return;
+    }
     localStorage.setItem('han-script', 'traditional');
     document.documentElement.dataset.scriptMode = '';
     applyTraditional();
