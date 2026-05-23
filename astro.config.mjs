@@ -8,6 +8,6 @@ export default defineConfig({
     })
   ],
   output: 'static',
-  site: process.env.SITE_URL || 'https://huaxia-yimin.pages.dev',
+  site: process.env.SITE_URL || 'https://huaxiayimin.us',
   base: process.env.BASE_PATH || '/'
 });

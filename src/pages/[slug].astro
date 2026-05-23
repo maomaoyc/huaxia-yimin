@@ -31,7 +31,7 @@ const { Content } = await page.render();
 <BaseLayout title={`${page.data.title} | 华夏义民起义、变革、正常化之法理`} description={page.data.description}>
   {page.slug !== 'reader-feedback' && <PageHero title={page.data.title} eyebrow={page.data.eyebrow} description={page.data.description} />}
   {page.slug !== 'letter' && page.slug !== 'reader-feedback' && (
-    <ContentShell>
+    <ContentShell class={page.slug === 'introduction' ? 'introduction-content' : ''}>
       <Content />
     </ContentShell>
   )}

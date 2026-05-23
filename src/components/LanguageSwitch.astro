@@ -11,8 +11,8 @@ const pathname = Astro.url.pathname;
 
 const itemClass = (target: Locale) =>
   `border border-gold-muted/35 px-2 py-1 transition hover:bg-gold-muted hover:text-navy-950 ${locale === target ? 'bg-gold-muted text-navy-950' : 'text-gold-pale/80'}`;
-const scriptToggleClass =
-  `border border-gold-muted/35 px-2 py-1 transition hover:bg-gold-muted hover:text-navy-950 ${locale === 'zh' ? 'bg-gold-muted text-navy-950' : 'text-gold-pale/80'}`;
+const scriptClass =
+  'border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950';
 const label = {
   zh: '语言切换',
   en: 'Language switcher',
@@ -20,14 +20,9 @@ const label = {
 };
 ---
 
-<div class="flex items-center gap-1 text-xs" aria-label={label[locale]}>
-  {
-    locale === 'zh' ? (
-      <button class={scriptToggleClass} type="button" data-script-toggle>繁</button>
-    ) : (
-      <a class={itemClass('zh')} href={withBase(localizedPath('zh', pathname))} data-simplified-toggle>中</a>
-    )
-  }
+<div class="flex items-center gap-1 text-xs" aria-label={label[locale]} data-language-switcher data-locale={locale}>
+  <a class={scriptClass} href={withBase(localizedPath('zh', pathname))} data-simplified-toggle>简</a>
+  <button class={scriptClass} type="button" data-traditional-toggle>繁</button>
   <a class={itemClass('en')} href={withBase(localizedPath('en', pathname))}>EN</a>
   <a class={itemClass('es')} href={withBase(localizedPath('es', pathname))}>ES</a>
 </div>
@@ -160,10 +155,21 @@ const label = {
     node.childNodes.forEach(convertNode);
   };
   let traditionalObserver = null;
+  const switcher = document.querySelector('[data-language-switcher]');
+  const currentLocale = switcher instanceof HTMLElement ? switcher.dataset.locale || 'zh' : 'zh';
+  const activeClasses = ['bg-gold-muted', 'text-navy-950'];
+  const inactiveClasses = ['text-gold-pale/80'];
+  const setButtonActive = (button, active) => {
+    if (!(button instanceof HTMLElement)) return;
+    activeClasses.forEach((className) => button.classList.toggle(className, active));
+    inactiveClasses.forEach((className) => button.classList.toggle(className, !active));
+  };
   const setTraditionalButtonState = () => {
     const isTraditional = localStorage.getItem('han-script') === 'traditional';
-    const toggle = document.querySelector('[data-script-toggle]');
-    if (toggle) toggle.textContent = isTraditional ? '简' : '繁';
+    const simplified = document.querySelector('[data-simplified-toggle]');
+    const traditional = document.querySelector('[data-traditional-toggle]');
+    setButtonActive(simplified, currentLocale === 'zh' && !isTraditional);
+    setButtonActive(traditional, currentLocale === 'zh' && isTraditional);
   };
   const applyTraditional = () => {
     if (document.documentElement.dataset.scriptMode === 'traditional') return;
@@ -198,14 +204,7 @@ const label = {
       window.location.href = target.href;
     }
   });
-  document.querySelector('[data-script-toggle]')?.addEventListener('click', () => {
-    const isTraditional = localStorage.getItem('han-script') === 'traditional';
-    if (isTraditional) {
-      localStorage.setItem('han-script', 'simplified');
-      traditionalObserver?.disconnect();
-      window.location.href = window.location.href;
-      return;
-    }
+  document.querySelector('[data-traditional-toggle]')?.addEventListener('click', () => {
     localStorage.setItem('han-script', 'traditional');
     document.documentElement.dataset.scriptMode = '';
     applyTraditional();
