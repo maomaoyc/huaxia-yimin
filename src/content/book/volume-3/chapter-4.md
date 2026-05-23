@@ -3,7 +3,7 @@ title: "第四章 法、德——统治者、民众"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 4
-summary: "本章为《第三卷  群境科学原理概论》之“第四章 法、德——统治者、民众”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈法，是建立惩罚之原则，及惩罚之详细参照，限制人类生物个体之有害其它个体及群体生存之行为。"
 keywords: ["群境", "统治者", "民众", "法理"]
 slug: "volume-3/chapter-4"
 order: 304

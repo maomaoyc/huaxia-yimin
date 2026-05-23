@@ -3,7 +3,7 @@ title: "第三十一章 终极目标及终极目标之后"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 31
-summary: "本章为《第三卷  群境科学原理概论》之“第三十一章 终极目标及终极目标之后”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉终极目标之后，是类体之更高标准之生存与自由生存。"
 keywords: ["群境"]
 slug: "volume-3/chapter-31"
 order: 331

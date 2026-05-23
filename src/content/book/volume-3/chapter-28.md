@@ -3,7 +3,7 @@ title: "第二十八章 优选"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 28
-summary: "本章为《第三卷  群境科学原理概论》之“第二十八章 优选”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴竞争之目的是为了易于优选。"
 keywords: ["群境", "优选"]
 slug: "volume-3/chapter-28"
 order: 328

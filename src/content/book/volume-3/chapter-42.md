@@ -3,7 +3,7 @@ title: "第四十二章 器用与性情"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 42
-summary: "本章为《第三卷  群境科学原理概论》之“第四十二章 器用与性情”，正文按作者原文整理为在线阅读版本。"
+summary: "〔注：1）音乐：音节确定情态类型，音阶确定情态强度，节奏确定情态速度。"
 keywords: ["群境", "器用与性情"]
 slug: "volume-3/chapter-42"
 order: 342

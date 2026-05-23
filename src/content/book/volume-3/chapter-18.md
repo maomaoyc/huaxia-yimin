@@ -3,7 +3,7 @@ title: "第十八章 人类生物群体最高权力组织模式概略"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 18
-summary: "本章为《第三卷  群境科学原理概论》之“第十八章 人类生物群体最高权力组织模式概略”，正文按作者原文整理为在线阅读版本。"
+summary: "人类生物保存思、言、行之名实体系之运作，需存原则。"
 keywords: ["群境"]
 slug: "volume-3/chapter-18"
 order: 318

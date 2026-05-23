@@ -3,7 +3,7 @@ title: "第十四章 自然学说之统一㈡"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 14
-summary: "本章为《第一卷  心境科学原理概论》之“第十四章 自然学说之统一㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "“排斥”与“吸引”是相对于平衡参照体验之正、负体验。"
 keywords: ["心境", "自然学说之统一㈡"]
 slug: "volume-1/chapter-14"
 order: 114

@@ -21,12 +21,28 @@ body {
   font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+.font-latin,
+.latin,
+html[lang="en"] .font-latin,
+html[lang="es"] .font-latin {
+  font-family: "Times New Roman", Times, serif;
+}
+
 html[lang="en"] body,
+html[lang="es"] body,
 html[lang="en"] .academic-prose,
+html[lang="es"] .academic-prose,
 html[lang="en"] .reading-article,
+html[lang="es"] .reading-article,
 html[lang="en"] input,
+html[lang="es"] input,
 html[lang="en"] textarea,
+html[lang="es"] textarea,
 html[lang="en"] button {
+  font-family: "Times New Roman", Times, serif;
+}
+
+html[lang="es"] button {
   font-family: "Times New Roman", Times, serif;
 }
 
@@ -131,6 +147,19 @@ html[lang="en"] button {
   inset: 32%;
 }
 
+.atlas-star {
+  position: absolute;
+  inset: 20%;
+  opacity: 0.2;
+  transform: rotate(-8deg);
+}
+
+.atlas-star polygon {
+  fill: rgba(138, 107, 53, 0.18);
+  stroke: rgba(138, 107, 53, 0.55);
+  stroke-width: 1;
+}
+
 .atlas-node {
   position: absolute;
   left: 50%;
@@ -219,4 +248,29 @@ dialog::backdrop {
 .reading-page.is-dark aside a:hover,
 .reading-page.is-dark aside a.font-medium {
   color: #d8c38c;
+}
+
+.selection-tools {
+  position: fixed;
+  z-index: 70;
+  display: none;
+  gap: 0.35rem;
+  border: 1px solid rgba(138, 107, 53, 0.35);
+  background: #f5efe0;
+  padding: 0.35rem;
+  box-shadow: 0 12px 30px rgba(7, 17, 31, 0.22);
+}
+
+.selection-tools button {
+  border: 1px solid rgba(138, 107, 53, 0.24);
+  padding: 0.35rem 0.6rem;
+  color: #8a6b35;
+  font-size: 0.82rem;
+}
+
+.reader-highlight {
+  background: rgba(216, 195, 140, 0.5);
+  text-decoration: underline;
+  text-decoration-color: rgba(138, 107, 53, 0.65);
+  text-underline-offset: 0.18em;
 }

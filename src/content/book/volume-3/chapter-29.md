@@ -3,7 +3,7 @@ title: "第二十九章 市场交易㈠"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 29
-summary: "本章为《第三卷  群境科学原理概论》之“第二十九章 市场交易㈠”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉⑴以交易模式，实现获利，或实现获取所需物资，即交易之目的。"
 keywords: ["群境", "市场交易㈠"]
 slug: "volume-3/chapter-29"
 order: 329

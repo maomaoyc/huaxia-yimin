@@ -3,7 +3,7 @@ title: "第三章 体验内保存之三个阶段（过程）"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 3
-summary: "本章为《第一卷  心境科学原理概论》之“第三章 体验内保存之三个阶段（过程）”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈体验之内保存过程，大略可划分为记忆阶段、习惯阶段、本能阶段三个阶段（过程）。"
 keywords: ["心境", "过程"]
 slug: "volume-1/chapter-3"
 order: 103

@@ -3,7 +3,7 @@ title: "第二十七章 自然经济、强健之自然经济"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 27
-summary: "本章为《第三卷  群境科学原理概论》之“第二十七章 自然经济、强健之自然经济”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈现实所存在者，独立实体之计划经济与整体之自由经济。"
 keywords: ["群境", "自然经济", "强健之自然经济"]
 slug: "volume-3/chapter-27"
 order: 327

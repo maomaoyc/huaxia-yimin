@@ -3,7 +3,7 @@ title: "第四十四章 中国传统王朝时代之群境现实"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 44
-summary: "本章为《第三卷  群境科学原理概论》之“第四十四章 中国传统王朝时代之群境现实”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉汉文体系与汉语体系，是中华主体族群之名实体系。"
 keywords: ["群境"]
 slug: "volume-3/chapter-44"
 order: 344

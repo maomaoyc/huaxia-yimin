@@ -3,7 +3,7 @@ title: "第十章 组织㈠"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 10
-summary: "本章为《第三卷  群境科学原理概论》之“第十章 组织㈠”，正文按作者原文整理为在线阅读版本。"
+summary: "最高权力组织划分为相互独立之立法部、执行部、监督部，三个相互制衡之组织体系。"
 keywords: ["群境", "组织㈠"]
 slug: "volume-3/chapter-10"
 order: 310

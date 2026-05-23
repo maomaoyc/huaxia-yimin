@@ -3,7 +3,7 @@ title: "后记"
 volume: "全书后记"
 volumeSlug: "afterword"
 chapterNumber: 999
-summary: "本节为全书后记，收束作者关于本书写作、法理论证与公共阅读的说明。"
+summary: "⒈本人出生及成长于一九七五年后之苏俄帝制模式中国实验群境，与中国大陆普通民众同甘苦同命运同情感。众所历者，己亦然之，故易知众心。"
 keywords: ["后记"]
 slug: "afterword"
 order: 9999

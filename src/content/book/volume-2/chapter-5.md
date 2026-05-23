@@ -3,7 +3,7 @@ title: "第五章 释略为详㈠"
 volume: "第二卷  名实学科原理概论"
 volumeSlug: "volume-2"
 chapterNumber: 5
-summary: "本章为《第二卷  名实学科原理概论》之“第五章 释略为详㈠”，正文按作者原文整理为在线阅读版本。"
+summary: "⑶仁，即源于爱之益于外体；故，仁亦名之仁爱；仁爱，即趋聚合原理。"
 keywords: ["名实", "释略为详㈠"]
 slug: "volume-2/chapter-5"
 order: 205

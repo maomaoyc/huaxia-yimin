@@ -3,7 +3,7 @@ title: "第五十章 大机器化与机器自动化、控制机器化"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 50
-summary: "本章为《第三卷  群境科学原理概论》之“第五十章 大机器化与机器自动化、控制机器化”，正文按作者原文整理为在线阅读版本。"
+summary: "大机器生产化，一指其规模大，一指其机器自动化程度高。"
 keywords: ["群境", "控制机器化"]
 slug: "volume-3/chapter-50"
 order: 350

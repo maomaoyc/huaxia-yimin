@@ -3,7 +3,7 @@ title: "第十六章 自然学说之统一㈣"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 16
-summary: "本章为《第一卷  心境科学原理概论》之“第十六章 自然学说之统一㈣”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈不存在所有实体之可演化出诸多分规律、分原则之源级规律、源级原则，即不存在所有实体之总总规律、总总原则。"
 keywords: ["心境", "自然学说之统一㈣"]
 slug: "volume-1/chapter-16"
 order: 116

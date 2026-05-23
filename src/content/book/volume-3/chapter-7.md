@@ -3,7 +3,7 @@ title: "第七章 群体组织模式"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 7
-summary: "本章为《第三卷  群境科学原理概论》之“第七章 群体组织模式”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈群体组织之作用是调节群体之行为，使群体行为遵循低耗高量原则。"
 keywords: ["群境", "群体组织模式"]
 slug: "volume-3/chapter-7"
 order: 307

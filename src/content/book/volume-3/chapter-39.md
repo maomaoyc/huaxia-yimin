@@ -3,7 +3,7 @@ title: "第三十九章 人文科学、欧洲哲学、神学、宗教"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 39
-summary: "本章为《第三卷  群境科学原理概论》之“第三十九章 人文科学、欧洲哲学、神学、宗教”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈人文化是世俗化之提升，世俗化务于现实，宗教化务于虚幻。"
 keywords: ["群境", "人文科学", "欧洲哲学", "神学", "宗教"]
 slug: "volume-3/chapter-39"
 order: 339

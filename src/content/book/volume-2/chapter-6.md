@@ -3,7 +3,7 @@ title: "第六章 释略为详㈡"
 volume: "第二卷  名实学科原理概论"
 volumeSlug: "volume-2"
 chapterNumber: 6
-summary: "本章为《第二卷  名实学科原理概论》之“第六章 释略为详㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "⑷体悟，是知类而发现生命体现实之自然体验之过程。"
 keywords: ["名实", "释略为详㈡"]
 slug: "volume-2/chapter-6"
 order: 206

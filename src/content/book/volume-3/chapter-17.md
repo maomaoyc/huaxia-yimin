@@ -3,7 +3,7 @@ title: "第十七章 生存安全——人类生物群体自然之安全原则"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 17
-summary: "本章为《第三卷  群境科学原理概论》之“第十七章 生存安全——人类生物群体自然之安全原则”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉⑴备荒，即预先准备人类生物群体生存物资，防御（预防）意外之外来灾害。"
 keywords: ["群境", "生存安全"]
 slug: "volume-3/chapter-17"
 order: 317

@@ -3,7 +3,7 @@ title: "第七章 信仰㈠"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 7
-summary: "本章为《第一卷  心境科学原理概论》之“第七章 信仰㈠”，正文按作者原文整理为在线阅读版本。"
+summary: "⒋消除所建立之全部参照之过程，逐渐产生了毁灭之思想。而生命体求生之本能，则产生了毁灭中再生之思想。"
 keywords: ["心境", "信仰㈠"]
 slug: "volume-1/chapter-7"
 order: 107

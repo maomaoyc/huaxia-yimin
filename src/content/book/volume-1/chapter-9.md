@@ -3,7 +3,7 @@ title: "第九章 差异"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 9
-summary: "本章为《第一卷  心境科学原理概论》之“第九章 差异”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈以产生了生命体之地球为平衡参照，星体大略划分为生命体易产生之星体、平衡星体、生命体易于毁灭之星体。"
 keywords: ["心境", "差异"]
 slug: "volume-1/chapter-9"
 order: 109

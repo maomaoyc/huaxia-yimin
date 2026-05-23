@@ -3,7 +3,7 @@ title: "第十三章 民众武装、反抗"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 13
-summary: "本章为《第三卷  群境科学原理概论》之“第十三章 民众武装、反抗”，正文按作者原文整理为在线阅读版本。"
+summary: "⑵故尔，在武装差异不大时，防御方与攻击方达到相互冲突平衡之生命体数量如下："
 keywords: ["群境", "民众武装", "反抗"]
 slug: "volume-3/chapter-13"
 order: 313

@@ -3,7 +3,7 @@ title: "第四十一章 本体之知行流程"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 41
-summary: "本章为《第三卷  群境科学原理概论》之“第四十一章 本体之知行流程”，正文按作者原文整理为在线阅读版本。"
+summary: "体系→目标（因环境）→方案（计划、定治）→执行（运作、治）→目标。"
 keywords: ["群境", "本体之知行流程"]
 slug: "volume-3/chapter-41"
 order: 341

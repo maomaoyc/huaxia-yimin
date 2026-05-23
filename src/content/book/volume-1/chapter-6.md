@@ -3,7 +3,7 @@ title: "第六章 体验之差异记录——坐标系"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 6
-summary: "本章为《第一卷  心境科学原理概论》之“第六章 体验之差异记录——坐标系”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉⑴参照x定为x“1”，参照y定为y“1”，参照z定为z“1”，同类之体验与比较，而建立体验之比值。"
 keywords: ["心境", "体验之差异记录", "坐标系"]
 slug: "volume-1/chapter-6"
 order: 106

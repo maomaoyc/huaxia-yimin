@@ -3,7 +3,7 @@ title: "第一章 人类思想原则"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 1
-summary: "本章为《第一卷  心境科学原理概论》之“第一章 人类思想原则”，正文按作者原文整理为在线阅读版本。"
+summary: "③认识是有参照系的，参照系只能唯一，多个参照系引起认识混乱。"
 keywords: ["心境", "人类思想原则"]
 slug: "volume-1/chapter-1"
 order: 101

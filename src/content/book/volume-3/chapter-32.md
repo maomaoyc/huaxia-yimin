@@ -3,7 +3,7 @@ title: "第三十二章 向往自由生存之本能"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 32
-summary: "本章为《第三卷  群境科学原理概论》之“第三十二章 向往自由生存之本能”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈生命体存在向往自由生存状态之本能，此是其初始状态之本能，是其深层之自然本能，即源始本能。"
 keywords: ["群境"]
 slug: "volume-3/chapter-32"
 order: 332

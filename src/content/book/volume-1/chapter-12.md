@@ -3,7 +3,7 @@ title: "第十二章 培训组织与认知"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 12
-summary: "本章为《第一卷  心境科学原理概论》之“第十二章 培训组织与认知”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉⑴实体可依对人类生物生存之作用而划分类别，而建立与实体对应趋于唯一之参照体验之网络，名之作用网。"
 keywords: ["心境", "培训组织与认知"]
 slug: "volume-1/chapter-12"
 order: 112

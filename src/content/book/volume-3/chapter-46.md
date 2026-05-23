@@ -3,7 +3,7 @@ title: "第四十六章 分类模式与命名"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 46
-summary: "本章为《第三卷  群境科学原理概论》之“第四十六章 分类模式与命名”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈千类万品、种类、界门纲目科属种、等级、标准、参照……、程度，诸如此类者，即细化分类命名者。"
 keywords: ["群境", "分类模式与命名"]
 slug: "volume-3/chapter-46"
 order: 346

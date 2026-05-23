@@ -3,7 +3,7 @@ title: "第十一章 组织㈡"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 11
-summary: "本章为《第三卷  群境科学原理概论》之“第十一章 组织㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "⑴可大略划分成：物资生产部、物资流通部、物资调节部。"
 keywords: ["群境", "组织㈡"]
 slug: "volume-3/chapter-11"
 order: 311

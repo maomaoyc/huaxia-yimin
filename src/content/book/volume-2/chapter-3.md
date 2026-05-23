@@ -3,7 +3,7 @@ title: "第三章 名实体系㈢"
 volume: "第二卷  名实学科原理概论"
 volumeSlug: "volume-2"
 chapterNumber: 3
-summary: "本章为《第二卷  名实学科原理概论》之“第三章 名实体系㈢”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈若中断了详细绘画之略化与简化过程，且失去了略化之绘画，则需代之以详细绘画与速记标签符号对应，用速记标签符号替代详细绘画记录生存体验。"
 keywords: ["名实", "名实体系㈢"]
 slug: "volume-2/chapter-3"
 order: 203

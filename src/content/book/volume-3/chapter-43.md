@@ -3,7 +3,7 @@ title: "第四十三章 分类模式与《周易》"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 43
-summary: "本章为《第三卷  群境科学原理概论》之“第四十三章 分类模式与《周易》”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈《周易》之首职即提供后世自分类模式，助本体认知细化。"
 keywords: ["群境"]
 slug: "volume-3/chapter-43"
 order: 343

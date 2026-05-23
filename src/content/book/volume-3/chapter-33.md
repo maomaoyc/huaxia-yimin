@@ -3,7 +3,7 @@ title: "第三十三章 万物平等与认知"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 33
-summary: "本章为《第三卷  群境科学原理概论》之“第三十三章 万物平等与认知”，正文按作者原文整理为在线阅读版本。"
+summary: "自然环境待众人类生物平等，即众人平等，即自然人格平等。"
 keywords: ["群境", "万物平等与认知"]
 slug: "volume-3/chapter-33"
 order: 333

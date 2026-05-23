@@ -3,7 +3,7 @@ title: "第六章 统治者之更替"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 6
-summary: "本章为《第三卷  群境科学原理概论》之“第六章 统治者之更替”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴统治者以掠夺、压迫、愚弄民众而超过民众之承受或忍受之上限，而使其与民众之对立关联激化，而可被其所统治之民众消除。"
 keywords: ["群境", "统治者之更替"]
 slug: "volume-3/chapter-6"
 order: 306

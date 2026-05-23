@@ -3,7 +3,7 @@ title: "第五章 统治者统治原则"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 5
-summary: "本章为《第三卷  群境科学原理概论》之“第五章 统治者统治原则”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈在统治者且未被领导者替代，统治者集团且未被领导者集团替代，则存在统治者集团与民众对立之生存益害关联。"
 keywords: ["群境", "统治者统治原则"]
 slug: "volume-3/chapter-5"
 order: 305

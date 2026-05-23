@@ -3,7 +3,7 @@ title: "第四十章 思想层与差异"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 40
-summary: "本章为《第三卷  群境科学原理概论》之“第四十章 思想层与差异”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴外者→益害之类→敌、友、己之类→情态类→本能。"
 keywords: ["群境", "思想层与差异"]
 slug: "volume-3/chapter-40"
 order: 340

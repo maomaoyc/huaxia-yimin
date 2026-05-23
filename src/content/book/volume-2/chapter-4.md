@@ -3,7 +3,7 @@ title: "第四章 备过渡用之名之对应（两者或一致或不一致）"
 volume: "第二卷  名实学科原理概论"
 volumeSlug: "volume-2"
 chapterNumber: 4
-summary: "本章为《第二卷  名实学科原理概论》之“第四章 备过渡用之名之对应（两者或一致或不一致）”，正文按作者原文整理为在线阅读版本。"
+summary: "人类群体划分——统治者、民众、国、党派、阶级、民族、群体、族群。"
 keywords: ["名实"]
 slug: "volume-2/chapter-4"
 order: 204

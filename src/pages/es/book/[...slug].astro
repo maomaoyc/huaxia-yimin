@@ -23,6 +23,6 @@ const spanishTitle = entry.data.chapterNumber === 0
     : `Capítulo ${entry.data.chapterNumber}`;
 ---
 
-<BaseLayout title={`${spanishTitle} | Lectura`} description={entry.data.summary} locale={locale}>
+<BaseLayout title={`${spanishTitle} | Lectura`} description="Ruta de lectura en español para la obra académica, con navegación, descargas y notas." locale={locale}>
   <ReadingLayout entry={entry} entries={entries} previous={previous} next={next} locale={locale} />
 </BaseLayout>

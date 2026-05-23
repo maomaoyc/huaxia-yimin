@@ -85,13 +85,13 @@ Each chapter page is generated from `src/content/book/**/*.md` and includes chap
 
 Chapter comments and annotations do not write to GitHub. By default, comments and highlights are saved in the visitor's browser. On Cloudflare Pages, bind a KV namespace named `COMMENTS_KV` to make chapter comments shared publicly through `functions/api/comments.ts`.
 
-Reader registration and author upload forms use Cloudflare Pages Functions. To email submissions to `yc114de@gmail.com`, configure an environment variable:
+Reader registration, reader feedback, chapter comments, and author upload forms use Cloudflare Pages Functions. They do not write visitor information to GitHub. To email submissions to `yc114de@gmail.com`, configure an environment variable in Cloudflare Pages:
 
 ```text
 RESEND_API_KEY=...
 ```
 
-If the email service is not configured, the forms fall back to opening an email draft.
+If the email service is not configured, the site still accepts the form request and reports whether the backend email was sent in the JSON response. Configure `RESEND_API_KEY` before relying on public submissions.
 
 ## Routes
 

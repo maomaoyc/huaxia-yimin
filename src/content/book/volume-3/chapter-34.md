@@ -3,7 +3,7 @@ title: "第三十四章 自然法与自然德"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 34
-summary: "本章为《第三卷  群境科学原理概论》之“第三十四章 自然法与自然德”，正文按作者原文整理为在线阅读版本。"
+summary: "⒌⑴德之体同，德体之用之域可不同，可用于公域，可用于私域。"
 keywords: ["群境", "自然法与自然德", "法理"]
 slug: "volume-3/chapter-34"
 order: 334

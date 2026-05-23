@@ -40,11 +40,50 @@ export const uiText = {
     es: 'Contacto para publicación y materiales'
   },
   footerNote: {
-    zh: '本站为静态学术书籍网站。公开文本保持克制表达，历史政治主张以作者论题方式呈现。',
-    en: 'This static academic book website presents strong historical and political claims as the author’s thesis and interpretive framework.',
-    es: 'Este sitio académico estático presenta las afirmaciones históricas y políticas fuertes como tesis e interpretación del autor.'
+    zh: '华夏义民起义、变革、正常化之法理',
+    en: 'Huaxia Civic Uprising, Transformation, and Jurisprudence of Normalization',
+    es: 'Levantamiento cívico Huaxia, transformación y jurisprudencia de la normalización'
   }
 };
+
+const keywordMap: Record<string, Record<'en' | 'es', string>> = {
+  心境: { en: 'Mind-state', es: 'Estado interior' },
+  名实: { en: 'Name and reality', es: 'Nombre y realidad' },
+  群境: { en: 'Collective environment', es: 'Entorno colectivo' },
+  法理: { en: 'Jurisprudence', es: 'Jurisprudencia' },
+  正常化: { en: 'Normalization', es: 'Normalización' },
+  思想: { en: 'Thought', es: 'Pensamiento' },
+  原则: { en: 'Principle', es: 'Principio' },
+  体验: { en: 'Experience', es: 'Experiencia' },
+  过程: { en: 'Process', es: 'Proceso' },
+  信仰: { en: 'Belief', es: 'Creencia' },
+  差异: { en: 'Difference', es: 'Diferencia' },
+  人文: { en: 'Humanistic order', es: 'Orden humanístico' },
+  政体: { en: 'Political system', es: 'Sistema político' },
+  民众: { en: 'People', es: 'Pueblo' },
+  主权: { en: 'Sovereignty', es: 'Soberanía' },
+  民主: { en: 'Democracy', es: 'Democracia' },
+  科学: { en: 'Science', es: 'Ciencia' },
+  儒学: { en: 'Confucian learning', es: 'Confucianismo' },
+  历史: { en: 'History', es: 'Historia' },
+  记忆: { en: 'Memory', es: 'Memoria' },
+  教育: { en: 'Education', es: 'Educación' },
+  土地: { en: 'Land policy', es: 'Política de tierras' },
+  公权力: { en: 'Public authority', es: 'Autoridad pública' },
+  医学: { en: 'Medicine', es: 'Medicina' },
+  分类: { en: 'Classification', es: 'Clasificación' },
+  命名: { en: 'Naming', es: 'Nombramiento' }
+};
+
+export function localizeKeyword(keyword: string, locale: Locale) {
+  if (locale === 'zh') return keyword;
+  return keywordMap[keyword]?.[locale] ?? (locale === 'en' ? 'Concept' : 'Concepto');
+}
+
+export function localizeKeywords(keywords: string[], locale: Locale) {
+  if (locale === 'zh') return keywords;
+  return keywords.map((keyword) => localizeKeyword(keyword, locale));
+}
 
 export const localizedPages: Record<string, Record<'en' | 'es', { title: string; eyebrow: string; description: string; body: string[] }>> = {
   home: {

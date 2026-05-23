@@ -3,7 +3,7 @@ title: "第三十七章 四境与四组织"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 37
-summary: "本章为《第三卷  群境科学原理概论》之“第三十七章 四境与四组织”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈现实存在之四类环境：心境、体境、群体环境、自然环境。"
 keywords: ["群境", "四境与四组织"]
 slug: "volume-3/chapter-37"
 order: 337

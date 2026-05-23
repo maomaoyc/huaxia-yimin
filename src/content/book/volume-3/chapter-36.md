@@ -3,7 +3,7 @@ title: "第三十六章 教化"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 36
-summary: "本章为《第三卷  群境科学原理概论》之“第三十六章 教化”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈认知引领所行，所行改变环境，即知以领行，行以变境。"
 keywords: ["群境", "教化"]
 slug: "volume-3/chapter-36"
 order: 336

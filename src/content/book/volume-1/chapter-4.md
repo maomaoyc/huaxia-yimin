@@ -3,7 +3,7 @@ title: "第四章 体验㈠"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 4
-summary: "本章为《第一卷  心境科学原理概论》之“第四章 体验㈠”，正文按作者原文整理为在线阅读版本。"
+summary: "⑶体验详化，则体验所对应之实体之数量趋于有限，乃至趋于唯一。"
 keywords: ["心境", "体验㈠"]
 slug: "volume-1/chapter-4"
 order: 104

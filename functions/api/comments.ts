@@ -1,9 +1,30 @@
 type Env = {
+  RESEND_API_KEY?: string;
   COMMENTS_KV?: {
     get(key: string): Promise<string | null>;
     put(key: string, value: string): Promise<void>;
   };
 };
+
+const to = 'yc114de@gmail.com';
+
+async function sendMail(env: Env, subject: string, text: string) {
+  if (!env.RESEND_API_KEY) return false;
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: 'Huaxia Yimin <onboarding@resend.dev>',
+      to,
+      subject,
+      text
+    })
+  });
+  return response.ok;
+}
 
 type CommentRecord = {
   name: string;
@@ -34,7 +55,6 @@ export async function onRequestGet({ request, env }: { request: Request; env: En
 }
 
 export async function onRequestPost({ request, env }: { request: Request; env: Env }) {
-  if (!env.COMMENTS_KV) return json({ ok: false, configured: false }, 501);
   const data = await request.formData();
   const chapter = String(data.get('chapter') || '');
   const comment = String(data.get('comment') || '').trim();
@@ -46,6 +66,14 @@ export async function onRequestPost({ request, env }: { request: Request; env: E
     comment: comment.slice(0, 4000),
     createdAt: new Date().toISOString()
   };
+  if (!env.COMMENTS_KV) {
+    const sent = await sendMail(
+      env,
+      `章节评论：${chapter}`,
+      [`章节：${chapter}`, `姓名：${next.name}`, `联系方式：${next.contact || ''}`, '', next.comment].join('\n')
+    );
+    return json({ ok: true, configured: false, sent, comment: next });
+  }
   const key = keyFor(chapter);
   const raw = await env.COMMENTS_KV.get(key);
   const comments: CommentRecord[] = raw ? JSON.parse(raw) : [];

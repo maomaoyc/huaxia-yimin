@@ -3,7 +3,7 @@ title: "第八章 信仰㈡"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 8
-summary: "本章为《第一卷  心境科学原理概论》之“第八章 信仰㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈称之为“宗教”之信仰，是人类群体之内部之个体之生存环境学说（即群境科学）与圈子思想结合，而产生之圈子思想。"
 keywords: ["心境", "信仰㈡"]
 slug: "volume-1/chapter-8"
 order: 108

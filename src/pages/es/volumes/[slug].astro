@@ -5,7 +5,7 @@ import PageHero from '@/components/PageHero.astro';
 import ContentShell from '@/components/ContentShell.astro';
 import ChapterCards from '@/components/ChapterCards.astro';
 import { getBookVolumeSlug, sortBookEntries } from '@/lib/book';
-import { volumeTranslations } from '@/lib/i18n';
+import { localizeKeywords, volumeTranslations } from '@/lib/i18n';
 
 const locale = 'es';
 
@@ -24,8 +24,8 @@ const bookEntries = sortBookEntries(await getCollection('book'))
   .filter((entry) => getBookVolumeSlug(entry) === volume.slug)
   .map((entry) => ({
     title: `Capítulo ${entry.data.chapterNumber}: texto chino`,
-    summary: `Página de lectura en línea para el capítulo ${entry.data.chapterNumber}. El texto principal permanece en chino para conservar precisión textual.`,
-    concepts: entry.data.keywords,
+    summary: `Guía breve del capítulo ${entry.data.chapterNumber}. La traducción completa al español podrá incorporarse después sin cambiar la ruta.`,
+    concepts: localizeKeywords(entry.data.keywords, locale),
     link: `/book/${entry.slug}/`
   }));
 ---

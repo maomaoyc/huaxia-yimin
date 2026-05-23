@@ -3,7 +3,7 @@ title: "第十二章 生命体群体生存之安全组织"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 12
-summary: "本章为《第三卷  群境科学原理概论》之“第十二章 生命体群体生存之安全组织”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈侦察部，司职获取本体所需之资料；资料真实且细化。"
 keywords: ["群境"]
 slug: "volume-3/chapter-12"
 order: 312

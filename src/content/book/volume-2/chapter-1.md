@@ -3,7 +3,7 @@ title: "第一章 名实体系㈠"
 volume: "第二卷  名实学科原理概论"
 volumeSlug: "volume-2"
 chapterNumber: 1
-summary: "本章为《第二卷  名实学科原理概论》之“第一章 名实体系㈠”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴体验外保存实体依低耗高量外保存体验为原则进行演变，外保存实体之保存参照体验之实体数量趋于有限，排列组合趋于无穷。"
 keywords: ["名实", "名实体系㈠"]
 slug: "volume-2/chapter-1"
 order: 201

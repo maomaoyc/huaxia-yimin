@@ -3,7 +3,7 @@ title: "第二章 体验之内保存对动物体生存之作用"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 2
-summary: "本章为《第一卷  心境科学原理概论》之“第二章 体验之内保存对动物体生存之作用”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴体验，即生命体对于生存环境之外作用接受之连续过程。"
 keywords: ["心境"]
 slug: "volume-1/chapter-2"
 order: 102

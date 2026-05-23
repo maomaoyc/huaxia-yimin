@@ -22,8 +22,8 @@ const copy = {
     resourcePlaceholder: '视频、图片或云盘链接',
     authorMessage: '资料说明',
     readerMessage: '留言内容',
-    submit: '生成邮件',
-    direct: '直接写邮件'
+    submit: '在线提交',
+    direct: '提交后将发送至邮箱'
   },
   en: {
     authorTitle: 'Author Materials Upload',
@@ -37,8 +37,8 @@ const copy = {
     resourcePlaceholder: 'Video, image, or cloud link',
     authorMessage: 'Material Description',
     readerMessage: 'Message',
-    submit: 'Create Email',
-    direct: 'Write Email'
+    submit: 'Submit Online',
+    direct: 'Sent to the contact inbox'
   },
   es: {
     authorTitle: 'Envío de materiales del autor',
@@ -52,8 +52,8 @@ const copy = {
     resourcePlaceholder: 'Video, imagen o enlace en la nube',
     authorMessage: 'Descripción del material',
     readerMessage: 'Mensaje',
-    submit: 'Crear correo',
-    direct: 'Escribir correo'
+    submit: 'Enviar en línea',
+    direct: 'Se envía al correo de contacto'
   }
 };
 const text = copy[locale];
@@ -66,7 +66,7 @@ const intro = isAuthor ? text.authorIntro : text.readerIntro;
     <div class="border border-gold-deep/20 bg-white/70 p-5 sm:p-7">
       <h2 class="font-serif text-2xl font-semibold text-navy-850">{title}</h2>
       <p class="mt-3 text-sm leading-7 text-ink/72">{intro}</p>
-      <p class="mt-2 text-sm leading-7 text-ink/72">{text.contactLine}<a class="text-gold-deep underline decoration-gold-deep/30" href={`mailto:${contact}`}>{contact}</a></p>
+      <p class="mt-2 text-sm leading-7 text-ink/72">{text.contactLine}<span class="text-gold-deep underline decoration-gold-deep/30">{contact}</span></p>
 
       <form
         class="mt-6 grid gap-4"
@@ -80,6 +80,9 @@ const intro = isAuthor ? text.authorIntro : text.readerIntro;
         data-contact-label={text.contact}
         data-resource-label={locale === 'zh' ? '资料链接' : locale === 'en' ? 'Material link' : 'Enlace de material'}
         data-subject-title={siteTitle[locale]}
+        data-pending={locale === 'zh' ? '提交中...' : locale === 'en' ? 'Submitting...' : 'Enviando...'}
+        data-success={locale === 'zh' ? '已提交。' : locale === 'en' ? 'Submitted.' : 'Enviado.'}
+        data-failure={locale === 'zh' ? '提交未完成，请稍后再试。' : locale === 'en' ? 'Submission failed. Please try again later.' : 'No se pudo enviar. Inténtelo más tarde.'}
       >
         <label class="grid gap-2 text-sm">
           <span class="font-medium text-navy-850">{text.name}</span>
@@ -101,7 +104,8 @@ const intro = isAuthor ? text.authorIntro : text.readerIntro;
         </label>
         <div class="flex flex-wrap gap-3">
           <button class="border border-gold-deep/35 px-4 py-2 text-sm font-medium text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="submit">{text.submit}</button>
-          <a class="border border-gold-deep/20 px-4 py-2 text-sm text-ink/60 transition hover:border-gold-deep/45 hover:text-gold-deep" href={`mailto:${contact}`}>{text.direct}</a>
+          <span class="border border-gold-deep/20 px-4 py-2 text-sm text-ink/60">{text.direct}</span>
+          <span class="text-sm text-ink/60" data-submit-status></span>
         </div>
       </form>
     </div>
@@ -110,24 +114,24 @@ const intro = isAuthor ? text.authorIntro : text.readerIntro;
 
   <script>
   document.querySelectorAll('[data-contact-form]').forEach((form) => {
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const target = event.currentTarget;
       if (!(target instanceof HTMLFormElement)) return;
       const data = new FormData(target);
+      const status = target.querySelector('[data-submit-status]');
+      if (status) status.textContent = target.dataset.pending || '提交中...';
       const mode = target.dataset.mode === 'author' ? target.dataset.authorMode : target.dataset.readerMode;
-      const contact = target.dataset.contact || 'yc114de@gmail.com';
-      const lines = [
-        `${target.dataset.categoryLabel}: ${mode}`,
-        `${target.dataset.nameLabel}: ${data.get('name') || ''}`,
-        `${target.dataset.contactLabel}: ${data.get('contactInfo') || ''}`,
-        `${target.dataset.resourceLabel}: ${data.get('resourceLink') || ''}`,
-        '',
-        `${data.get('message') || ''}`
-      ];
-      const subject = encodeURIComponent(`${target.dataset.subjectTitle || 'Book'} ${mode}`);
-      const body = encodeURIComponent(lines.join('\n'));
-      window.location.href = `mailto:${contact}?subject=${subject}&body=${body}`;
+      data.set('modeLabel', mode || '');
+      data.set('pageTitle', target.dataset.subjectTitle || '');
+      try {
+        const response = await fetch('/api/feedback', { method: 'POST', body: data });
+        if (!response.ok) throw new Error('request failed');
+        if (status) status.textContent = target.dataset.success || '已提交。';
+        target.reset();
+      } catch {
+        if (status) status.textContent = target.dataset.failure || '提交未完成，请稍后再试。';
+      }
     });
   });
 </script>

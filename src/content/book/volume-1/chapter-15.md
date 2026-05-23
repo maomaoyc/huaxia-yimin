@@ -3,7 +3,7 @@ title: "第十五章 自然学说之统一㈢"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 15
-summary: "本章为《第一卷  心境科学原理概论》之“第十五章 自然学说之统一㈢”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈“真空”是未体验粒子体相互作用形成之平衡区域。"
 keywords: ["心境", "自然学说之统一㈢"]
 slug: "volume-1/chapter-15"
 order: 115

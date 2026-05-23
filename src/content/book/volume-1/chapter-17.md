@@ -3,7 +3,7 @@ title: "第十七章 时间、长度、速度"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 17
-summary: "本章为《第一卷  心境科学原理概论》之“第十七章 时间、长度、速度”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈实体及其过程不依体验而存在，不依体验变动而变动。"
 keywords: ["心境", "时间", "长度", "速度"]
 slug: "volume-1/chapter-17"
 order: 117

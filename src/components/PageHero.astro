@@ -9,10 +9,11 @@ interface Props {
 }
 
 const { eyebrow, title, description, locale = 'zh' } = Astro.props;
+const descriptionLines = description.split('\n').filter(Boolean);
 const volumeLine = {
-  zh: '心境科学 · 名实学科 · 群境科学 · 正常化法理',
-  en: 'Mind-State · Name-Reality · Collective Environment · Normalization',
-  es: 'Estado interior · Nombre-realidad · Entorno colectivo · Normalización'
+  zh: '山河 · 舆图 · 简牍',
+  en: 'Mountains and Rivers · Maps · Bamboo Slips',
+  es: 'Montañas y ríos · Mapas · Tablillas'
 };
 const volumeLabel = {
   zh: '三卷本',
@@ -24,9 +25,11 @@ const volumeLabel = {
 <section class="bg-navy-950 text-ivory">
   <div class="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[1fr_0.72fr] lg:px-8">
     <div class="max-w-3xl">
-      {eyebrow && <p class="text-sm uppercase tracking-[0.32em] text-gold-pale/82">{eyebrow}</p>}
+      {eyebrow && <p class="font-latin text-sm uppercase tracking-[0.32em] text-gold-pale/82">{eyebrow}</p>}
       <h1 class="mt-5 font-serif text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">{title}</h1>
-      <p class="mt-6 max-w-2xl text-base leading-8 text-ivory/76 sm:text-lg">{description}</p>
+      <div class="mt-6 grid max-w-3xl gap-3 text-base leading-8 text-ivory/78 sm:text-lg">
+        {descriptionLines.map((line) => <p>{line}</p>)}
+      </div>
     </div>
     <div class="min-h-72 border border-gold-muted/30 bg-navy-900 shadow-soft">
       <div class="grid h-full grid-rows-[1fr_auto]">
@@ -55,7 +58,7 @@ const volumeLabel = {
             </div>
           </div>
         </div>
-        <div class="border-t border-gold-muted/25 px-6 py-4 text-sm leading-6 text-ivory/68">{volumeLine[locale]}</div>
+          <div class="border-t border-gold-muted/25 px-6 py-4 text-center text-sm leading-6 text-ivory/78">{volumeLine[locale]}</div>
       </div>
     </div>
   </div>

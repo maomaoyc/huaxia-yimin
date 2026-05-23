@@ -3,7 +3,7 @@ title: "第五十一章 现实验证之医学"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 51
-summary: "本章为《第三卷  群境科学原理概论》之“第五十一章 现实验证之医学”，正文按作者原文整理为在线阅读版本。"
+summary: "〔注：1）现代之微表情学，其实质属于中医之望闻问切之望。"
 keywords: ["群境", "现实验证之医学"]
 slug: "volume-3/chapter-51"
 order: 351

@@ -3,7 +3,7 @@ title: "第四十九章 作战之攻击与防御"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 49
-summary: "本章为《第三卷  群境科学原理概论》之“第四十九章 作战之攻击与防御”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈作战之攻击与防御，是主动与被动之相互作用，存在相互反制。"
 keywords: ["群境", "作战之攻击与防御"]
 slug: "volume-3/chapter-49"
 order: 349

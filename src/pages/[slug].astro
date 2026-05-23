@@ -9,6 +9,7 @@ import PdfCallout from '@/components/PdfCallout.astro';
 import SubmissionForms from '@/components/SubmissionForms.astro';
 import BookTextEmbed from '@/components/BookTextEmbed.astro';
 import AuthorUploadPanel from '@/components/AuthorUploadPanel.astro';
+import AfterwordPanels from '@/components/AfterwordPanels.astro';
 
 export async function getStaticPaths() {
   const hiddenPages = new Set(['structure', 'diagrams', 'author-submissions']);
@@ -37,6 +38,7 @@ const { Content } = await page.render();
   {page.slug === 'timeline' && <Timeline />}
   {page.slug === 'downloads' && <DownloadCenter />}
   {page.slug === 'arguments' && preface && <BookTextEmbed entry={preface} title="原书前言" />}
+  {page.slug === 'letter' && <AfterwordPanels />}
   {page.slug === 'letter' && afterword && <BookTextEmbed entry={afterword} title="后记正文" />}
   {page.slug === 'letter' && <AuthorUploadPanel />}
   {page.slug === 'author-submissions' && <SubmissionForms mode="author" />}

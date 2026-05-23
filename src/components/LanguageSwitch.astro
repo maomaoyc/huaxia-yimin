@@ -19,7 +19,41 @@ const label = {
 ---
 
 <div class="flex items-center gap-1 text-xs" aria-label={label[locale]}>
-  <a class={itemClass('zh')} href={withBase(localizedPath('zh', pathname))}>中</a>
+  <a class={itemClass('zh')} href={withBase(localizedPath('zh', pathname))} data-simplified-toggle>中</a>
+  <button class="border border-gold-muted/35 px-2 py-1 text-gold-pale/80 transition hover:bg-gold-muted hover:text-navy-950" type="button" data-traditional-toggle>繁</button>
   <a class={itemClass('en')} href={withBase(localizedPath('en', pathname))}>EN</a>
   <a class={itemClass('es')} href={withBase(localizedPath('es', pathname))}>ES</a>
 </div>
+
+<script>
+  const traditionalMap = {
+    华: '華', 义: '義', 民: '民', 起: '起', 变: '變', 革: '革', 常: '常', 化: '化', 法: '法', 理: '理',
+    书: '書', 对: '對', 现: '現', 实: '實', 总: '總', 结: '結', 级: '級', 别: '別', 选: '選',
+    马: '馬', 恩: '恩', 共: '共', 产: '產', 思: '思', 想: '想', 体: '體', 系: '系', 源: '源',
+    于: '於', 本: '本', 土: '土', 孔: '孔', 孟: '孟', 儒: '儒', 学: '學', 术: '術', 著: '著',
+    简: '簡', 介: '介', 论: '論', 证: '證', 构: '構', 图: '圖', 载: '載', 后: '後',
+    读: '讀', 者: '者', 留: '留', 言: '言', 页: '頁', 面: '面', 章: '章', 节: '節', 卷: '卷',
+    心: '心', 境: '境', 名: '名', 群: '群', 录: '錄', 线: '線', 关: '關', 键: '鍵'
+  };
+  const convertText = (value) => value.split('').map((char) => traditionalMap[char] || char).join('');
+  const convertNode = (node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.nodeValue = convertText(node.nodeValue || '');
+      return;
+    }
+    if (node instanceof HTMLElement && ['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT'].includes(node.tagName)) return;
+    node.childNodes.forEach(convertNode);
+  };
+  const applyTraditional = () => {
+    document.documentElement.lang = 'zh-Hant';
+    convertNode(document.body);
+  };
+  if (localStorage.getItem('han-script') === 'traditional') applyTraditional();
+  document.querySelector('[data-simplified-toggle]')?.addEventListener('click', () => {
+    localStorage.setItem('han-script', 'simplified');
+  });
+  document.querySelector('[data-traditional-toggle]')?.addEventListener('click', () => {
+    localStorage.setItem('han-script', 'traditional');
+    applyTraditional();
+  });
+</script>

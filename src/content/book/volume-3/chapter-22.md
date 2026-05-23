@@ -3,7 +3,7 @@ title: "第二十二章 实体之作用划分"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 22
-summary: "本章为《第三卷  群境科学原理概论》之“第二十二章 实体之作用划分”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈人类生物制造机械（实体），而使人类生物对生存环境之作用加强，使人类生物更易于生存及自由生存。"
 keywords: ["群境", "实体之作用划分"]
 slug: "volume-3/chapter-22"
 order: 322

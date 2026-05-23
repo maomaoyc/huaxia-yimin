@@ -64,9 +64,7 @@
       if (status) status.textContent = '已提交。若后端邮件服务未配置，请同时保留云盘链接。';
       form.reset();
     } catch {
-      const subject = encodeURIComponent('作者最新文章与视频上传');
-      const body = encodeURIComponent(`提交人：${data.get('name') || ''}\n联系方式：${data.get('contact') || ''}\n标题：${data.get('title') || ''}\n链接：${data.get('resourceUrl') || ''}\n文件：${data.get('file') instanceof File ? data.get('file').name : ''}\n\n${data.get('message') || ''}`);
-      window.location.href = `mailto:yc114de@gmail.com?subject=${subject}&body=${body}`;
+      if (status) status.textContent = '提交未完成，请稍后再试。';
     }
   });
 </script>

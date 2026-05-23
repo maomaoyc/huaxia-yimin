@@ -3,7 +3,7 @@ title: "第五章 体验㈡"
 volume: "第一卷  心境科学原理概论"
 volumeSlug: "volume-1"
 chapterNumber: 5
-summary: "本章为《第一卷  心境科学原理概论》之“第五章 体验㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "体验比较阶段→建立与实体对应趋于唯一之参照体验阶段→依参照体验行动（所行）阶段→体验比较阶段。"
 keywords: ["心境", "体验㈡"]
 slug: "volume-1/chapter-5"
 order: 105

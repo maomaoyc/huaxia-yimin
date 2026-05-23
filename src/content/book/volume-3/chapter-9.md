@@ -3,7 +3,7 @@ title: "第九章 纲要"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 9
-summary: "本章为《第三卷  群境科学原理概论》之“第九章 纲要”，正文按作者原文整理为在线阅读版本。"
+summary: "⑴群体生存模式与群体生存原则之建立，是为实现更有益于个体生存及个体自由生存。"
 keywords: ["群境", "纲要"]
 slug: "volume-3/chapter-9"
 order: 309

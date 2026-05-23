@@ -3,7 +3,7 @@ title: "第五十二章 资料与心境"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 52
-summary: "本章为《第三卷  群境科学原理概论》之“第五十二章 资料与心境”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈智能机器与人类生物之比较，可发现两者之共性与特性。"
 keywords: ["心境", "群境", "资料与心境"]
 slug: "volume-3/chapter-52"
 order: 352

@@ -3,7 +3,7 @@ title: "前言"
 volume: "全书导言"
 volumeSlug: "preface"
 chapterNumber: 0
-summary: "本节为全书前言，集中呈现作者的问题意识、写作缘起与理论关怀。"
+summary: "天体状态进入荒野之人类生物个体及群体，与现存城市环境之人类生物个体及群体，两类生存状态之间，存在着一系列可重复之发展演变阶段，如同个体生命体系之孕育及发展存在可重复之发展演变阶段。（现实存在，……"
 keywords: ["前言"]
 slug: "preface"
 order: 0

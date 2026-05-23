@@ -3,7 +3,7 @@ title: "第三十八章 唯物论与唯心论"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 38
-summary: "本章为《第三卷  群境科学原理概论》之“第三十八章 唯物论与唯心论”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈关于世界之源与物质之关联，及现实存在与认知之关联，因其认知之异而形成唯物论与唯心论。"
 keywords: ["群境", "唯物论与唯心论"]
 slug: "volume-3/chapter-38"
 order: 338

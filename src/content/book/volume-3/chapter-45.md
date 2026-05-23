@@ -3,7 +3,7 @@ title: "第四十五章 近代中国之群境现实"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 45
-summary: "本章为《第三卷  群境科学原理概论》之“第四十五章 近代中国之群境现实”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴中国传统王朝时代，中国主体族群之汉族主政之王朝是中国及其周邻之文明发源地，即文明基地。"
 keywords: ["群境"]
 slug: "volume-3/chapter-45"
 order: 345

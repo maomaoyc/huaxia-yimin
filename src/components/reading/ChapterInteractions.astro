@@ -11,60 +11,60 @@ const { entry, locale = 'zh' } = Astro.props;
 const copy = {
   zh: {
     title: '章节批注与评论',
-    intro: '可选中正文后记录划线与想法，也可留下本章评论。未注册也可以评论；注册信息不写入 GitHub。',
+    intro: '选中正文后可直接划线、高亮或记录想法；也可留下本章评论。注册为可选项。',
     register: '读者注册',
     name: '姓名 / 昵称',
     contact: '联系方式',
     note: '注册说明',
     registerButton: '提交注册',
-    annotation: '选中文本批注',
-    selected: '选中文本',
-    idea: '想法',
-    saveAnnotation: '保存批注',
     comment: '章节评论',
     commentBody: '评论内容',
-    saveComment: '发布到本机评论区',
     publishComment: '发表评论',
-    empty: '暂无本机评论。',
-    localOnly: '已预留 Cloudflare 评论存储；未配置时评论先保存在本机浏览器。'
+    highlight: '高亮',
+    underline: '划线',
+    idea: '想法',
+    saved: '已保存。',
+    pending: '提交中...',
+    failed: '提交未完成，请稍后再试。',
+    close: '关闭'
   },
   en: {
     title: 'Chapter Notes and Comments',
-    intro: 'Select text to save a highlight and note, or leave a chapter comment. Registration is optional; registration data is not written to GitHub.',
+    intro: 'Select text in the chapter to highlight, underline, or save a note. Chapter comments and registration are optional.',
     register: 'Reader Registration',
     name: 'Name / Nickname',
     contact: 'Contact',
     note: 'Registration Note',
     registerButton: 'Submit Registration',
-    annotation: 'Selected Text Note',
-    selected: 'Selected Text',
-    idea: 'Idea',
-    saveAnnotation: 'Save Note',
     comment: 'Chapter Comment',
     commentBody: 'Comment',
-    saveComment: 'Post Locally',
     publishComment: 'Post Comment',
-    empty: 'No local comments yet.',
-    localOnly: 'Cloudflare comment storage is supported; when it is not configured, comments stay in this browser.'
+    highlight: 'Highlight',
+    underline: 'Underline',
+    idea: 'Note',
+    saved: 'Saved.',
+    pending: 'Submitting...',
+    failed: 'Submission failed. Please try again later.',
+    close: 'Close'
   },
   es: {
-    title: 'Notas y comentarios del capítulo',
-    intro: 'Seleccione texto para guardar una marca y una nota, o deje un comentario del capítulo. El registro es opcional; los datos no se escriben en GitHub.',
+    title: 'Notas y comentarios',
+    intro: 'Seleccione texto del capítulo para resaltar, subrayar o guardar una nota. Los comentarios y el registro son opcionales.',
     register: 'Registro de lector',
     name: 'Nombre / apodo',
     contact: 'Contacto',
     note: 'Nota de registro',
     registerButton: 'Enviar registro',
-    annotation: 'Nota sobre texto seleccionado',
-    selected: 'Texto seleccionado',
-    idea: 'Idea',
-    saveAnnotation: 'Guardar nota',
     comment: 'Comentario del capítulo',
     commentBody: 'Comentario',
-    saveComment: 'Publicar localmente',
     publishComment: 'Publicar comentario',
-    empty: 'Aún no hay comentarios locales.',
-    localOnly: 'El almacenamiento de comentarios de Cloudflare está preparado; si no está configurado, los comentarios quedan en este navegador.'
+    highlight: 'Resaltar',
+    underline: 'Subrayar',
+    idea: 'Nota',
+    saved: 'Guardado.',
+    pending: 'Enviando...',
+    failed: 'No se pudo enviar. Inténtelo más tarde.',
+    close: 'Cerrar'
   }
 };
 const text = copy[locale];
@@ -75,54 +75,43 @@ const text = copy[locale];
     <div>
       <h2 class="font-serif text-2xl font-semibold text-navy-850">{text.title}</h2>
       <p class="mt-2 text-sm leading-7 text-ink/70">{text.intro}</p>
-      <p class="mt-1 text-xs leading-5 text-ink/55">{text.localOnly}</p>
     </div>
     <button class="w-fit border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep transition hover:border-navy-850 hover:text-navy-850" type="button" data-open-register>{text.register}</button>
   </div>
 
-  <div class="mt-6 grid gap-5 lg:grid-cols-2">
-    <form class="grid gap-3 border border-gold-deep/15 bg-ivory p-4" data-annotation-form>
-      <h3 class="font-serif text-xl text-navy-850">{text.annotation}</h3>
+  <form class="mt-6 grid max-w-3xl gap-3 border border-gold-deep/15 bg-ivory p-4" data-comment-form>
+    <h3 class="font-serif text-xl text-navy-850">{text.comment}</h3>
+    <div class="grid gap-3 sm:grid-cols-2">
       <label class="grid gap-2 text-sm">
-        <span class="font-medium text-navy-850">{text.selected}</span>
-        <textarea class="min-h-24 border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="selectedText" data-selected-text></textarea>
+        <span class="font-medium text-navy-850">{text.name}</span>
+        <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" />
       </label>
       <label class="grid gap-2 text-sm">
-        <span class="font-medium text-navy-850">{text.idea}</span>
-        <textarea class="min-h-24 border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="idea"></textarea>
+        <span class="font-medium text-navy-850">{text.contact}</span>
+        <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contact" type="text" />
       </label>
-      <button class="w-fit border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep" type="submit">{text.saveAnnotation}</button>
-    </form>
-
-    <form class="grid gap-3 border border-gold-deep/15 bg-ivory p-4" data-comment-form>
-      <h3 class="font-serif text-xl text-navy-850">{text.comment}</h3>
-      <div class="grid gap-3 sm:grid-cols-2">
-        <label class="grid gap-2 text-sm">
-          <span class="font-medium text-navy-850">{text.name}</span>
-          <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="name" type="text" />
-        </label>
-        <label class="grid gap-2 text-sm">
-          <span class="font-medium text-navy-850">{text.contact}</span>
-          <input class="border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="contact" type="text" />
-        </label>
-      </div>
-      <label class="grid gap-2 text-sm">
-        <span class="font-medium text-navy-850">{text.commentBody}</span>
-        <textarea class="min-h-28 border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="comment" required></textarea>
-      </label>
+    </div>
+    <label class="grid gap-2 text-sm">
+      <span class="font-medium text-navy-850">{text.commentBody}</span>
+      <textarea class="min-h-28 border border-gold-deep/25 bg-white px-3 py-2 text-ink outline-none focus:border-gold-deep" name="comment" required></textarea>
+    </label>
+    <div class="flex flex-wrap items-center gap-3">
       <button class="w-fit border border-gold-deep/35 px-4 py-2 text-sm text-gold-deep" type="submit">{text.publishComment}</button>
-    </form>
-  </div>
-
-  <div class="mt-5 grid gap-3" data-comment-list>
-    <p class="text-sm text-ink/55" data-empty-comments>{text.empty}</p>
-  </div>
+      <p class="text-sm text-ink/60" data-comment-status></p>
+    </div>
+  </form>
 </section>
+
+<div class="selection-tools" data-selection-tools>
+  <button type="button" data-mark="highlight">{text.highlight}</button>
+  <button type="button" data-mark="underline">{text.underline}</button>
+  <button type="button" data-mark="idea">{text.idea}</button>
+</div>
 
 <dialog class="w-[min(92vw,34rem)] border border-gold-deep/35 bg-ivory p-0 text-ink shadow-soft" data-register-dialog>
   <div class="flex items-center justify-between border-b border-gold-deep/20 px-5 py-4">
     <h2 class="font-serif text-2xl text-navy-850">{text.register}</h2>
-    <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="button" data-close-register>关闭</button>
+    <button class="border border-gold-deep/35 px-3 py-1.5 text-sm text-gold-deep" type="button" data-close-register>{text.close}</button>
   </div>
   <form class="grid gap-4 p-5" data-register-form>
     <label class="grid gap-2 text-sm">
@@ -144,97 +133,76 @@ const text = copy[locale];
   </form>
 </dialog>
 
-<script>
+<script define:vars={{ saved: text.saved, pending: text.pending, failed: text.failed }}>
   const interactions = document.querySelector('[data-chapter-interactions]');
   const chapter = interactions instanceof HTMLElement ? interactions.dataset.chapter || 'chapter' : 'chapter';
-  const commentKey = `huaxia-comments:${chapter}`;
-  const annotationKey = `huaxia-annotations:${chapter}`;
-  const selectedText = document.querySelector('[data-selected-text]');
-  let remoteComments = [];
+  const tools = document.querySelector('[data-selection-tools]');
+  const article = document.querySelector('.reading-article');
+  let activeRange = null;
 
-  document.addEventListener('selectionchange', () => {
-    const value = window.getSelection()?.toString().trim() || '';
-    if (value && selectedText instanceof HTMLTextAreaElement) selectedText.value = value.slice(0, 1200);
+  const hideTools = () => {
+    if (tools instanceof HTMLElement) tools.style.display = 'none';
+  };
+
+  document.addEventListener('mouseup', () => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || !article?.contains(selection.anchorNode)) {
+      hideTools();
+      return;
+    }
+    activeRange = selection.getRangeAt(0).cloneRange();
+    const rect = activeRange.getBoundingClientRect();
+    if (tools instanceof HTMLElement) {
+      tools.style.left = `${Math.min(window.innerWidth - 220, Math.max(12, rect.left))}px`;
+      tools.style.top = `${Math.max(12, rect.top - 48)}px`;
+      tools.style.display = 'flex';
+    }
   });
 
-  const renderComments = () => {
-    const list = document.querySelector('[data-comment-list]');
-    if (!list) return;
-    const localComments = JSON.parse(localStorage.getItem(commentKey) || '[]');
-    const comments = remoteComments.length ? remoteComments : localComments;
-    list.querySelectorAll('[data-local-comment]').forEach((item) => item.remove());
-    const empty = list.querySelector('[data-empty-comments]');
-    if (empty instanceof HTMLElement) empty.style.display = comments.length ? 'none' : '';
-    comments.forEach((comment) => {
-      const article = document.createElement('article');
-      article.dataset.localComment = 'true';
-      article.className = 'border border-gold-deep/15 bg-ivory p-4 text-sm leading-7 text-ink/74';
-      article.innerHTML = `<p class="font-medium text-navy-850"></p><p class="mt-1"></p><p class="mt-2 text-xs text-ink/45"></p>`;
-      article.children[0].textContent = comment.name || '读者';
-      article.children[1].textContent = comment.comment || '';
-      article.children[2].textContent = comment.createdAt ? new Date(comment.createdAt).toLocaleString() : '';
-      list.appendChild(article);
-    });
-  };
-
-  const loadRemoteComments = async () => {
-    try {
-      const response = await fetch(`/api/comments?chapter=${encodeURIComponent(chapter)}`);
-      if (!response.ok) throw new Error('comments unavailable');
-      const payload = await response.json();
-      if (Array.isArray(payload.comments)) {
-        remoteComments = payload.comments;
-        renderComments();
+  tools?.querySelectorAll('[data-mark]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!activeRange) return;
+      const type = button instanceof HTMLElement ? button.dataset.mark : 'highlight';
+      const selected = activeRange.toString();
+      if (!selected.trim()) return;
+      if (type === 'idea') {
+        const idea = window.prompt('记录想法');
+        const notes = JSON.parse(localStorage.getItem(`huaxia-notes:${chapter}`) || '[]');
+        notes.unshift({ selected, idea, createdAt: new Date().toISOString() });
+        localStorage.setItem(`huaxia-notes:${chapter}`, JSON.stringify(notes.slice(0, 80)));
+      } else {
+        const mark = document.createElement('mark');
+        mark.className = 'reader-highlight';
+        if (type === 'underline') mark.style.background = 'transparent';
+        try {
+          activeRange.surroundContents(mark);
+        } catch {
+          const contents = activeRange.extractContents();
+          mark.appendChild(contents);
+          activeRange.insertNode(mark);
+        }
       }
-    } catch {
-      renderComments();
-    }
-  };
-
-  document.querySelector('[data-annotation-form]')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement)) return;
-    const data = new FormData(form);
-    const annotations = JSON.parse(localStorage.getItem(annotationKey) || '[]');
-    annotations.unshift({
-      selectedText: data.get('selectedText') || '',
-      idea: data.get('idea') || '',
-      createdAt: new Date().toLocaleString()
+      window.getSelection()?.removeAllRanges();
+      hideTools();
     });
-    localStorage.setItem(annotationKey, JSON.stringify(annotations.slice(0, 50)));
-    form.reset();
   });
 
   document.querySelector('[data-comment-form]')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (!(form instanceof HTMLFormElement)) return;
+    const status = document.querySelector('[data-comment-status]');
+    if (status) status.textContent = pending;
     const data = new FormData(form);
-    const nextComment = {
-      name: data.get('name') || '',
-      contact: data.get('contact') || '',
-      comment: data.get('comment') || '',
-      createdAt: new Date().toLocaleString()
-    };
-    let savedRemote = false;
+    data.set('chapter', chapter);
     try {
-      data.set('chapter', chapter);
       const response = await fetch('/api/comments', { method: 'POST', body: data });
-      if (response.ok) {
-        const payload = await response.json();
-        if (payload.comment) {
-          remoteComments.unshift(payload.comment);
-          savedRemote = true;
-        }
-      }
-    } catch {}
-    const comments = JSON.parse(localStorage.getItem(commentKey) || '[]');
-    comments.unshift(nextComment);
-    localStorage.setItem(commentKey, JSON.stringify(comments.slice(0, 100)));
-    if (!savedRemote) remoteComments = [];
-    form.reset();
-    renderComments();
+      if (!response.ok) throw new Error('request failed');
+      if (status) status.textContent = saved;
+      form.reset();
+    } catch {
+      if (status) status.textContent = failed;
+    }
   });
 
   const registerDialog = document.querySelector('[data-register-dialog]');
@@ -249,19 +217,14 @@ const text = copy[locale];
     const form = event.currentTarget;
     if (!(form instanceof HTMLFormElement)) return;
     const status = document.querySelector('[data-register-status]');
-    if (status) status.textContent = '提交中...';
-    const data = new FormData(form);
+    if (status) status.textContent = pending;
     try {
-      const response = await fetch('/api/register', { method: 'POST', body: data });
+      const response = await fetch('/api/register', { method: 'POST', body: new FormData(form) });
       if (!response.ok) throw new Error('request failed');
-      if (status) status.textContent = '已提交。';
+      if (status) status.textContent = saved;
       form.reset();
     } catch {
-      const subject = encodeURIComponent('读者注册');
-      const body = encodeURIComponent(`姓名：${data.get('name') || ''}\n联系方式：${data.get('contact') || ''}\n说明：${data.get('note') || ''}`);
-      window.location.href = `mailto:yc114de@gmail.com?subject=${subject}&body=${body}`;
+      if (status) status.textContent = failed;
     }
   });
-
-  loadRemoteComments();
 </script>

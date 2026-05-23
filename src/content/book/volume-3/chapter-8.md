@@ -3,7 +3,7 @@ title: "第八章 根源对立之两套稳定之组织体系"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 8
-summary: "本章为《第三卷  群境科学原理概论》之“第八章 根源对立之两套稳定之组织体系”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈源于生存物资趋于向少数个体集中，而逐渐形成了一权独裁·中央集权之组织模式，及相关联之组建原则，即此类官制与相关之官道。"
 keywords: ["群境"]
 slug: "volume-3/chapter-8"
 order: 308

@@ -3,7 +3,7 @@ title: "第二十三章 实体与篇目"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 23
-summary: "本章为《第三卷  群境科学原理概论》之“第二十三章 实体与篇目”，正文按作者原文整理为在线阅读版本。"
+summary: "⑴保存、累积、总结生存体验之实体——纸、笔、电脑等。"
 keywords: ["群境", "实体与篇目"]
 slug: "volume-3/chapter-23"
 order: 323

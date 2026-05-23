@@ -3,7 +3,7 @@ title: "第一章 人类生存时代之大略划分"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 1
-summary: "本章为《第三卷  群境科学原理概论》之“第一章 人类生存时代之大略划分”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈⑴人类是生物之一种，人类群体是生物群体。人类生物存在生物之共性与人类之特性，人类生物群体存在生物群体之共性与人类群体之特性。"
 keywords: ["群境"]
 slug: "volume-3/chapter-1"
 order: 301

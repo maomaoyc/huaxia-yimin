@@ -3,7 +3,7 @@ title: "第二十六章 按劳动额正比例分配原则之困惑"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 26
-summary: "本章为《第三卷  群境科学原理概论》之“第二十六章 按劳动额正比例分配原则之困惑”，正文按作者原文整理为在线阅读版本。"
+summary: "采取三并行组织原则，实现破产、标准、重建之良性循环过程。"
 keywords: ["群境"]
 slug: "volume-3/chapter-26"
 order: 326

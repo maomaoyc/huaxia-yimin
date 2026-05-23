@@ -3,7 +3,7 @@ title: "第三十章 市场交易㈡"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 30
-summary: "本章为《第三卷  群境科学原理概论》之“第三十章 市场交易㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "⑴交易价值、交易价格、使用价值（需求价值），此三者名异实异。"
 keywords: ["群境", "市场交易㈡"]
 slug: "volume-3/chapter-30"
 order: 330

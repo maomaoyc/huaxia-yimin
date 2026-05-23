@@ -3,7 +3,7 @@ title: "第二章 名实体系㈡"
 volume: "第二卷  名实学科原理概论"
 volumeSlug: "volume-2"
 chapterNumber: 2
-summary: "本章为《第二卷  名实学科原理概论》之“第二章 名实体系㈡”，正文按作者原文整理为在线阅读版本。"
+summary: "⒈独创之速记符号存在三个创制原则，及相应之三个创制过程。"
 keywords: ["名实", "名实体系㈡"]
 slug: "volume-2/chapter-2"
 order: 202

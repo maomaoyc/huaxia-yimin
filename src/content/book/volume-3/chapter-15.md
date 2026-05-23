@@ -3,7 +3,7 @@ title: "第十五章 武装"
 volume: "第三卷  群境科学原理概论"
 volumeSlug: "volume-3"
 chapterNumber: 15
-summary: "本章为《第三卷  群境科学原理概论》之“第十五章 武装”，正文按作者原文整理为在线阅读版本。"
+summary: "⒉⑴以展开破坏之过程之长短程度，来大略划分武装之攻击等级水平，即攻击武装（器）较防御武装（器）展开破坏作用之过程短。"
 keywords: ["群境", "武装"]
 slug: "volume-3/chapter-15"
 order: 315
